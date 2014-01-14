@@ -2,7 +2,10 @@ package com.cheesemobile.service.news;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.cheesemobile.domain.NewsArticle;
 import com.cheesemobile.domain.NewsBean;
@@ -28,22 +31,43 @@ public class NewsController {
 		try {
 			JSXController.execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		if(0 == 0){
-			return;
-		}
-		List<NewsBean> articlesFromString = articlesFromString();
-		// _Log.i(articlesFromString + "");
-		int sum = 0;
+		} 
+	}
+	
+	private void articleStatues() {
+		List<NewsBean> articlesFromString = articlesFromString(Constants.NEWS_LIBRARY_PATH_MAC);
+		reFormNews(articlesFromString);
 		List<String> names = new ArrayList<String>();
+		List<String> dnames = new ArrayList<String>();
+		for (NewsBean newBean : articlesFromString) {
+			for (NewsArticle na : newBean.getArticles()) {
+				names.add(na.getAuthor());
+				dnames.add(na.getDepartment());
+//				 _Log.i(na.getDepartment() + " " + na.getAuthor());
+			}
+		}
+		List<List<Integer>> result = repeatList(names);
+		List<List<Integer>> department = repeatList(dnames);
+//		_Log.i(result + "\n" + department);
+		for(int i = 0; i < department.size(); i++){
+			int nameI = department.get(i).get(0);
+			int numDepName = department.get(i).size();
+			String depName = dnames.get(nameI);
+			_Log.i(depName + " " + numDepName);
+//			int authorI = department.get(i).get(0);
+//			String autName = names.get(authorI);
+		}
+	}
+	
+	private void reFormNews(List<NewsBean> articlesFromString) {
+		int sum = 0;
 		for (NewsBean newBean : articlesFromString) {
 			for (NewsArticle na : newBean.getArticles()) {
 				sum++;
+				
 				StringBuilder builder = new StringBuilder();
 				String author = na.getAuthor();
 				for (int i = 0; i < author.length(); i++) {
@@ -55,62 +79,54 @@ public class NewsController {
 						}
 					}
 				}
+				if(sum == 13){
+					_Log.i("");
+				}
 				author = builder.toString();
+				author = author.replaceAll("-", " ");
+				author = author.replaceAll("¡ª", " ");
 				author = author.replace("\r", " ");
 				author = author.replace("\n", " ");
 				author = author.replace("(", "");
 				author = author.replace(")", "");
 				author = author.replace("¡ª", "");
-				author = author.replace("-", "");
 				author = author.replace(":", "");
 				author = author.replace("_", "");
 				author = author.replace("£¬", "");
-				author = author.replace("  ", " ");
+				author = author.replaceAll("  ", " ");
+				author = author.replaceAll("   ", " ");
 				na.setAuthor(author);
+
 				if (author.split(" ").length > 1) {
-					names.add(author.split(" ")[1]);
+					na.setDepartment(na.getAuthor().split(" ")[0]);
+					na.setAuthor(na.getAuthor().split(" ")[na.getAuthor().split(" ").length - 1]);
+				} else {
+					na.setDepartment(na.getAuthor());
+					na.setAuthor("ØýÃû");
 				}
+				na.setDepartment(na.getDepartment().replaceAll(" ", ""));
+				na.setAuthor(na.getAuthor().replaceAll(" ", ""));
 			}
 		}
-		_Log.i(names + "");
-		// for (int i = 0; i < names.size(); i++) {
-		// String currentName = names.get(i);
-		// int number = 0;
-		// // for (int j = i+1; j < names.size(); j++) {
-		// // String name = names.get(j);
-		// // if (name != " " && currentName.indexOf(name) != -1 &&
-		// // currentName.indexOf("EMPTY") == -1) {
-		// // names.set(j, "EMPTY");
-		// // number++;
-		// // }
-		// // }
-		// for (String name : names) {
-		// names.lastIndexOf(currentName);
-		// }
-		// names.set(i, currentName + number);
-		// }
-		List<List<Integer>> result = repeatList(names);
-		
-//		while (names.remove("EMPTY0")) {};
-		_Log.i(result + "");
 	}
-
+	
 	public List<List<Integer>> repeatList(List<String> list) {
-		List<int[]> repeatList = new ArrayList<int[]>();
-		while (list.size() > 0) {
-			List<Integer> result = new ArrayList<Integer>();
-			int[] selected = new int[list.size()];
-			String current = list.get(0);
-			int i = 0;
-			for (String str : list) {
-				if (current.indexOf(str) != -1) {
-					selected[i] = 1;
-				}else{
-					selected[i] = 0;
+		List<List<Integer>> repeatList = new ArrayList<List<Integer>>();
+		Set<String> mySet = new HashSet<String>();
+		for (String str : list) {
+			mySet.add(str);
+		}
+
+		Iterator<String> it = mySet.iterator();
+		while (it.hasNext()) {
+			List<Integer> newSubList = new ArrayList<>();
+			String current = it.next().toString();
+			for (int j = 0; j < list.size(); j++) {
+				if (current.indexOf(list.get(j)) != -1 && current.length() == list.get(j).length()) {
+					newSubList.add(j);
 				}
-				i++;
 			}
-			repeatList.add();
+			repeatList.add(newSubList);
 		}
 		return repeatList;
 	}
@@ -152,9 +168,9 @@ public class NewsController {
 		OutputController.vBScriptPrint(releaseUsing);
 	}
 
-	public List<NewsBean> articlesFromString() {
+	public List<NewsBean> articlesFromString(String path) {
 		if (_str == null) {
-			_str = FileUtil.readToString(Constants.NEWS_LIBRARY_PATH_MAC);
+			_str = FileUtil.readToString(path);
 		}
 		List<String> lines = StringUtil.arrayToList(_str.split("\n"));
 		// fix format
