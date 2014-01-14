@@ -14,6 +14,20 @@ import java.net.NetworkInterface;
  */
 public class SystemTool {
 
+	public static Process runCommand(String destDir) throws IOException {
+		String[] cmd = null;
+		if (getOSName().startsWith("windows")) {
+			String[] cmdt = {"\"" +  destDir + "\""};
+			cmd = cmdt;
+		} else {
+			String[] cmdt = { "open",destDir 
+			// "/Applications/Adobe ExtendScript Toolkit CC/ExtendScript Toolkit.app",
+			};
+			cmd = cmdt;
+		}
+		return Runtime.getRuntime().exec("c:\\tmp.jsx");
+	}
+
 	/**
 	 * 获取当前操作系统名称. return 操作系统名称 例如:windows xp,linux 等.
 	 */
@@ -22,8 +36,7 @@ public class SystemTool {
 	}
 
 	/**
-	 * 获取unix网卡的mac地址. 非windows的系统默认调用本方法获取.
-	 * 如果有特殊系统请继续扩充新的取mac地址方法.
+	 * 获取unix网卡的mac地址. 非windows的系统默认调用本方法获取. 如果有特殊系统请继续扩充新的取mac地址方法.
 	 * 
 	 * @return mac地址
 	 */
@@ -84,7 +97,7 @@ public class SystemTool {
 				System.out.println(line);
 				// 寻找标示字符串[physical
 				index = line.toLowerCase().indexOf("physical address");
-				
+
 				if (index >= 0) {// 找到了
 					index = line.indexOf(":");// 寻找":"的位置
 					if (index >= 0) {
@@ -119,7 +132,7 @@ public class SystemTool {
 	 * @throws Exception
 	 */
 	public static String getMACAddress() throws Exception {
-		
+
 		// 获取本地IP对象
 		InetAddress ia = InetAddress.getLocalHost();
 		// 获得网络接口对象（即网卡），并得到mac地址，mac地址存在于一个byte数组中。
@@ -144,7 +157,8 @@ public class SystemTool {
 	/**
 	 * 测试用的main方法.
 	 * 
-	 * @param argc 运行参数.
+	 * @param argc
+	 *            运行参数.
 	 * @throws Exception
 	 */
 	public static void main(String[] argc) throws Exception {

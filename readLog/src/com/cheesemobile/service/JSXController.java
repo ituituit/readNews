@@ -11,21 +11,19 @@ import com.cheesemobile.util.FileUtil;
 public class JSXController {
 
 	public static void execute() throws IOException, InterruptedException {
-		String destDir = "/Users/pwl/Documents/Adobe Scripts/sourcex.jsx";
-		String srcDir = "/Users/pwl/Desktop/automation/sample.jsx";
+		
+		String destDir = Constants.XSL_DESTINATION_PATH ;
+		String srcDir = Constants.XSL_SOURCE_PATH ;
 		String str = FileUtil.readToString(srcDir);
 		str = str.substring(str.indexOf("\r"));
 		StringBuilder sb = new StringBuilder();
 		sb.append("#target photoshop");
 		sb.append("\r");
-		sb.append(str);
+//		sb.append(str);
 		sb.append("\r");
 		sb.append("alert(\"123321\")");
 		FileUtil.write(destDir, sb.toString());
-		String[] cmd = { "open", destDir
-		// "/Applications/Adobe ExtendScript Toolkit CC/ExtendScript Toolkit.app",
-		};
-		Process p = Runtime.getRuntime().exec(cmd);
+		Process p = SystemTool.runCommand(destDir);
 		InputStream is = p.getInputStream();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		String line;
