@@ -11,16 +11,16 @@ public class Constants {
 	public final static int ARTICLE_HEIGHT_DEFAULT = 300;
 	public static String XSL_SOURCE_PATH = "/Users/pwl/Desktop/automation/sample.jsx";
 	public static String XSL_DESTINATION_PATH = "/Users/pwl/Documents/Adobe Scripts/sourcex.jsx";
+	public final static String IMG_DESTINATION_PATH = "/Volumes/peiwen/";
+	public final static String TRAVEL_LAWS_LIBRARY_PATH = "C:/Documents and Settings/Administrator/桌面/旅游法学习.txt";
+	public static String NEWS_LIBRARY_PATH = "/Users/pwl/Downloads/automation/sample.txt";
 	static{
 		if (SystemTool.getOSName().indexOf("windows") != -1) {
 			XSL_SOURCE_PATH = "C:\\Documents and Settings\\Administrator\\git\\readNews_remote\\readLog\\sample.jsx";
 			XSL_DESTINATION_PATH = "D:\\我的文档\\Adobe Scripts\\tmp.jsx";
+			NEWS_LIBRARY_PATH = "F:/BaiduYunDownload/automation/sample.txt";
 		}
 	}
-	public final static String IMG_DESTINATION_PATH = "/Volumes/peiwen/";
-	public final static String TRAVEL_LAWS_LIBRARY_PATH = "C:/Documents and Settings/Administrator/桌面/旅游法学习.txt";
-	public final static String NEWS_LIBRARY_PATH = "F:/BaiduYunDownload/automation/sample.txt";
-	public final static String NEWS_LIBRARY_PATH_MAC = "/Users/pwl/Downloads/automation/sample.txt";
 
 	public static boolean _SET_CONTENT_NOTE_TO_TITLE = true;
 

@@ -28,6 +28,7 @@ public class NewsController {
 	// }
 
 	public NewsController() {
+//		articleStatues();
 		try {
 			JSXController.execute();
 		} catch (IOException e) {
@@ -38,7 +39,7 @@ public class NewsController {
 	}
 	
 	private void articleStatues() {
-		List<NewsBean> articlesFromString = articlesFromString(Constants.NEWS_LIBRARY_PATH_MAC);
+		List<NewsBean> articlesFromString = articlesFromString(Constants.NEWS_LIBRARY_PATH);
 		reFormNews(articlesFromString);
 		List<String> names = new ArrayList<String>();
 		List<String> dnames = new ArrayList<String>();
@@ -52,16 +53,19 @@ public class NewsController {
 		List<List<Integer>> result = repeatList(names);
 		List<List<Integer>> department = repeatList(dnames);
 //		_Log.i(result + "\n" + department);
+		traceRepeatList(result,names);
+//		traceRepeatList(department,dnames);
+		
+	}
+	
+	private void traceRepeatList(List<List<Integer>> department,List<String> dnames){
 		for(int i = 0; i < department.size(); i++){
 			int nameI = department.get(i).get(0);
 			int numDepName = department.get(i).size();
 			String depName = dnames.get(nameI);
 			_Log.i(depName + " " + numDepName);
-//			int authorI = department.get(i).get(0);
-//			String autName = names.get(authorI);
 		}
 	}
-	
 	private void reFormNews(List<NewsBean> articlesFromString) {
 		int sum = 0;
 		for (NewsBean newBean : articlesFromString) {

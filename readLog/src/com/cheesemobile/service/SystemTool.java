@@ -17,7 +17,7 @@ public class SystemTool {
 	public static Process runCommand(String destDir) throws IOException {
 		String[] cmd = null;
 		if (getOSName().startsWith("windows")) {
-			String[] cmdt = {"\"" +  destDir + "\""};
+			String[] cmdt = {"cmd" ,"/c",destDir};
 			cmd = cmdt;
 		} else {
 			String[] cmdt = { "open",destDir 
@@ -25,7 +25,7 @@ public class SystemTool {
 			};
 			cmd = cmdt;
 		}
-		return Runtime.getRuntime().exec("c:\\tmp.jsx");
+		return Runtime.getRuntime().exec(cmd);
 	}
 
 	/**
