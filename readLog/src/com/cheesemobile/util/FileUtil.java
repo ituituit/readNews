@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.net.URLDecoder;
@@ -203,7 +204,9 @@ public class FileUtil {
 	public static String readToString(String tmpFile) {
 		try {
 			StringBuffer sbFile = new StringBuffer();
-			FileReader in = new FileReader(tmpFile);
+			InputStreamReader in = new InputStreamReader(new FileInputStream(tmpFile), "UTF-8");
+
+//			FileReader in = new FileReader(tmpFile);
 			char[] buffer = new char[4096];
 			int len;
 			sbFile = new StringBuffer();

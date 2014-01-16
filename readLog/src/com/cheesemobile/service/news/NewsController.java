@@ -2,6 +2,7 @@ package com.cheesemobile.service.news;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,7 @@ import com.cheesemobile.domain.NewsArticle;
 import com.cheesemobile.domain.NewsBean;
 import com.cheesemobile.domain.Point;
 import com.cheesemobile.domain.Rectangle;
+import com.cheesemobile.domain.VoBean;
 import com.cheesemobile.service.Constants;
 import com.cheesemobile.service.JSXController;
 import com.cheesemobile.util.FileUtil;
@@ -28,16 +30,13 @@ public class NewsController {
 	// }
 
 	public NewsController() {
-//		articleStatues();
-		try {
-			JSXController.execute();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} 
+		// articleStatues();
+		String[] str = { "0", "0" };
+		
+		VoBean invoke = JSXController.invoke("bounds", Arrays.asList(str));
+		_Log.i(invoke.toString());
 	}
-	
+
 	private void articleStatues() {
 		List<NewsBean> articlesFromString = articlesFromString(Constants.NEWS_LIBRARY_PATH);
 		reFormNews(articlesFromString);
@@ -47,31 +46,33 @@ public class NewsController {
 			for (NewsArticle na : newBean.getArticles()) {
 				names.add(na.getAuthor());
 				dnames.add(na.getDepartment());
-//				 _Log.i(na.getDepartment() + " " + na.getAuthor());
+				// _Log.i(na.getDepartment() + " " + na.getAuthor());
 			}
 		}
 		List<List<Integer>> result = repeatList(names);
 		List<List<Integer>> department = repeatList(dnames);
-//		_Log.i(result + "\n" + department);
-		traceRepeatList(result,names);
-//		traceRepeatList(department,dnames);
-		
+		// _Log.i(result + "\n" + department);
+		traceRepeatList(result, names);
+		// traceRepeatList(department,dnames);
+
 	}
-	
-	private void traceRepeatList(List<List<Integer>> department,List<String> dnames){
-		for(int i = 0; i < department.size(); i++){
+
+	private void traceRepeatList(List<List<Integer>> department,
+			List<String> dnames) {
+		for (int i = 0; i < department.size(); i++) {
 			int nameI = department.get(i).get(0);
 			int numDepName = department.get(i).size();
 			String depName = dnames.get(nameI);
 			_Log.i(depName + " " + numDepName);
 		}
 	}
+
 	private void reFormNews(List<NewsBean> articlesFromString) {
 		int sum = 0;
 		for (NewsBean newBean : articlesFromString) {
 			for (NewsArticle na : newBean.getArticles()) {
 				sum++;
-				
+
 				StringBuilder builder = new StringBuilder();
 				String author = na.getAuthor();
 				for (int i = 0; i < author.length(); i++) {
@@ -83,7 +84,7 @@ public class NewsController {
 						}
 					}
 				}
-				if(sum == 13){
+				if (sum == 13) {
 					_Log.i("");
 				}
 				author = builder.toString();
@@ -103,7 +104,8 @@ public class NewsController {
 
 				if (author.split(" ").length > 1) {
 					na.setDepartment(na.getAuthor().split(" ")[0]);
-					na.setAuthor(na.getAuthor().split(" ")[na.getAuthor().split(" ").length - 1]);
+					na.setAuthor(na.getAuthor().split(" ")[na.getAuthor()
+							.split(" ").length - 1]);
 				} else {
 					na.setDepartment(na.getAuthor());
 					na.setAuthor("ØýÃû");
@@ -113,7 +115,7 @@ public class NewsController {
 			}
 		}
 	}
-	
+
 	public List<List<Integer>> repeatList(List<String> list) {
 		List<List<Integer>> repeatList = new ArrayList<List<Integer>>();
 		Set<String> mySet = new HashSet<String>();
@@ -126,7 +128,8 @@ public class NewsController {
 			List<Integer> newSubList = new ArrayList<>();
 			String current = it.next().toString();
 			for (int j = 0; j < list.size(); j++) {
-				if (current.indexOf(list.get(j)) != -1 && current.length() == list.get(j).length()) {
+				if (current.indexOf(list.get(j)) != -1
+						&& current.length() == list.get(j).length()) {
 					newSubList.add(j);
 				}
 			}

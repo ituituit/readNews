@@ -9,15 +9,17 @@ public class Constants {
 	public final static float CONTENT_WIDTH = 459.36f;
 
 	public final static int ARTICLE_HEIGHT_DEFAULT = 300;
-	public static String XSL_SOURCE_PATH = "/Users/pwl/Desktop/automation/sample.jsx";
+	public static String PREFERENCE_TEMP_PATH = "D:/我的文档/Adobe Scripts/prefs.txt";
+	public static String XSL_SOURCE_PATH = "/Users/pwl/Desktop/automation/libs.jsx";
 	public static String XSL_DESTINATION_PATH = "/Users/pwl/Documents/Adobe Scripts/sourcex.jsx";
 	public final static String IMG_DESTINATION_PATH = "/Volumes/peiwen/";
 	public final static String TRAVEL_LAWS_LIBRARY_PATH = "C:/Documents and Settings/Administrator/桌面/旅游法学习.txt";
 	public static String NEWS_LIBRARY_PATH = "/Users/pwl/Downloads/automation/sample.txt";
 	static{
 		if (SystemTool.getOSName().indexOf("windows") != -1) {
-			XSL_SOURCE_PATH = "C:\\Documents and Settings\\Administrator\\git\\readNews_remote\\readLog\\sample.jsx";
+			XSL_SOURCE_PATH = "C:\\Documents and Settings\\Administrator\\git\\readNews_remote\\readLog\\lib.jsx";
 			XSL_DESTINATION_PATH = "D:\\我的文档\\Adobe Scripts\\tmp.jsx";
+			PREFERENCE_TEMP_PATH = "D:/我的文档/Adobe Scripts/prefs.txt";
 			NEWS_LIBRARY_PATH = "F:/BaiduYunDownload/automation/sample.txt";
 		}
 	}
