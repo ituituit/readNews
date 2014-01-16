@@ -31,10 +31,9 @@ public class NewsController {
 
 	public NewsController() {
 		// articleStatues();
-		String[] str = { "0", "0" };
-		
+		String[] str = { "t1" };
 		VoBean invoke = JSXController.invoke("bounds", Arrays.asList(str));
-		_Log.i(invoke.toString());
+		_Log.i("" + Arrays.asList(invoke.getValuesList()));
 	}
 
 	private void articleStatues() {

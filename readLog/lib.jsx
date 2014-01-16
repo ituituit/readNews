@@ -599,7 +599,6 @@ function textShape(desc8108){
 
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<utils<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-}
 function resizePath(obj,size){
       var width = obj.bounds[2] - obj.bounds[0];
     var height=  obj.bounds[3] - obj.bounds[1];
@@ -769,20 +768,17 @@ ISpeak.prototype.boundsContent = function(){
    $.write("private static float[] iSpeakBound = {" + obj.bounds);
    $.write("}\r")
 }
-ensNews = new EnsNews().init()
-//ensNews.boundsOfNews()
-//new ISpeak().init().boundsContent()
 
-rects = [[369.6,194.04,154.99997,220.99998],[79.6,131.04,268.0,145.99998],[79.6,299.03998,108.0,116.0],[79.6,437.03998,444.99997,175.0],[209.6,299.03998,138.0,116.0],[369.6,131.04,154.99997,41.0],[79.6,634.04,444.99997,205.0],]
-names = ["text_1","text_2","text_3","text_4","text_5","text_6","i_speak",]
-//ensNews.reshotNews(names,rects)
-names = ["""row_sample""","""row_sample""","""row_sample""","""row_sample""","""row_sample""","""row_sample""","""cow_sample""","""cow_sample""","""cow_sample""","""cow_sample""",]
-rect = [[-2.0,0.0,470.0,3.0], [288.0,63.0,180.0,3.0], [-2.0,168.0,293.0,3.0], [-2.0,306.0,470.0,3.0], [-2.0,503.0,470.0,3.0], [-2.0,730.0,470.0,3.0], [-2.0,0.0,3.0,733.0], [128.0,168.0,3.0,141.0], [288.0,0.0,3.0,309.0], [465.0,0.0,3.0,733.0]]
-//ensNews.drawSplitLine(names,rect)
-var array = Array ();
-for(var i = 0; i < 2; i++){
-    array.push (objSelect("text_4_" + i))
-} 
-//array.push (objSelect("blog_logo_bg"));
-//ensNews.pathObjs(objSelect("text_4"),array)
-ensNews.pathObjs2 ("text_4",[[64.08,438.72], [504.96002,438.72], [504.96002,439.44], [374.16,439.44], [374.16,606.72], [509.76,606.72], [509.76,439.44], [504.96002,439.44], [504.96002,508.08], [61.68,508.08], [61.68,607.44], [240.47998,607.44], [240.47998,508.08], [504.96002,508.08], [504.96002,605.76], [64.08,605.76]])
+
+function helloworld(arrs){
+    return arrs
+}
+
+function bounds(arrs){
+    returnArr = new Array()
+    for(var i = 0; i < arrs.length; i++){
+        
+        returnArr.push (objSelect(arrs[i]).bounds)
+    }
+    return returnArr
+}

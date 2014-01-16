@@ -28,7 +28,7 @@ public class JSXController {
 		StringBuilder stringOfArray = new StringBuilder();
 		stringOfArray.append("[");
 		for (String str : list) {
-			stringOfArray.append(str + ",");
+			stringOfArray.append("\"" + str + "\",");
 		}
 		stringOfArray.deleteCharAt(stringOfArray.length() - 1);
 		stringOfArray.append("]");
@@ -39,7 +39,6 @@ public class JSXController {
 		VoBean returnVal = null;
 		execute(funName,JSXArray(params));
 		if (_lastPreferenceStr.indexOf(funName) != -1) {
-			_Log.i(_lastPreferenceStr);
 			returnVal = new VoBean(_lastPreferenceStr);
 		}
 		return returnVal;
