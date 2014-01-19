@@ -25,15 +25,94 @@ public class NewsController {
 	public String _str = null;
 	private static int FIRST_CHARACTER = 0;
 
+	public enum NewsType {
+		VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, TRAVEL_LAWS;
+		public String toString() {
+			String str = "";
+			switch (this) {
+			case VISITORS_TRACK:
+				str = Constants.VISITORS_TRACK_PSD_GROUP;
+				break;
+			case SCENIC_BLOGS:
+				str = Constants.SCENIC_BLOGS_PSD_GROUP;
+				break;
+			case SCENIC_NEWS:
+				str = Constants.SCENIC_NEWS_PSD_GROUP;
+				break;
+			case TRAVEL_LAWS:
+				str = Constants.TRAVEL_LAWS_PSD_GROUP;
+				break;
+			}
+			return str;
+		}
+	};
+	
 	// public abstract interface DataCallback<T> {
 	// public abstract void processData(T paramObject, boolean paramBoolean);
 	// }
 
 	public NewsController() {
 		// articleStatues();
-		String[] str = { "t1" };
-		VoBean invoke = JSXController.invoke("bounds", Arrays.asList(str));
-		_Log.i("" + Arrays.asList(invoke.getValuesList()));
+		// String[] str = { "text_1" };
+		// VoBean invoke = JSXController.invoke("bounds", Arrays.asList(str));
+		// _Log.i("" + Arrays.asList(invoke.getValuesList()));
+		NewsBean nb = genNewsRects(genNewsContents());
+		for(NewsArticle na : nb.getArticles(3)){
+			String[] str = { Constants.PSD_LIBRARY_PATH,Constants.PAGE_2_3_PATH, na.getType().toString()};
+			JSXController.invoke("dumplicateExtendPsd", Arrays.asList(str));
+			String[] str1 = {"content","content_" + na.getOrder()};
+			JSXController.invoke("changeName", Arrays.asList(str1));
+			String[] str2 = {"text","text_" + na.getContent().substring(0,5)};
+			JSXController.invoke("changeName", Arrays.asList(str2));
+			String[] str3 = {"text_" + na.getContent().substring(0,5),na.getContent()};
+			JSXController.invoke("changeText", Arrays.asList(str3));
+
+		}
+	}
+
+	private NewsBean genNewsRects(NewsBean nb) {
+//		List<NewsArticle> articles = nb.getArticles(1);
+//		List<NewsArticle> articles2 = nb.getArticles(2);
+//		List<NewsArticle> articles3 = nb.getArticles(3);
+//		for(NewsArticle na : articles3){
+//			na.setBound(bound);
+//		}
+//		List<NewsArticle> articles4 = nb.getArticles(4);
+		return nb;
+	}
+
+	private NewsBean genNewsContents() {
+		List<NewsBean> visitorsTrackNews = articlesFromString(Constants.VISITORS_TRACK_LIBRARY_PATH);
+		List<NewsBean> scenicBlogsNews = articlesFromString(Constants.SCENIC_BLOGS_LIBRARY_PATH);
+		List<NewsBean> scenicNewsNews = articlesFromString(Constants.SCENIC_NEWS_LIBRARY_PATH);
+		List<NewsBean> travelLawsNews = articlesFromString(Constants.TRAVEL_LAWS_LIBRARY_PATH);
+		int releaseNum = 3;
+		List<NewsArticle> articles = new ArrayList<>();
+		NewsBean nb = new NewsBean("_" + releaseNum, null, articles, releaseNum);
+		nb.pushArticles(typeOfArticles(articlesInReleaseNumber(visitorsTrackNews, releaseNum),NewsType.VISITORS_TRACK),3);
+		nb.pushArticles(typeOfArticles(articlesInReleaseNumber(scenicBlogsNews, releaseNum),NewsType.SCENIC_BLOGS), 3);
+		nb.pushArticles(typeOfArticles(articlesInReleaseNumber(travelLawsNews, releaseNum),NewsType.TRAVEL_LAWS), 4);
+		nb.pushArticles(typeOfArticles(articlesInReleaseNumber(scenicNewsNews, releaseNum),NewsType.SCENIC_NEWS), 2);
+		return nb;
+	}
+
+	private List<NewsArticle> typeOfArticles(List<NewsArticle> list,
+			NewsType type) {
+		for (NewsArticle n : list) {
+			n.setType(type);
+		}
+		return list;
+	}
+	private List<NewsArticle> articlesInReleaseNumber(List<NewsBean> newsBean,
+			int releaseNum) {
+		List<NewsArticle> returnList = null;
+		for (NewsBean bean : newsBean) {
+			if (bean.getReleaseNumber() == releaseNum) {
+				returnList = bean.getArticles();
+				break;
+			}
+		}
+		return returnList;
 	}
 
 	private void articleStatues() {
@@ -53,7 +132,6 @@ public class NewsController {
 		// _Log.i(result + "\n" + department);
 		traceRepeatList(result, names);
 		// traceRepeatList(department,dnames);
-
 	}
 
 	private void traceRepeatList(List<List<Integer>> department,
@@ -83,20 +161,17 @@ public class NewsController {
 						}
 					}
 				}
-				if (sum == 13) {
-					_Log.i("");
-				}
 				author = builder.toString();
 				author = author.replaceAll("-", " ");
-				author = author.replaceAll("°™", " ");
+				author = author.replaceAll("‚Äî", " ");
 				author = author.replace("\r", " ");
 				author = author.replace("\n", " ");
 				author = author.replace("(", "");
 				author = author.replace(")", "");
-				author = author.replace("°™", "");
+				author = author.replace("‚Äî", "");
 				author = author.replace(":", "");
 				author = author.replace("_", "");
-				author = author.replace("£¨", "");
+				author = author.replace("Ôºå", "");
 				author = author.replaceAll("  ", " ");
 				author = author.replaceAll("   ", " ");
 				na.setAuthor(author);
@@ -107,7 +182,7 @@ public class NewsController {
 							.split(" ").length - 1]);
 				} else {
 					na.setDepartment(na.getAuthor());
-					na.setAuthor("ÿ˝√˚");
+					na.setAuthor("‰ΩöÂêç");
 				}
 				na.setDepartment(na.getDepartment().replaceAll(" ", ""));
 				na.setAuthor(na.getAuthor().replaceAll(" ", ""));
@@ -151,11 +226,42 @@ public class NewsController {
 		for (String line : lines) {
 			if (org.jsoup.helper.StringUtil.isNumeric(line.substring(0, 1))
 					&& line.length() < 6) {
-				articleIndexes.add(lineIndexSum);
+				articleIndexes.add(lineIndexSum);// isNumberic(line));
 			}
 			lineIndexSum++;
 		}
 		return articleIndexes;
+	}
+
+	private int isNumberic(String str) {
+		List<Integer> inds = new ArrayList<>();
+		for (int i = 0; i < str.length(); i++) {
+			String s = str.substring(i, i + 1);
+			if (org.jsoup.helper.StringUtil.isNumeric(s)) {
+				inds.add(i);
+			} else {
+				continue;
+			}
+		}
+		if (inds.size() == 1) {
+			return Integer
+					.parseInt(str.substring(inds.get(0), inds.get(0) + 1));
+		} else if (inds.size() == 0) {
+			return 0;
+		} else {
+			int end = inds.get(0);
+			for (int i = 0; i < inds.size() - 1; i++) {
+				int current = inds.get(i);
+				int next = inds.get(i + 1);
+				boolean close = current == next - 1 ? true : false;
+				end = next;
+				if (!close) {
+					break;
+				}
+
+			}
+			return Integer.parseInt(str.substring(inds.get(0), end));
+		}
 	}
 
 	public void continuedFromString() {
@@ -165,7 +271,8 @@ public class NewsController {
 		List<NewsBean> releases = new ArrayList<NewsBean>();
 		for (int i = 0; i < indexesOfEachVersions.size() - 1; i++) {
 			NewsBean newRelease = ensNews(lines, indexesOfEachVersions.get(i),
-					indexesOfEachVersions.get(i + 1), i);
+					indexesOfEachVersions.get(i + 1),
+					isNumberic(lines.get(indexesOfEachVersions.get(i))));
 			releases.add(newRelease);
 		}
 		NewsBean releaseUsing = releases.get(0);
@@ -175,9 +282,7 @@ public class NewsController {
 	}
 
 	public List<NewsBean> articlesFromString(String path) {
-		if (_str == null) {
-			_str = FileUtil.readToString(path);
-		}
+		_str = FileUtil.readToString(path);
 		List<String> lines = StringUtil.arrayToList(_str.split("\n"));
 		// fix format
 		int sum = 0;
@@ -195,7 +300,8 @@ public class NewsController {
 		indexesOfEachVersions.add(lines.size() - 1);
 		for (int i = 0; i < indexesOfEachVersions.size() - 1; i++) {
 			NewsBean newRelease = ensNews(lines, indexesOfEachVersions.get(i),
-					indexesOfEachVersions.get(i + 1), i);
+					indexesOfEachVersions.get(i + 1),
+					isNumberic(lines.get(indexesOfEachVersions.get(i))));
 			releases.add(newRelease);
 		}
 		return releases;
@@ -219,7 +325,7 @@ public class NewsController {
 				articles.add(articleFromVersion(lines.subList(i, j)));
 			}
 		}
-		return new NewsBean("_" + ind, null, articles, ind + "");
+		return new NewsBean("_" + ind, null, articles, ind);
 	}
 
 	private NewsArticle articleFromVersion(List<String> lines) {
@@ -239,6 +345,10 @@ public class NewsController {
 			}
 			title = title + getTitles(line);
 			department = department + getDepartment(line);
+			author = author + getAuthors(line);
+			if (getTitles(line) != "" || getDepartment(line) != "" || getAuthors(line) != "") {
+				continue;
+			}
 			content = content + line;
 		}
 
@@ -249,7 +359,6 @@ public class NewsController {
 				note = content.substring(content.lastIndexOf("("),
 						content.lastIndexOf(")") + 1);
 			}
-			author = department + note;
 			content = content.replace(note, "");
 		}
 		int articlesId = 0;
@@ -313,6 +422,15 @@ public class NewsController {
 
 	private String getTitles(String str) {
 		String tag = "<title>";
+		String result = rowByTag(str, tag);
+		if (result == null) {
+			return "";
+		}
+		return result;
+	}
+
+	private String getAuthors(String str) {
+		String tag = "<author>";
 		String result = rowByTag(str, tag);
 		if (result == null) {
 			return "";

@@ -9,12 +9,25 @@ public class Constants {
 	public final static float CONTENT_WIDTH = 459.36f;
 
 	public final static int ARTICLE_HEIGHT_DEFAULT = 300;
-	public static String PREFERENCE_TEMP_PATH = "D:/我的文档/Adobe Scripts/prefs.txt";
-	public static String XSL_SOURCE_PATH = "/Users/pwl/Desktop/automation/libs.jsx";
-	public static String XSL_DESTINATION_PATH = "/Users/pwl/Documents/Adobe Scripts/sourcex.jsx";
-	public final static String IMG_DESTINATION_PATH = "/Volumes/peiwen/";
-	public final static String TRAVEL_LAWS_LIBRARY_PATH = "C:/Documents and Settings/Administrator/桌面/旅游法学习.txt";
-	public static String NEWS_LIBRARY_PATH = "/Users/pwl/Downloads/automation/sample.txt";
+	public static String PREFERENCE_TEMP_PATH = "/Users/pwl/Documents/Adobe Scripts/prefs.txt";
+	public static String XSL_SOURCE_PATH = "/Users/pwl/git/readNews_remote/readLog/lib.jsx";
+	public static String XSL_DESTINATION_PATH = "/Users/pwl/Documents/Adobe Scripts/tmp.jsx";
+	public static String IMG_DESTINATION_PATH = "/Volumes/peiwen/";
+	private static String AUTOMATION_FOLDER = "/Users/pwl/Downloads/automation/";
+	public static String PAGE_2_3_PATH = AUTOMATION_FOLDER + "news2.psd";
+	public static String PAGE_1_4_PATH = AUTOMATION_FOLDER + "news1.psd";
+	public static String PSD_LIBRARY_PATH = AUTOMATION_FOLDER + "lib.psd";
+	public static String VISITORS_TRACK_LIBRARY_PATH = AUTOMATION_FOLDER + "visitors_track.txt";
+	public static String SCENIC_BLOGS_LIBRARY_PATH = AUTOMATION_FOLDER + "scenic_blogs.txt";
+	public static String SCENIC_NEWS_LIBRARY_PATH = AUTOMATION_FOLDER + "scenic_news.txt";
+	public static String TRAVEL_LAWS_LIBRARY_PATH = AUTOMATION_FOLDER + "travel_laws.txt";
+	public static String NEWS_LIBRARY_PATH = AUTOMATION_FOLDER + "sample.txt";
+	public static String VISITORS_TRACK_PSD_GROUP = "文化研究";
+	public static String SCENIC_BLOGS_PSD_GROUP = "博客珏山";
+	public static String SCENIC_NEWS_PSD_GROUP = "景区快讯";
+	public static String TRAVEL_LAWS_PSD_GROUP = "旅游法的学习";
+	public static String TRAVEL_LINKS_PSD_GROUP = "旅游链接";
+	public static String I_SPEAK_PSD_GROUP = "我来说两句";
 	static{
 		if (SystemTool.getOSName().indexOf("windows") != -1) {
 			XSL_SOURCE_PATH = "C:\\Documents and Settings\\Administrator\\git\\readNews_remote\\readLog\\lib.jsx";

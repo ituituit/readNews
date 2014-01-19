@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
+import java.io.Reader;
+import java.io.Writer;
 import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -50,11 +53,16 @@ public class FileUtil {
 	}
 
 	public static void write(String filePath, String content) {
-		BufferedWriter bw = null;
+		OutputStreamWriter bw = null;
 		
 		try {
 			// 鏍规嵁鏂囦欢璺緞鍒涘缓缂撳啿杈撳嚭娴�
-			bw = new BufferedWriter(new FileWriter(filePath));
+			
+			bw = new OutputStreamWriter(new FileOutputStream(filePath),"utf-16");
+//			if(utf8){
+//				bw = new OutputStreamWriter(new FileOutputStream(filePath),"UTF-8");
+//				
+//			}
 			// 灏嗗唴�?�瑰啓鍏ユ枃浠朵�?
 			bw.write(content);
 		} catch (Exception e) {
@@ -200,13 +208,17 @@ public class FileUtil {
 		}
 		return c;
 	}
-
-	public static String readToString(String tmpFile) {
+	public static String readToString(String tmpFile){
+		return readToString(tmpFile,false);
+	}
+	public static String readToString(String tmpFile,boolean utf8) {
 		try {
 			StringBuffer sbFile = new StringBuffer();
-			InputStreamReader in = new InputStreamReader(new FileInputStream(tmpFile), "UTF-8");
-
-//			FileReader in = new FileReader(tmpFile);
+			Reader in = new FileReader(tmpFile);
+			if (utf8) {
+				in = new InputStreamReader(
+						new FileInputStream(tmpFile), "UTF-8");
+			}
 			char[] buffer = new char[4096];
 			int len;
 			sbFile = new StringBuffer();

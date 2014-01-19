@@ -10,13 +10,13 @@ public class VoBean {
 
 	public VoBean(String PreferenceStr) {
 		function = PreferenceStr.substring(PreferenceStr.indexOf(":") + 1,
-				PreferenceStr.indexOf("\n"));
+				PreferenceStr.indexOf("\r"));
 		PreferenceStr = PreferenceStr
-				.substring(PreferenceStr.indexOf("\n") + 1);
+				.substring(PreferenceStr.indexOf("\r") + 1);
 		names = PreferenceStr.substring(PreferenceStr.indexOf(":") + 1,
-				PreferenceStr.indexOf("\n"));
+				PreferenceStr.indexOf("\r"));
 		PreferenceStr = PreferenceStr
-				.substring(PreferenceStr.indexOf("\n") + 1);
+				.substring(PreferenceStr.indexOf("\r") + 1);
 		values = PreferenceStr.substring(PreferenceStr.indexOf(":") + 1);
 	}
 

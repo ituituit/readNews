@@ -14,10 +14,10 @@ import com.cheesemobile.util._Log;
 
 public class JSXController {
 
-	private static int timeOut = 5000;
+	private static int timeOut = 50000;
 	private static int timePassed = 0;
 	private static int timedelay = 100;
-	private static String _lastPreferenceStr;
+	private static String _lastPreferenceStr = "";
 
 	private static void alert(StringBuilder sb) {
 		sb.append("alert(\"123321\")");
@@ -28,7 +28,7 @@ public class JSXController {
 		StringBuilder stringOfArray = new StringBuilder();
 		stringOfArray.append("[");
 		for (String str : list) {
-			stringOfArray.append("\"" + str + "\",");
+			stringOfArray.append("\"\"\"" + str + "\"\"\",");
 		}
 		stringOfArray.deleteCharAt(stringOfArray.length() - 1);
 		stringOfArray.append("]");
@@ -60,7 +60,7 @@ public class JSXController {
 					}
 					if (preferenceFileExists()) {
 						String str = FileUtil
-								.readToString("D:/ÎÒµÄÎÄµµ/Adobe Scripts/prefs.txt");
+								.readToString(Constants.PREFERENCE_TEMP_PATH,true);
 						_lastPreferenceStr = str;
 						delPreferenceFile();
 					}
@@ -91,7 +91,7 @@ public class JSXController {
 			delPreferenceFile();
 			String destDir = Constants.XSL_DESTINATION_PATH;
 			String srcDir = Constants.XSL_SOURCE_PATH;
-			String str = FileUtil.readToString(srcDir);
+			String str = FileUtil.readToString(srcDir,true);
 			str = str.substring(str.indexOf("\r"));
 			StringBuilder sb = new StringBuilder();
 			sb.append("#target photoshop");
@@ -132,7 +132,7 @@ public class JSXController {
 		delPreferenceFile();
 		String destDir = Constants.XSL_DESTINATION_PATH;
 		String srcDir = Constants.XSL_SOURCE_PATH;
-		String str = FileUtil.readToString(srcDir);
+		String str = FileUtil.readToString(srcDir,true);
 		str = str.substring(str.indexOf("\r"));
 		StringBuilder sb = new StringBuilder();
 		sb.append("#target photoshop");
