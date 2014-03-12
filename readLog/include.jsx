@@ -1,0 +1,1 @@
+#target photoshop#include "/Users/pwl/git/readNews_remote/readLog/libText.jsx"#include "/Users/pwl/git/readNews_remote/readLog/ExportLayerCoordinatesToXML.jsx"var _scriptPath= "/Users/pwl/Documents/Adobe Scripts/"#include "/Users/pwl/git/readNews_remote/readLog/libc.jsx"

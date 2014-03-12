@@ -1,0 +1,1 @@
+#target photoshop#include "/Users/pwl/git/readNews_remote/readLog/include.jsx"collegeInfo("newXML.xml")$.write("ok")
