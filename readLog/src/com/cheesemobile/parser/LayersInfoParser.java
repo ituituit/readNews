@@ -73,16 +73,18 @@ public class LayersInfoParser {
 		}
 		_Log.i(list + "");
 	}
-
+	
 	public List<String> namesInLayer(String fullName) {
 		List<LayerInfoBean> indexByName = list.indexByName(fullName);
 		List<String> returnVal = new ArrayList<String>();
 		for (LayerInfoBean bean : indexByName) {
-			if (bean.getName().equals("")) {// add self's name
+			if (bean.getName().equals("")) {
 				List<String> nl = bean.getNamesList();
 				returnVal.add(nl.get(nl.size() - 1));
 			} else {
-				returnVal.add(bean.getName());
+				if(bean.getName().indexOf("/") == -1){//no group add self's name
+					returnVal.add(bean.getName());
+				}
 			}
 		}
 		return returnVal;
@@ -187,5 +189,9 @@ public class LayersInfoParser {
 			}
 		}
 		list.remove(indexByName.get(0));
+	}
+
+	public void changeName(String newName) {
+		
 	}
 }

@@ -44,7 +44,19 @@ traverseLayers = function(doc, ftn, reverse) {
 // create a string to hold the data
 var str ="";
 
-
+function genFullName(layer){
+    var parentNames = new Array()
+    var obj = layer
+    while(obj.parent){
+        parentNames.push(obj.name)
+        obj = obj.parent
+    }
+    var fullname =""
+    for(var i = parentNames.length - 2; i >= 0; i--){
+        fullname +=  "/" + parentNames[i]
+    }
+    return fullname
+}
 // now a function to collect the data
 function exportBounds(doc, layer, i) {
     var isVisible = layer.visible;

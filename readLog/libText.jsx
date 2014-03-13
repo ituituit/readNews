@@ -1,5 +1,4 @@
-﻿
-function arrayIndex(array,content){
+﻿function arrayIndex(array,content){
     for(var i =0; i < array.length; i++){
         if(array[i].indexOf (content,0) == 0 && array[i].length == content.length){
             return i;
@@ -7,6 +6,7 @@ function arrayIndex(array,content){
     }
     return -1
 }    
+
 function textDirection(direction){
     be = direction.toString()
     ba = be.substr (be.indexOf(".",0) + 1,100)
@@ -31,7 +31,6 @@ var idsetd = charIDToTypeID( "setd" );
     var idVrtc = charIDToTypeID( strJust );
     desc1897.putEnumerated( idT, idOrnt, idVrtc );
 executeAction( idsetd, desc1897, DialogModes.NO );
-
 }
 function idHard(){
     // =======================================================
@@ -58,8 +57,6 @@ var idsetd = charIDToTypeID( "setd" );
     var idparagraphStyle = stringIDToTypeID( "paragraphStyle" );
     desc1875.putObject( idT, idparagraphStyle, desc1876 );
 executeAction( idsetd, desc1875, DialogModes.NO );
-
-
 }
 function textJustify(justification){
     be = justification.toString()
@@ -216,6 +213,34 @@ executeAction( idsetd, desc1241, DialogModes.NO );
 
 }
 
+function mojiZume(mojiZume){
+// =======================================================
+var idsetd = charIDToTypeID( "setd" );
+    var desc3206 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref1087 = new ActionReference();
+        var idPrpr = charIDToTypeID( "Prpr" );
+        var idTxtS = charIDToTypeID( "TxtS" );
+        ref1087.putProperty( idPrpr, idTxtS );
+        var idTxLr = charIDToTypeID( "TxLr" );
+        var idOrdn = charIDToTypeID( "Ordn" );
+        var idTrgt = charIDToTypeID( "Trgt" );
+        ref1087.putEnumerated( idTxLr, idOrdn, idTrgt );
+    desc3206.putReference( idnull, ref1087 );
+    var idT = charIDToTypeID( "T   " );
+        var desc3207 = new ActionDescriptor();
+        var idtextOverrideFeatureName = stringIDToTypeID( "textOverrideFeatureName" );
+        desc3207.putInteger( idtextOverrideFeatureName, 808466224 );
+        var idtypeStyleOperationType = stringIDToTypeID( "typeStyleOperationType" );
+        desc3207.putInteger( idtypeStyleOperationType, 3 );
+        var idmojiZume = stringIDToTypeID( "mojiZume" );
+        desc3207.putDouble( idmojiZume, 0.600000 );
+    var idTxtS = charIDToTypeID( "TxtS" );
+    desc3206.putObject( idT, idTxtS, desc3207 );
+executeAction( idsetd, desc3206, DialogModes.NO );
+
+
+}
 function kaiti(content,points){
 // =======================================================
 var idslct = charIDToTypeID( "slct" );
@@ -284,7 +309,7 @@ var idMk = charIDToTypeID( "Mk  " );
         var idAnSm = charIDToTypeID( "AnSm" );
         desc1795.putEnumerated( idAntA, idAnnt, idAnSm );
         
-              //>>shape
+        //>>shape
         var idtextShape = stringIDToTypeID( "textShape" );
             var list97 = new ActionList();
                 var desc535 = new ActionDescriptor();

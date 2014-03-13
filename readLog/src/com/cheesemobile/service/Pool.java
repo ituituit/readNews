@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import com.cheesemobile.domain.NewsLine;
 import com.cheesemobile.domain.PixelDataBean;
 import com.cheesemobile.domain.Point;
 import com.cheesemobile.domain.Rectangle;
@@ -22,7 +23,7 @@ public class Pool {
 		super();
 		this.placesRects = placesRects;
 		this.containerRect = containerRect;
-		if(placesRects.size() == 1){
+		if (placesRects.size() == 1) {
 			placesRects.remove(0);
 			this.placesRects.add(containerRect);
 			return;
@@ -30,29 +31,30 @@ public class Pool {
 		scaleSquare();
 		fixCracks();
 	}
-	
-	
 
-//	private void setPlacesRects(List<Point> placesPoints) {
-//		if (placesRects == null) {
-//			placesRects = new ArrayList<>();
-//		}
-//		for (Point p : placesPoints) {
-//			Rectangle rect = new Rectangle(p.x, p.y, 1, 1);
-//			placesRects.add(rect);
-//		}
-//	}
+	// private void setPlacesRects(List<Point> placesPoints) {
+	// if (placesRects == null) {
+	// placesRects = new ArrayList<>();
+	// }
+	// for (Point p : placesPoints) {
+	// Rectangle rect = new Rectangle(p.x, p.y, 1, 1);
+	// placesRects.add(rect);
+	// }
+	// }
 
 	private void fixCracks() {
+		 containerRect.scale(Constants.RULER_1);
 		List<Rectangle> lines = ShotNewsUtil.genLines(placesRects,
 				containerRect);
+		 containerRect.scale(-Constants.RULER_1);
 		this.lines = lines;
-		ShotNewsUtil.print(placesRects, containerRect);
+//		ShotNewsUtil.print(placesRects, containerRect);
 		for (Rectangle rectangle : placesRects) {
-			rectangle.attachLine(ShotNewsUtil.linepointFromRect(lines));
+			rectangle.attachLine(ShotNewsUtil.linepointFromRect(lines),
+					Constants.RULER_1);// just can invoke once
+			_Log.i("attach one line");
 		}
-		 ShotNewsUtil.print(placesRects, containerRect);
-		 ShotNewsUtil.print(placesRects, containerRect);
+		ShotNewsUtil.print(placesRects, containerRect);
 	}
 
 	private void scaleSquare() {
@@ -74,7 +76,7 @@ public class Pool {
 				if (passed.contains(rect)) {
 					continue;
 				}
-				rect.scale(2);
+				rect.scale(1);
 			}
 		}
 		for (Rectangle rect : placesRects) {
@@ -87,8 +89,6 @@ public class Pool {
 	public List<Rectangle> getPlacesRects() {
 		return placesRects;
 	}
-
-
 
 	public List<Rectangle> getLines() {
 		return lines;

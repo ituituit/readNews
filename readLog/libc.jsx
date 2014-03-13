@@ -325,6 +325,7 @@ function covertPercent(obj_width){
     _image_width = app.activeDocument.width
     return _image_width/obj_width * 100 / _image_width
 }
+
 function moveTo(obj,x,y){
     bound = obj.bounds
     obj.translate(-bound[0] + x, -bound[1] + y)  
@@ -341,6 +342,7 @@ function nameFromFullName(arrString){
     arr = arrString.split("/")
     return arr[arr.length - 1]
 }
+
 function objIndex(arrString){
     if(arrString.indexOf("/") == 0){
         arrString = arrString.substring (1, arrString.length)
@@ -370,10 +372,10 @@ function select(name){
  
 
 function selectBound(arrs){
-    left = arrs[0]
-    top = arrs[1]
-    right = arrs[2]
-    bottom = arrs[3]
+    left = eval(arrs[0])
+    top = eval(arrs[1])
+    right = eval(arrs[2])
+    bottom = eval(arrs[3])
 var idsetd = charIDToTypeID( "setd" );
     var desc86 = new ActionDescriptor();
     var idnull = charIDToTypeID( "null" );
@@ -448,7 +450,6 @@ function bounds(parentname,ind){
     return targetObj.bounds;
 }
 
-
 function dumplicate(params){
     group = params[0];
     changedText = "dumplicated_object"
@@ -461,6 +462,7 @@ function dumplicate(params){
     newObj.name = changedText;
     app.activeDocument.activeLayer = newObj
 }
+
 function dumplicateExtendPsd(params){
     fileName = params[0];
     destName = params[1];
@@ -551,10 +553,12 @@ grabInformationsToXML(_scriptPath + name)
 function makePathSelectArea(params){
     var sa = new SelectArea()
     contentBound = new Array()
-    contentBound.push( params[0])
-    contentBound.push( params[1])
-    contentBound.push( params[2])
-    contentBound.push( params[3])
+    contentBound.push( eval(params[0]))
+    contentBound.push( eval(params[1]))
+    contentBound.push( eval(params[2]))
+    contentBound.push( eval(params[3]))
+    contentBound[1] += 5
+    contentBound[3] += 500
     textObjName = params[4]
     objIndex(textObjName)
     textObj = app.activeDocument.activeLayer
@@ -586,7 +590,11 @@ fontType(from.font)
 fontSize(from.size)
 textJustify(from.justification)
 firstLineIndent(from.size * 2)
-leading(from.useAutoLeading,from.leading)
+if(from.useAutoLeading){
+    leading(from.useAutoLeading,0)
+}else{
+    leading(from.useAutoLeading,from.leading)
+}
 idHard()
 to.contents = from.contents
 /*
@@ -648,7 +656,6 @@ function setText(params){
     text = params[1]
     objIndex(textName) 
     app.activeDocument.activeLayer.textItem.contents = text
-   
 }
 
 function objIndexJSX(params){
@@ -658,3 +665,10 @@ function objIndexJSX(params){
 function deleteLayerJSX(params){
     deleteLayer(params[0])
 }
+
+function manuPath(masklayer){
+    textObj = app.activeDocument.activeLayer
+    array = [textObj.bounds[0],textObj.bounds[1],textObj.bounds[2],textObj.bounds[3],genFullName(textObj),masklayer]
+    makePathSelectArea(array)
+}
+

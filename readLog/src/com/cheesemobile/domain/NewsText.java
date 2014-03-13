@@ -10,8 +10,9 @@ import com.cheesemobile.service.news.NewsController.NewsType;
 
 public class NewsText extends BoundNewsObject implements MovementsInterface,
 		Serializable {
-	private List<String> assoicatedObjNames = new ArrayList<>();
+	private List<String> assoicatedObjNames;
 	private String text;
+	private String title;
 
 	public NewsText(int id, NewsType type, String text) {
 		super(id, type);
@@ -19,7 +20,7 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 	}
 
 	public NewsText(String fullName) {
-		super(fullName,NewsType.TEXT);
+		super(fullName, NewsType.TEXT);
 	}
 
 	private void applyPath(Rectangle bound) {
@@ -35,11 +36,11 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 
 	@Override
 	protected boolean existsLayer() {
-		boolean val =  super.existsLayer();
+		boolean val = super.existsLayer();
 		refreshText(text);
 		return val;
 	}
-	
+
 	public void refreshText(String text) {
 		JSXController.getInstance().invoke("setText", getFullName(), text);
 	}
@@ -47,19 +48,24 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 	@Override
 	public void added(NewsStyle parent, int toInd) {
 		Rectangle rectangle = parent.getPlacesPointsRects().get(toInd);
-		List<String> foreigns = parent.getForeigns();
-//		for (String fullName : foreigns) {
-//			NewsImage newsImage = new NewsImage(fullName);
-//			Rectangle one = newsImage.getBound().attachMove(rectangle);
-//		//	Rectangle attachMove = one.attachMove(rectangle);
-//			newsImage.setBound(one);
-//		}
+		List<String> foreigns = parent.typeInLayer(NewsType.FOREIGN);
+		List<String> images = parent.typeInLayer(NewsType.IMAGE);
+		assoicatedObjNames = new ArrayList<>();
 		assoicatedObjNames.addAll(foreigns);
+		assoicatedObjNames.addAll(images);
 		applyPath(rectangle);
+		parent.addStaticText(title);
+		parent.updateStaticTexts();
 	}
 
 	@Override
 	public void scaleToFit(Rectangle rect) {
 	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	
 
 }

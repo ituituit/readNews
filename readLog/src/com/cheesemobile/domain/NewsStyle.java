@@ -13,6 +13,7 @@ import com.cheesemobile.util._Log;
 public class NewsStyle extends BoundNewsObject {
 	private List<Rectangle> placePointsRects;
 	private List<Rectangle> placePointsLines;
+	private Rectangle _container;
 	private List<String> staticTexts;
 	private List<BoundNewsObject> childs = new ArrayList<>();
 	private boolean hasBackground = false;
@@ -55,6 +56,7 @@ public class NewsStyle extends BoundNewsObject {
 			ind++;
 		}
 	}
+	
 	private void setSplitLines() {
 		NewsLine newsLine = new NewsLine(this.getFullName(), placePointsLines);
 	}
@@ -77,12 +79,12 @@ public class NewsStyle extends BoundNewsObject {
 	}
 
 	public void addAll(List<BoundNewsObject> list) {
-		Rectangle container = placesPointsBackgroundRect();
-		if(container == null){
-			container = getBound();
+		_container = placesPointsBackgroundRect();
+		if(_container == null){
+			_container = getBound();
 		}
 		if (hasBackground) {
-			container.scale(-Constants.RULER_1);
+			_container.scale(-Constants.RULER_1);
 		}
 		List<Integer> notExists = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -119,7 +121,7 @@ public class NewsStyle extends BoundNewsObject {
 				newList.add(rect);// ÎÄ±¾µÄrect
 			}
 		}
-		enlargePlacesPointsRects(newList, container);
+		enlargePlacesPointsRects(newList, _container);
 
 		for (int i = 0; i < newList.size(); i++) {
 			get(i).move(get(i).getBound().getPoints()[0],
@@ -166,6 +168,7 @@ public class NewsStyle extends BoundNewsObject {
 		if (hasSplitLines) {
 			this.setSplitLines();
 		}
+		attachForeigns();
 	}
 
 	public int size() {
@@ -188,14 +191,16 @@ public class NewsStyle extends BoundNewsObject {
 	public void enlargePlacesPointsRects(List<Rectangle> list,
 			Rectangle contentBound) {
 		for (Rectangle rect : list) {
-			float level = 0;
+			int level = 0;
 			if (rect.getWidth() < rect.getHeight()) {
-				level = rect.getWidth() / 2 + 1;
+				level = (int) Math.floor((rect.getWidth() - 1) / 2);
 			} else {
-				level = rect.getHeight() / 2 + 1;
+				level = (int) Math.floor((rect.getHeight() - 1) / 2);
 			}
 			rect.scale(-level);
+			rect.scale(2);
 		}
+		
 		Pool pool = new Pool(list, contentBound);
 		placePointsRects = pool.getPlacesRects();
 		placePointsLines = pool.getLines();
@@ -215,10 +220,8 @@ public class NewsStyle extends BoundNewsObject {
 
 	private Rectangle placesPointsBackgroundRect(){
 		Rectangle bound = null;
-		List<Rectangle> rects = new ArrayList<Rectangle>();
 		List<String> list = LayersInfoParser.getInstance().namesInLayer(
 				this.getFullName() + "/places");
-		String background = null;
 		for (String string : list) {
 			if(string.contains(NewsType.BACKGROUND.toString())){
 				bound = LayersInfoParser.getInstance().bound(
@@ -266,5 +269,15 @@ public class NewsStyle extends BoundNewsObject {
 
 	public List<String> getForeigns() {
 		return typeInLayer(NewsType.FOREIGN);
+	}
+	
+	public void attachForeigns(){
+		List<String> foreigns = getForeigns();
+		for (String fullName : foreigns) {
+			NewsImage newsImage = new NewsImage(fullName);
+			Rectangle one = newsImage.getBound().attachMove(_container);
+		//	Rectangle attachMove = one.attachMove(rectangle);
+			newsImage.setBound(one);
+		}
 	}
 }

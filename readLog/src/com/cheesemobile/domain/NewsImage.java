@@ -45,8 +45,7 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface, Se
 	
 	@Override
 	public void scaleToFit(Rectangle rect) {
-		Rectangle bound2 = this.getBound();
-//		bound2.scale((rect.getWidth() - bound2.getWidth())/2);
+		Rectangle bound2 = new Rectangle();
 		bound2.setX(rect.getX());
 		bound2.setY(rect.getY());
 		bound2.setWidth(rect.getWidth());
@@ -57,9 +56,12 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface, Se
 
 	@Override
 	public void added(NewsStyle parent, int toInd) {
-		
+		scaleToFit(new Rectangle(getBound().getX(),getBound().getY(),640,400));
 	}
 
+	public void refresh(){
+		changeImage(_imagePath);
+	}
 	public void changeImage(String path) {
 		this._imagePath = path;
 		Rectangle rect = this.getBound();
