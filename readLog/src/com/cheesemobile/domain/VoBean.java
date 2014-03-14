@@ -7,8 +7,11 @@ public class VoBean {
 	private String function;
 	private String names;
 	private String values;
-
+	private enum Status{ERROR,FINISHED};
+	private Status status = Status.FINISHED;
 	public VoBean(String PreferenceStr) {
+		PreferenceStr = PreferenceStr
+				.substring(PreferenceStr.indexOf("\r") + 2);
 		function = PreferenceStr.substring(PreferenceStr.indexOf(":") + 1,
 				PreferenceStr.indexOf("\r"));
 		PreferenceStr = PreferenceStr
@@ -17,7 +20,11 @@ public class VoBean {
 				PreferenceStr.indexOf("\r"));
 		PreferenceStr = PreferenceStr
 				.substring(PreferenceStr.indexOf("\r") + 1);
-		values = PreferenceStr.substring(PreferenceStr.indexOf(":") + 1);
+		values = PreferenceStr.substring(PreferenceStr.indexOf(":") + 1,
+				PreferenceStr.indexOf("\r"));
+		if(values.indexOf("error") != -1){
+			status = Status.ERROR;
+		}
 	}
 
 	public VoBean(String function, String names, String values) {
@@ -36,6 +43,9 @@ public class VoBean {
 	}
 
 	public String getNames() {
+		if(status == Status.ERROR){
+			return null;
+		}
 		return names;
 	}
 
@@ -44,16 +54,22 @@ public class VoBean {
 	}
 
 	public String getValues() {
+		if(status == Status.ERROR){
+			return null;
+		}
 		return values;
 	}
 
 	public String[] getValuesList() {
-		String[] strs = values.split(",");
-		for (int i = 0; i < strs.length; i++) {
-			String str = strs[i];
-			str = str.replace("pt", "");
-			strs[i] = str;
+		if(status == Status.ERROR){
+			return null;
 		}
+		String[] strs = values.split(",");
+		// for (int i = 0; i < strs.length; i++) {
+		// String str = strs[i];
+		// str = str.replace("pt", "");
+		// strs[i] = str;
+		// }
 		return strs;
 	}
 
@@ -66,5 +82,9 @@ public class VoBean {
 		return "VoBean [function=" + function + ", names=" + names
 				+ ", values=" + values + "]";
 	}
-
+	public VoBean(){
+		this.function = "null";
+		this.names = "[null]";
+		this.values = "[null]";
+	}
 }

@@ -36,7 +36,7 @@ public class LayersInfoParser {
 	private static LayersInfoParser instance;
 
 	private LayersInfoParser() {
-		parse(Constants.PREFERENCE_XML_PATH,list);
+		parse(Constants.PREFERENCE_XML_PATH, list);
 		parse(Constants.PREFERENCE_LIB_XML_PATH, lib);
 	}
 
@@ -59,7 +59,7 @@ public class LayersInfoParser {
 			LayerInfoBean bean = new LayerInfoBean();
 			bean.setFullName(element.attr("name"));
 			_Log.i(bean.getFullName());
-//			bean.setName(element.ownText());
+			// bean.setName(element.ownText());
 			String pos = element.attr("position");
 			String[] point = pos.split(",");
 			Rectangle bound = new Rectangle();
@@ -73,16 +73,17 @@ public class LayersInfoParser {
 		}
 		_Log.i(list + "");
 	}
-	
+
 	public List<String> namesInLayer(String fullName) {
 		List<LayerInfoBean> indexByName = list.indexByName(fullName);
 		List<String> returnVal = new ArrayList<String>();
 		for (LayerInfoBean bean : indexByName) {
-			if (bean.getName().equals("")) {
+			if (bean.getName().equals("")) {// add self's name
 				List<String> nl = bean.getNamesList();
 				returnVal.add(nl.get(nl.size() - 1));
 			} else {
-				if(bean.getName().indexOf("/") == -1){//no group add self's name
+				if (bean.getName().indexOf("/") != -1) {//skip group
+				} else {
 					returnVal.add(bean.getName());
 				}
 			}
@@ -131,16 +132,16 @@ public class LayersInfoParser {
 	public void importImage(String path, String tempName) {
 		int width = 0;
 		int height = 0;
-//		try {
-//			Iterator readers = ImageIO.getImageReadersByFormatName("psd");
-//			ImageReader reader = (ImageReader) readers.next();
-//			ImageInputStream iis = ImageIO.createImageInputStream(path);
-//			reader.setInput(iis, true);
-//			width = reader.getWidth(0);
-//			height = reader.getHeight(0);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// Iterator readers = ImageIO.getImageReadersByFormatName("psd");
+		// ImageReader reader = (ImageReader) readers.next();
+		// ImageInputStream iis = ImageIO.createImageInputStream(path);
+		// reader.setInput(iis, true);
+		// width = reader.getWidth(0);
+		// height = reader.getHeight(0);
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 		LayerInfoBean bean = new LayerInfoBean();
 		bean.setFullName(tempName);
 		bean.setRect(new Rectangle(0, 0, width, height));
@@ -162,9 +163,9 @@ public class LayersInfoParser {
 		list.addAll(newIndexByName);
 	}
 
-	public void applyMask(String fullName,Rectangle maskRect){
+	public void applyMask(String fullName, Rectangle maskRect) {
 		List<LayerInfoBean> indexByName = list.indexByName(fullName);
-		if(indexByName.size() != 1){
+		if (indexByName.size() != 1) {
 			try {
 				throw new Exception();
 			} catch (Exception e) {
@@ -173,15 +174,15 @@ public class LayersInfoParser {
 		}
 		indexByName.get(0).setRect(maskRect);
 	}
-	
+
 	public void dumplicateFromLib(String inLibName, String newName) {
 		dumplicate(inLibName, newName, lib);
 	}
-	
-	public void deleteLayer(String fullName){
-		JSXController.getInstance().invoke("deleteLayerJSX", fullName);		
+
+	public void deleteLayer(String fullName) {
+		JSXController.getInstance().invoke("deleteLayerJSX", fullName);
 		List<LayerInfoBean> indexByName = list.indexByName(fullName);
-		if(indexByName.size() != 1){
+		if (indexByName.size() != 1) {
 			try {
 				throw new Exception();
 			} catch (Exception e) {
@@ -189,9 +190,5 @@ public class LayersInfoParser {
 			}
 		}
 		list.remove(indexByName.get(0));
-	}
-
-	public void changeName(String newName) {
-		
 	}
 }

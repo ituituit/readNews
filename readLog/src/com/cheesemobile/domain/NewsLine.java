@@ -16,16 +16,13 @@ public class NewsLine extends NewsStyle implements MovementsInterface {
 		super(-1, NewsType.SPLIT_LINES, parentName);
 		linesGroup = spread(placePointsLines);
 		for (int i = 0; i < linesGroup.size(); i++) {
-			linesGroup.get(i).remove(0);
-			linesGroup.get(i).remove(linesGroup.get(i).size() - 1);
-			
 			int ind = 0;
 			NewsType rowType = NewsType.ROW;
 			if(i == 1){
 				rowType = NewsType.COW;
 			}
 			for (Rectangle rectangle : linesGroup.get(i)) {
-				NewsImage newsImage = new NewsImage(ind++,rowType) {
+				NewsImage newsImage = new NewsImage(ind++,rowType,"") {
 					protected String dumplicateNew() {
 						JSXController.getInstance().invoke(
 								"dumplicate",
@@ -76,7 +73,7 @@ public class NewsLine extends NewsStyle implements MovementsInterface {
 		this.addAll2(imagesRow2);
 	}
 
-	public static List<List<Rectangle>> spread(List<Rectangle> lines) {
+	private static List<List<Rectangle>> spread(List<Rectangle> lines) {
 		List<Rectangle> row = new ArrayList<Rectangle>();
 		List<Rectangle> cow = new ArrayList<Rectangle>();
 		for (Rectangle rectangle : lines) {

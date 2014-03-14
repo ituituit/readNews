@@ -922,21 +922,21 @@ public final class Vector3f implements Cloneable, java.io.Serializable {
 		throw new IllegalArgumentException("index must be either 0, 1 or 2");
 	}
 
-	public static int[] calculateDistance(Point point, Point linea, Point lineb) {
+	public static float[] calculateDistance(Point point, Point linea, Point lineb) {
 		return calculateDistance(new Vector3f(linea.x,
 				linea.y, 0), new Vector3f(lineb.x, lineb.y, 0),new Vector3f(point.x, point.y, 0));
 	}
 
-	private static int[] calculateDistance(Vector3f A, Vector3f B, Vector3f C) {
-		int[] dxy = new int[3];
+	private static float[] calculateDistance(Vector3f A, Vector3f B, Vector3f C) {
+		float[] dxy = new float[3];
 		// 计算点到直线的距离
 		Vector3f abDir = A.subtract(B).normalize(); // AB
 		Vector3f cb = C.subtract(B);
 		float length = abDir.dot(cb); // cb在ab上的投影
 		Vector3f result = abDir.mult(length).add(B); // 计算出垂直交点
 //		System.out.println("ths cross point :" + result);
-		dxy[1] = (int) result.x;
-		dxy[2] = (int) result.y;
+		dxy[1] = result.x;
+		dxy[2] = result.y;
 		float distance_a = (float) C.distance(A);
 		float distance_b = (float) C.distance(B);
 		float distance_result = (float) C.distance(result);
@@ -948,10 +948,10 @@ public final class Vector3f implements Cloneable, java.io.Serializable {
 		Vector3f br = B.subtractLocal(result);
 		if (ar.dot(br) > 0) { // 小于零，则交点在AB内部
 //			System.out.println("交点在AB外部" + min);
-			dxy[0] = (int) min;
+			dxy[0] =  min;
 		}
 //		System.out.println("交点在AB内部" + moreMin);
-		dxy[0] = (int) moreMin;
+		dxy[0] =  moreMin;
 		return dxy;
 	}
 }

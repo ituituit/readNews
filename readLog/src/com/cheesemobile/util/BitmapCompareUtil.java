@@ -171,7 +171,7 @@ public class BitmapCompareUtil {
 		}
 		try {
 			ImageIO.write(bi, "bmp", new File(
-					"/Users/pwl/Desktop/sample.bmp"));
+					com.cheesemobile.service.Constants.PIC_OUTPUT_PATH + "sample.bmp"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

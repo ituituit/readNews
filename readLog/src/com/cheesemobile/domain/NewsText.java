@@ -10,13 +10,23 @@ import com.cheesemobile.service.news.NewsController.NewsType;
 
 public class NewsText extends BoundNewsObject implements MovementsInterface,
 		Serializable {
-	private List<String> assoicatedObjNames;
+	private List<String> assoicatedObjNames = new ArrayList<>();
 	private String text;
 	private String title;
 
 	public NewsText(int id, NewsType type, String text) {
 		super(id, type);
+		init(text, "");
+	}
+
+	public NewsText(int id, NewsType type, String text, String title) {
+		super(id, type);
+		init(text, title);
+	}
+
+	private void init(String text, String title) {
 		this.text = text;
+		this.title = title;
 	}
 
 	public NewsText(String fullName) {
@@ -48,24 +58,15 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 	@Override
 	public void added(NewsStyle parent, int toInd) {
 		Rectangle rectangle = parent.getPlacesPointsRects().get(toInd);
-		List<String> foreigns = parent.typeInLayer(NewsType.FOREIGN);
-		List<String> images = parent.typeInLayer(NewsType.IMAGE);
-		assoicatedObjNames = new ArrayList<>();
+		List<String> foreigns = parent.getForeigns();
+
 		assoicatedObjNames.addAll(foreigns);
-		assoicatedObjNames.addAll(images);
 		applyPath(rectangle);
-		parent.addStaticText(title);
-		parent.updateStaticTexts();
+		parent.addStaticText(this.title);
 	}
 
 	@Override
 	public void scaleToFit(Rectangle rect) {
 	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	
 
 }

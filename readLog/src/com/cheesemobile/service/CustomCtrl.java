@@ -283,8 +283,132 @@ public class CustomCtrl {
 		groups.add(group);
 		return groups;
 	}
-
 	
+	public static List<PixelDataBean> mergeCloseLines(List<PixelDataBean> list) {
+		List<List<PixelDataBean>> closeLines = closeLines(list);
+		List<PixelDataBean> returnVal = new ArrayList<>();
+		for(List<PixelDataBean> bean: closeLines){
+			PixelDataBean first = bean.get(0);
+			PixelDataBean last = bean.get(bean.size() - 1);
+			if(last.getMinx() > first.getMinx()){
+				first.setWidth(last.getMinx() + last.getWidth() - first.getMinx());
+			}
+			if(last.getMiny() > first.getMiny()){
+				first.setHeight(last.getMiny() + last.getHeight() - first.getMiny());
+			}
+			returnVal.add(first);
+		}
+		return returnVal;
+	}
+
+	public static List<List<PixelDataBean>> splitByShorter(
+			List<List<PixelDataBean>> groups) {
+		List<Integer[]> indexs = new ArrayList<Integer[]>();
+		boolean startToggle = true;
+		int start = 0;
+		for (int i = 0; i < groups.size() - 1; i++) {
+			int cur = mostLongLine(groups.get(i));
+			int nex = mostLongLine(groups.get(i+1));
+//			_Log.i("" + cur + " " + nex + " haha"+i);
+			if (cur < nex) {
+				start = i+1;
+				startToggle = true;
+			}
+			int end = 0;
+			if (startToggle &&(cur > nex || i == groups.size() - 2)) {
+				startToggle = false;
+				end = i+2;
+				Integer[] ints = { start, end };
+				indexs.add(ints);
+				_Log.i(indexs.toString());
+			} else {
+				continue;
+			}
+
+		}
+		
+		if(indexs.size() == 0){
+			Integer[] ints = {0,groups.size()};
+			indexs.add(ints);
+		}
+		List<List<PixelDataBean>> returnValues = new ArrayList<List<PixelDataBean>>();
+		for (int i = 0; i < indexs.size(); i++) {
+			List<List<PixelDataBean>> subList = groups.subList(indexs.get(i)[0], indexs.get(i)[1]);
+			List<PixelDataBean> group = new ArrayList<>(); 
+			for(int j = 0; j < subList.size(); j++){
+				group.add(longerBean(subList.get(j)));
+			}
+			returnValues.add(group);
+		}
+		return returnValues;
+	}
+	
+	private static int mostLongLine(List<PixelDataBean> beans){
+		int max = 0;
+		for(PixelDataBean bean : beans){
+			if(max < bean.getHeight()){
+				max = bean.getHeight();
+			}
+			if(max < bean.getWidth()){
+				max = bean.getWidth();
+			}
+		}
+		return max;
+	}
+	
+	private static PixelDataBean longerBean(List<PixelDataBean> beans){
+		int max = 0;
+		for(PixelDataBean bean : beans){
+			if(max < bean.getHeight()){
+				max = bean.getHeight();
+			}
+			if(max < bean.getWidth()){
+				max = bean.getWidth();
+			}
+		}
+		for(PixelDataBean bean : beans){
+			if(bean.getWidth() == max || bean.getHeight() == max){
+				return bean;
+			}
+		}
+		return null;
+	}
+	
+	private static List<List<PixelDataBean>> split(List<PixelDataBean> groupi) {
+		List<Integer[]> indexs = new ArrayList<Integer[]>();
+		for (int i = 0; i < groupi.size() - 1; i++) {
+			PixelDataBean cur = groupi.get(i);
+			PixelDataBean nex = groupi.get(i + 1);
+			int start = 0;
+			if (i != 0) {
+				if (cur.getWidth() < nex.getWidth()
+						|| cur.getHeight() < nex.getHeight()) {
+					start = i;
+				} else {
+					continue;
+				}
+			}
+			int end = 0;
+			if (cur.getWidth() > nex.getWidth()
+					|| cur.getHeight() > nex.getHeight()) {
+				end = i;
+				Integer[] ints = { start, end };
+				indexs.add(ints);
+			} else {
+				continue;
+			}
+		}
+		if(indexs.size() == 0){
+			Integer[] ints = {0,groupi.size()};
+			indexs.add(ints);
+		}
+		List<List<PixelDataBean>> returnValues = new ArrayList<List<PixelDataBean>>();
+		for (int i = 0; i < indexs.size(); i++) {
+			returnValues.add(groupi.subList(indexs.get(i)[0], indexs.get(i)[1]));
+		}
+		return returnValues;
+	}
+
 	// private List<Integer> getBlankLines(int[][] srcData,boolean isVertical){
 	// int width = BitmapCompareUtil.listWidth(srcData);
 	// int height = BitmapCompareUtil.listHeight(srcData);

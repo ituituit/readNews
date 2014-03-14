@@ -21,6 +21,70 @@ public class StringUtil {
 		return list;
 	}
 	
+	public static float floatInString(String str){
+		List<Integer> inds = new ArrayList<>();
+		for (int i = 0; i < str.length(); i++) {
+			String s = str.substring(i, i + 1);
+			if (org.jsoup.helper.StringUtil.isNumeric(s) || s.equals(".") || s.equals("-")) {
+				inds.add(i);
+			} else {
+				continue;
+			}
+		}
+		if (inds.size() == 1) {
+			return Integer
+					.parseInt(str.substring(inds.get(0), inds.get(0) + 1));
+		} else if (inds.size() == 0) {
+			return 0;
+		} else {
+			int end = inds.get(0);
+			for (int i = 0; i < inds.size() - 1; i++) {
+				int current = inds.get(i);
+				int next = inds.get(i + 1);
+				boolean close = current == next - 1 ? true : false;
+				end = next;
+				if (!close) {
+					break;
+				}
+
+			}
+			String str1 = str.substring(inds.get(0), end + 1);
+			return Float.parseFloat(str1);
+		}
+	}
+	
+	public static int intInString(String str) {
+		List<Integer> inds = new ArrayList<>();
+		for (int i = 0; i < str.length(); i++) {
+			String s = str.substring(i, i + 1);
+			if (org.jsoup.helper.StringUtil.isNumeric(s)) {
+				inds.add(i);
+			} else {
+				continue;
+			}
+		}
+		if (inds.size() == 1) {
+			return Integer
+					.parseInt(str.substring(inds.get(0), inds.get(0) + 1));
+		} else if (inds.size() == 0) {
+			return 0;
+		} else {
+			int end = inds.get(0);
+			for (int i = 0; i < inds.size() - 1; i++) {
+				int current = inds.get(i);
+				int next = inds.get(i + 1);
+				boolean close = current == next - 1 ? true : false;
+				end = next;
+				if (!close) {
+					break;
+				}
+
+			}
+			return Integer.parseInt(str.substring(inds.get(0), end));
+		}
+	}
+
+	
 	public static Date StringToDate(String str, int type) {
 		Date date = new Date();
 		SimpleDateFormat sdf = null;

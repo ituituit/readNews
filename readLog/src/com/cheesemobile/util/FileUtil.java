@@ -211,14 +211,20 @@ public class FileUtil {
 	public static String readToString(String tmpFile){
 		return readToString(tmpFile,false);
 	}
-	public static String readToString(String tmpFile,boolean utf8) {
+	
+	public static String readToString(String tmpFile,boolean utf8){
+		if(utf8){
+		return readToString(tmpFile,"UTF-8");
+		}else{
+			return readToString(tmpFile,"default");
+		}
+	}
+	
+	public static String readToString(String tmpFile,String utf8) {
 		try {
 			StringBuffer sbFile = new StringBuffer();
-			Reader in = new FileReader(tmpFile);
-			if (utf8) {
-				in = new InputStreamReader(
-						new FileInputStream(tmpFile), "UTF-8");
-			}
+			Reader in = new InputStreamReader(
+						new FileInputStream(tmpFile), utf8);
 			char[] buffer = new char[4096];
 			int len;
 			sbFile = new StringBuffer();

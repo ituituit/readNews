@@ -13,25 +13,34 @@ import com.cheesemobile.util._Log;
 public class NewsStyle extends BoundNewsObject {
 	private List<Rectangle> placePointsRects;
 	private List<Rectangle> placePointsLines;
-	private Rectangle _container;
 	private List<String> staticTexts;
 	private List<BoundNewsObject> childs = new ArrayList<>();
 	private boolean hasBackground = false;
 	private boolean hasSplitLines = false;
-
+	private Rectangle _container;
 	public NewsStyle(int ind, NewsType type, String parentName) {
 		super(ind, type, parentName);
 	}
 
-	public void addStaticText(String str){
-		if(staticTexts == null){
+	public void addStaticText(String str) {
+		if (staticTexts == null) {
 			staticTexts = new ArrayList();
 		}
 		this.staticTexts.add(str);
 	}
-	
+
+	private void attatchForeigns() {
+		List<String> foreigns = this.getForeigns();
+		for (String fullName : foreigns) {
+			NewsImage newsImage = new NewsImage(fullName);
+			Rectangle one = newsImage.getBound().attachMove(_container);
+			// Rectangle attachMove = one.attachMove(rectangle);
+			newsImage.setBound(one);
+		}
+	}
+
 	@Override
-	public void added(NewsStyle parent, int toInd) {
+	public void added(NewsStyle parent, int toInd) {////no childs add allafter has childs
 		if (typeInLayer(NewsType.BACKGROUND).size() != 0) {
 			this.setBackground(parent.getPlacesPointsRects().get(toInd));
 			hasBackground = true;
@@ -39,10 +48,9 @@ public class NewsStyle extends BoundNewsObject {
 		if (typeInLayer(NewsType.SPLIT_LINES).size() != 0) {
 			hasSplitLines = true;
 		}
-		updateStaticTexts();
 	}
 
-	public void updateStaticTexts(){
+	public void updateStaticTexts() {
 		List<String> typeInLayer = typeInLayer(NewsType.STATIC_TEXT);
 		int ind = 0;
 		for (String string : typeInLayer) {
@@ -56,7 +64,7 @@ public class NewsStyle extends BoundNewsObject {
 			ind++;
 		}
 	}
-	
+
 	private void setSplitLines() {
 		NewsLine newsLine = new NewsLine(this.getFullName(), placePointsLines);
 	}
@@ -80,12 +88,13 @@ public class NewsStyle extends BoundNewsObject {
 
 	public void addAll(List<BoundNewsObject> list) {
 		_container = placesPointsBackgroundRect();
-		if(_container == null){
+		if (_container == null) {
 			_container = getBound();
 		}
 		if (hasBackground) {
 			_container.scale(-Constants.RULER_1);
 		}
+		addAllBefore();
 		List<Integer> notExists = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			childs.add(list.get(i));
@@ -135,6 +144,10 @@ public class NewsStyle extends BoundNewsObject {
 		addAllAfter();
 	}
 
+	private void addAllBefore() {//inited _container only
+		attatchForeigns();
+	}
+
 	// public void add(BoundNewsObject e) {
 	// childs.add(e);
 	// if (!_objInited) {
@@ -168,7 +181,7 @@ public class NewsStyle extends BoundNewsObject {
 		if (hasSplitLines) {
 			this.setSplitLines();
 		}
-		attachForeigns();
+		updateStaticTexts();
 	}
 
 	public int size() {
@@ -191,16 +204,14 @@ public class NewsStyle extends BoundNewsObject {
 	public void enlargePlacesPointsRects(List<Rectangle> list,
 			Rectangle contentBound) {
 		for (Rectangle rect : list) {
-			int level = 0;
+			float level = 0;
 			if (rect.getWidth() < rect.getHeight()) {
-				level = (int) Math.floor((rect.getWidth() - 1) / 2);
+				level = rect.getWidth() / 2 + 1;
 			} else {
-				level = (int) Math.floor((rect.getHeight() - 1) / 2);
+				level = rect.getHeight() / 2 + 1;
 			}
 			rect.scale(-level);
-			rect.scale(2);
 		}
-		
 		Pool pool = new Pool(list, contentBound);
 		placePointsRects = pool.getPlacesRects();
 		placePointsLines = pool.getLines();
@@ -218,24 +229,26 @@ public class NewsStyle extends BoundNewsObject {
 		return null;
 	}
 
-	private Rectangle placesPointsBackgroundRect(){
+	private Rectangle placesPointsBackgroundRect() {
 		Rectangle bound = null;
+		List<Rectangle> rects = new ArrayList<Rectangle>();
 		List<String> list = LayersInfoParser.getInstance().namesInLayer(
 				this.getFullName() + "/places");
+		String background = null;
 		for (String string : list) {
-			if(string.contains(NewsType.BACKGROUND.toString())){
+			if (string.contains(NewsType.BACKGROUND.toString())) {
 				bound = LayersInfoParser.getInstance().bound(
 						this.getFullName() + "/places" + "/" + string);
 			}
 		}
 		return bound;
 	}
-	
+
 	private List<Rectangle> placesPointsRectsFromPlaces() {
 		List<Rectangle> rects = new ArrayList<Rectangle>();
 		List<String> list = LayersInfoParser.getInstance().namesInLayer(
 				this.getFullName() + "/places");
-		if(placesPointsBackgroundRect() != null){
+		if (placesPointsBackgroundRect() != null) {
 			list.remove(NewsType.BACKGROUND.toString());
 		}
 		if (list.size() == 0) {
@@ -269,15 +282,5 @@ public class NewsStyle extends BoundNewsObject {
 
 	public List<String> getForeigns() {
 		return typeInLayer(NewsType.FOREIGN);
-	}
-	
-	public void attachForeigns(){
-		List<String> foreigns = getForeigns();
-		for (String fullName : foreigns) {
-			NewsImage newsImage = new NewsImage(fullName);
-			Rectangle one = newsImage.getBound().attachMove(_container);
-		//	Rectangle attachMove = one.attachMove(rectangle);
-			newsImage.setBound(one);
-		}
 	}
 }

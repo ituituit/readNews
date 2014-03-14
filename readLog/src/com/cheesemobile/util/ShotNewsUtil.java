@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import sun.security.action.GetLongAction;
+
 import com.cheesemobile.domain.PixelDataBean;
 import com.cheesemobile.domain.Point;
 import com.cheesemobile.domain.Rectangle;
@@ -78,6 +80,29 @@ public class ShotNewsUtil {
 		return rectsReturn;
 	}
 
+	public static List<Point[]> linepointFromRect(
+			List<Rectangle> rects) {
+		List<Point[]> pointsList = new ArrayList<Point[]>();
+		for (Rectangle bean : rects) {
+			Point p1 = new Point(0, 0);
+			Point p2 = new Point(0, 0);
+			if (bean.getWidth() > bean.getHeight()) {// horizontal
+				p1 = new Point(bean.getX(), bean.getY()
+						- bean.getHeight() / 2);
+				p2 = new Point(bean.getX() + bean.getWidth(), bean.getY()
+						- bean.getHeight() / 2);
+			} else {
+				p1 = new Point(bean.getX() - bean.getWidth() / 2,
+						bean.getY());
+				p2 = new Point(bean.getX() - bean.getWidth() / 2,
+						bean.getY() + bean.getHeight());
+			}
+			Point[] ps = { p1, p2 };
+			pointsList.add(ps);
+		}
+		return pointsList;
+	}
+	
 	private static List<Point[]> linepointFromPixelDataBean(
 			List<PixelDataBean> beans) {
 		List<Point[]> pointsList = new ArrayList<Point[]>();
@@ -142,12 +167,11 @@ public class ShotNewsUtil {
 		return sampleData;
 	}
 
-	private static int[][] drawRects(Rectangle contentRect,
-			List<Rectangle> rects) {
+	public static int[][] drawRects(Rectangle contentRect, List<Rectangle> rects) {
 		int x = (int) contentRect.getX();
 		int y = (int) contentRect.getY();
-		int width = (int) contentRect.getWidth() - x + 2;
-		int height = (int) contentRect.getHeight() - y + 2;
+		int width = contentRect.getWidthInt();
+		int height = contentRect.getHeightInt();
 		int[][] gridData = new int[width][height];
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -190,6 +214,45 @@ public class ShotNewsUtil {
 		_Log.i(pPaths + "");
 	}
 
+	public static List<Rectangle> genLines(List<Rectangle> rects, Rectangle contentRect) {
+		PixelDataBean srcData = new PixelDataBean(drawRects(contentRect, rects));
+		List<List<PixelDataBean>> groups = new ArrayList<>();
+		for (int i = 0; i < srcData.getWidth(); i++) {
+			groups.add(pixelDataLengthOfLineVertical(srcData,
+					i, Direction.VERTICAL));
+		}
+		List<PixelDataBean> lineResult = delShorterCloseLine(groups);
+		lineResult.get(0).setMinx(0);
+		PixelDataBean last = lineResult.get(lineResult.size() - 1);
+		last.setMinx((int)(srcData.getWidth()));
+
+		List<List<PixelDataBean>> groupsH = new ArrayList<>();
+		for (int i = 0; i < srcData.getHeight(); i+= 2) {
+			List<PixelDataBean> pixelDataLengthOfLineVertical = pixelDataLengthOfLineVertical(srcData,
+					i, Direction.HORTICAL);
+			groupsH.add(pixelDataLengthOfLineVertical);
+		}
+		lineResult.addAll(delShorterCloseLine(groupsH));
+		List<Point[]> pointFromPixelDataBean = ensLines(lineResult);
+		for(Point[] r : pointFromPixelDataBean){
+			r[0].x += contentRect.getX() - 1;
+			r[0].y += contentRect.getY() - 1;
+			r[1].x += contentRect.getX() - 1;
+			r[1].y += contentRect.getY() - 1;
+		}
+		
+		List<Rectangle> lineRects = rectsOfLinePoint(pointFromPixelDataBean);
+//		print(lineRects, contentRect);
+		return lineRects;
+	}
+	
+	public static void print(List<Rectangle> placesRects,
+			Rectangle containerRect) {
+		PixelDataBean srcData = new PixelDataBean(ShotNewsUtil.drawRects(
+				containerRect, placesRects));
+		BitmapCompareUtil.outputPx(srcData.getSourceData());
+	}
+
 	private static void genNewsRects() {
 		List<Rectangle> rects = ensBounds(textBounds);
 		Rectangle contentRect = getContentRect(rects);
@@ -197,7 +260,7 @@ public class ShotNewsUtil {
 		PixelDataBean lineHorizontal = linePic(rects, Direction.VERTICAL);
 		List<java.awt.Point> points = CustomCtrl.linearInData(lineHorizontal,
 				srcData, true);
-		List<PixelDataBean> list = new ArrayList<PixelDataBean>();
+		List<List<PixelDataBean> groups = new ArrayList<PixelDataBean>();
 		for (java.awt.Point point : points) {
 			list.add(pixelDataLengthOfLineVertical(lineHorizontal, srcData,
 					point.x, Direction.VERTICAL));
@@ -246,22 +309,71 @@ public class ShotNewsUtil {
 		ensLines(delShorterCloseLine);
 	}
 
-	private static void ensLines(List<PixelDataBean> delShorterCloseLine) {
+	public enum ReleativePlace{
+		LEFT,TOP,RIGHT,BUTTOM;
+		public boolean fit(Point from, Point to) {
+			if(from == to){
+				return false;
+			}
+			switch (this) {
+			case LEFT:
+				return to.x < from.x && to.y == from.y;
+			case TOP:
+				return to.y < from.y && to.x == from.x;
+			case RIGHT:
+				return to.x > from.x && to.y == from.y;
+			case BUTTOM:
+				return to.y > from.y && to.x == from.x;
+			default:
+				break;
+			}
+			return false;
+		}
+	};
+	public static Point[] lineToLines(Point[] linePoint,List<Point[]> containers,ReleativePlace releativePlace){
+			float[] dxy1 = { Integer.MAX_VALUE, linePoint[0].x, linePoint[0].y };
+			float[] dxy2 = { Integer.MAX_VALUE, linePoint[1].x, linePoint[1].y };
+			for (Point[] linePoint2 : containers) {
+				float[] dxy1t = Vector3f.calculateDistance(linePoint[0],
+						linePoint2[0], linePoint2[1]);
+				float[] dxy2t = Vector3f.calculateDistance(linePoint[1],
+						linePoint2[0], linePoint2[1]);
+				Point cross1t = new Point(dxy1t[1], dxy1t[2]);
+				Point cross2t = new Point(dxy2t[1], dxy2t[2]);
+				if(releativePlace.fit(linePoint[0],cross1t) && dxy1[0] > dxy1t[0]){
+					dxy1 = dxy1t;
+				}
+
+				if (releativePlace.fit(linePoint[1],cross2t) && dxy2[0] > dxy2t[0]) {
+					dxy2 = dxy2t;
+				}
+			}
+			// _Log.i("min:" + dxy1[0] + " " + dxy2[0]);
+			if (dxy1[0] != 0) {
+				Point[] linePointNew = { new Point(dxy1[1], dxy1[2]),
+						linePoint[1] };
+				linePoint = linePointNew;
+			}
+			if (dxy2[0] != 0) {
+				Point[] linePointNew = { linePoint[0],
+						new Point(dxy2[1], dxy2[2]) };
+				linePoint = linePointNew;
+			}
+			return linePoint;
+	}
+	private static List<Point[]> ensLines(List<PixelDataBean> delShorterCloseLine) {
 		List<Point[]> pointFromPixelDataBean = linepointFromPixelDataBean(delShorterCloseLine);
 		for (int i = 0; i < pointFromPixelDataBean.size(); i++) {
 			Point[] linePoint = pointFromPixelDataBean.get(i);
-			int[] dxy1 = { Integer.MAX_VALUE, 0, 0 };
-			int[] dxy2 = { Integer.MAX_VALUE, 0, 0 };
+			float[] dxy1 = { Integer.MAX_VALUE, 0, 0 };
+			float[] dxy2 = { Integer.MAX_VALUE, 0, 0 };
 			for (Point[] linePoint2 : pointFromPixelDataBean) {
-				if (linePoint2[0].x == linePoint[0].x
-						&& linePoint2[1].x == linePoint[1].x
-						&& linePoint2[0].y == linePoint[0].y
-						&& linePoint2[1].y == linePoint[1].y) {
+				if (linePoint2 ==linePoint) {
 					continue;
 				}
-				int[] dxy1t = Vector3f.calculateDistance(linePoint[0],
+				float[] dxy1t = Vector3f.calculateDistance(linePoint[0],
 						linePoint2[0], linePoint2[1]);
-				int[] dxy2t = Vector3f.calculateDistance(linePoint[1],
+				float[] dxy2t = Vector3f.calculateDistance(linePoint[1],
 						linePoint2[0], linePoint2[1]);
 				if (dxy1[0] > dxy1t[0]) {
 					dxy1 = dxy1t;
@@ -282,24 +394,21 @@ public class ShotNewsUtil {
 				pointFromPixelDataBean.set(i, linePointNew);
 			}
 		}
-		List<Rectangle> rectsOfLinePoint = rectsOfLinePoint(pointFromPixelDataBean);
-		for (int i = 0; i < rectsOfLinePoint.size(); i++) {
-			Rectangle r = rectsOfLinePoint.get(i);
-			r.scale(1);
-		}
-		BitmapCompareUtil.outputPx(drawRects(getContentRect(rectsOfLinePoint),
-				rectsOfLinePoint));
-
-		System.out.print("[");
-		for (Rectangle r : rectsOfLinePoint) {
-			if (r.orientation() == Direction.HORTICAL) {
-				System.out.print("\"\"\"cow_sample\"\"\",");
-			} else {
-				System.out.print("\"\"\"row_sample\"\"\",");
-			}
-		}
-		System.out.print("]\n");
-		_Log.i("" + rectsOfLinePoint);
+		return pointFromPixelDataBean;
+		
+//		BitmapCompareUtil.outputPx(drawRects(getContentRect(rectsOfLinePoint),
+//				rectsOfLinePoint));
+//
+//		System.out.print("[");
+//		for (Rectangle r : rectsOfLinePoint) {
+//			if (r.orientation() == Direction.HORTICAL) {
+//				System.out.print("\"\"\"cow_sample\"\"\",");
+//			} else {
+//				System.out.print("\"\"\"row_sample\"\"\",");
+//			}
+//		}
+//		System.out.print("]\n");
+//		_Log.i("" + rectsOfLinePoint);
 
 	}
 
@@ -431,9 +540,39 @@ public class ShotNewsUtil {
 		return linePic(len, direction);
 	}
 
+//	private static List<PixelDataBean> delShorterCloseLine(
+//			List<PixelDataBean> list) {
+//		List<List<PixelDataBean>> closeLines = CustomCtrl.closeLines(list);
+//		closeLines = CustomCtrl.splitByShorter(closeLines);
+//		List<PixelDataBean> delCloseLine = new ArrayList<PixelDataBean>();
+//		for (List<PixelDataBean> closeLine : closeLines) {
+//			PixelDataBean maxLenLine = closeLine.get(0);
+//			for (PixelDataBean line : closeLine) {
+//				if (line.getWidth() == maxLenLine.getWidth()
+//						&& line.getHeight() > maxLenLine.getHeight()) {
+//					maxLenLine = line;
+//				}
+//				if (line.getHeight() == maxLenLine.getHeight()
+//						&& line.getWidth() > maxLenLine.getWidth()) {
+//					maxLenLine = line;
+//				}
+//			}
+//			List<PixelDataBean> maxLenLines = new ArrayList<>();
+//			for (int i = 0; i < closeLine.size(); i++) {
+//				if (closeLine.get(i).getWidth() == maxLenLine.getWidth()
+//						&& closeLine.get(i).getHeight() == maxLenLine
+//								.getHeight()) {
+//					maxLenLines.add(closeLine.get(i));
+//				}
+//			}
+//			delCloseLine.add(maxLenLines.get(maxLenLines.size() / 2));
+//		}
+//		return delCloseLine;
+//	}
+
 	private static List<PixelDataBean> delShorterCloseLine(
-			List<PixelDataBean> list) {
-		List<List<PixelDataBean>> closeLines = CustomCtrl.closeLines(list);
+			List<List<PixelDataBean>> groups) {
+		List<List<PixelDataBean>> closeLines  = CustomCtrl.splitByShorter(groups);
 		List<PixelDataBean> delCloseLine = new ArrayList<PixelDataBean>();
 		for (List<PixelDataBean> closeLine : closeLines) {
 			PixelDataBean maxLenLine = closeLine.get(0);
@@ -447,11 +586,19 @@ public class ShotNewsUtil {
 					maxLenLine = line;
 				}
 			}
-			delCloseLine.add(maxLenLine);
+			List<PixelDataBean> maxLenLines = new ArrayList<>();
+			for (int i = 0; i < closeLine.size(); i++) {
+				if (closeLine.get(i).getWidth() == maxLenLine.getWidth()
+						&& closeLine.get(i).getHeight() == maxLenLine
+								.getHeight()) {
+					maxLenLines.add(closeLine.get(i));
+				}
+			}
+			delCloseLine.add(maxLenLines.get(maxLenLines.size() / 2));
 		}
 		return delCloseLine;
 	}
-
+	
 	private static PixelDataBean pixelDataLengthOfLineVertical(
 			PixelDataBean line, PixelDataBean srcData, int pos,
 			Direction direction) {
@@ -508,6 +655,45 @@ public class ShotNewsUtil {
 		return rect;
 	}
 
+	private static List<PixelDataBean> pixelDataLengthOfLineVertical(PixelDataBean srcData, int pos,
+			Direction direction) {
+//		_Log.i("start pixelDataLengthOfLineVertical");
+		PixelDataBean line = linePic(1, direction);
+		int x = pos;
+		int y = 0;
+		int w = 1;
+		int h = srcData.getHeight();
+		if (direction == Direction.HORTICAL) {
+			x = 0;
+			y = pos;
+			w = srcData.getWidth();
+			h = 1;
+		}
+
+		PixelDataBean longLine = BitmapCompareUtil
+				.getSubPX(srcData, x, y, w, h);
+		int[] points = BitmapCompareUtil.BigPicInSmallPic(longLine, line,true);
+		if (points == null) {
+			return null;
+		}
+		List<PixelDataBean> pointsBean = new ArrayList<PixelDataBean>();
+		for(int i = 0; i < points.length; i+=2){
+			int px = points[i];
+			int py = points[i+1];
+			if(direction == Direction.HORTICAL){
+				line.setMiny(pos);
+				line.setMinx(px);
+			}else{
+				line.setMinx(pos);
+				line.setMiny(py);
+			}
+			pointsBean.add(new PixelDataBean(line.getSourceData(),line.getMinx(),line.getMiny(),line.getWidth(),line.getHeight()));
+		}
+
+//		_Log.i("end pixelDataLengthOfLineVertical");
+		return CustomCtrl.mergeCloseLines(pointsBean);
+	}
+	
 	/****
 	 * 点到直线的距离***
 	 * 

@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.cheesemobile.service.news.NewsController.NewsType;
 
-public class NewsArticle extends BoundNewsObject {
+public class NewsArticle {
 	private int id;
-	private int page;
+	private int page = -1;
 	private int order;
 	private NewsType type;
 	private Date sendDate;
@@ -17,16 +17,27 @@ public class NewsArticle extends BoundNewsObject {
 	private String title;
 	private List<String> picsUrl;
 
-	public NewsArticle(int id, Date sendDate, String content, String author,
-			String department, String title, List<String> picsUrl) {
+	public NewsArticle(int id, Date sendDate, String content, String pick,
+			String department, String title, List<String> picsUrl,
+			NewsType type, int page) {
 		super();
 		this.id = id;
 		this.sendDate = sendDate;
 		this.content = content;
-		this.author = author;
-		this.department = department;
+		this.author = pick;
+		if (pick.length() < 1 && department.indexOf(" ") != -1) {
+			this.author = department.substring(department.indexOf(" ") + 1);
+			this.department = department.substring(0, department.indexOf(" "));
+		}else{
+			this.department = department;
+		}
+		if (pick.length() > 1) {
+			this.department = "";
+		}
 		this.title = title;
 		this.picsUrl = picsUrl;
+		this.type = type;
+		this.page = page;
 	}
 
 	public int getPage() {
@@ -86,7 +97,37 @@ public class NewsArticle extends BoundNewsObject {
 	}
 
 	public String getContent() {
-		return content;
+		StringBuilder sb = new StringBuilder();
+		sb.append(content);
+		while (sb.lastIndexOf("\r") == sb.length() - 1
+				|| sb.lastIndexOf("\n") == sb.length() - 1
+				|| sb.lastIndexOf(" ") == sb.length() - 1) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		sb.append("(");
+		if (departmentExists()) {
+			sb.append(getDepartment());
+		}
+		sb.append("");
+		if (!getAuthor().equals("")) {
+			if (departmentExists()) {
+				sb.append("¡ª¡ª");
+			}
+			sb.append(getAuthor());
+		}
+		sb.append(")");
+		if (sb.lastIndexOf("()") == sb.length() - "()".length()) {
+			return sb.substring(0, sb.length() - "()".length());
+		}
+		String str = sb.toString().replaceAll("\r", "\\\\r");
+		return str;
+	}
+
+	private boolean departmentExists() {
+		if (getDepartment().length() > 1) {
+			return true;
+		}
+		return false;
 	}
 
 	public void setContent(String content) {
@@ -111,10 +152,11 @@ public class NewsArticle extends BoundNewsObject {
 
 	@Override
 	public String toString() {
-		return "NewsArticle [id=" + id + ", page=" + page + ", order=" + order
-				+ ", type=" + type + ", sendDate=" + sendDate + ", content="
-				+ content + ", author=" + author + ", department=" + department
-				+ ", title=" + title + ", picsUrl=" + picsUrl + "]";
+		return id + " " + page + " " + order + ", type=" + type + ", sendDate="
+				+ sendDate + ", content="
+				+ content.substring(0, content.length() / 10) + "..."
+				+ content.length() + ", author=" + author + ", department="
+				+ department + ", title=" + title + ", pics " + picsUrl + "\n";
 	}
 
 }
