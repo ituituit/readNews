@@ -333,6 +333,9 @@ function moveTo(obj,x,y){
 
 function resize(obj,size){
     bound = obj.bounds
+    if(bound[2] == 0 || bound[3] == 0){
+        return;
+    }
     var width = bound[2] - bound[0];
     var height=  bound[3] - bound[1];
     obj.resize(covertPercent(width)* size[0],covertPercent(height)* size[1],AnchorPosition.TOPLEFT);

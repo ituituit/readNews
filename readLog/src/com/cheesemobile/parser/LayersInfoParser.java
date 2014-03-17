@@ -82,7 +82,7 @@ public class LayersInfoParser {
 				List<String> nl = bean.getNamesList();
 				returnVal.add(nl.get(nl.size() - 1));
 			} else {
-				if (bean.getName().indexOf("/") != -1) {//skip group
+				if (bean.getName().indexOf("/") != -1) {// skip group
 				} else {
 					returnVal.add(bean.getName());
 				}
@@ -105,17 +105,27 @@ public class LayersInfoParser {
 	public void setBound(String fullName, Rectangle from, Rectangle to) {
 		Point place = new Point(from.getX() - to.getX(), from.getY()
 				- to.getY());
-		float percentX = from.getWidth() / to.getWidth();
-		float percentY = from.getHeight() / to.getHeight();
+		float percentX = to.getWidth() / from.getWidth();
+		float percentY = to.getHeight() / from.getHeight();
 		List<LayerInfoBean> indexByName = list.indexByName(fullName);
-		for (LayerInfoBean bean : indexByName) {
-			Rectangle rect = bean.getRect();
+		if (indexByName.size() == 1) {
+			Rectangle rect = indexByName.get(0).getRect();
 			Rectangle newRect = new Rectangle();
 			newRect.setX(rect.getX() - place.x);
 			newRect.setY(rect.getY() - place.y);
-			newRect.setWidth(rect.getWidth());
-			newRect.setHeight(rect.getHeight());
-			bean.setRect(newRect);
+			newRect.setWidth(rect.getWidth() * percentX);
+			newRect.setHeight(rect.getHeight() * percentX);
+			indexByName.get(0).setRect(newRect);
+		} else {
+			for (LayerInfoBean bean : indexByName) {
+				Rectangle rect = bean.getRect();
+				Rectangle newRect = new Rectangle();
+				newRect.setX(rect.getX() - place.x);
+				newRect.setY(rect.getY() - place.y);
+				newRect.setWidth(rect.getWidth());
+				newRect.setHeight(rect.getHeight());
+				bean.setRect(newRect);
+			}
 		}
 	}
 
