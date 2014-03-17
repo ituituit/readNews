@@ -1,13 +1,11 @@
 package com.cheesemobile.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.cheesemobile.parser.LayersInfoParser;
 import com.cheesemobile.service.Constants;
 import com.cheesemobile.service.JSXController;
-import com.cheesemobile.service.Pool;
 import com.cheesemobile.service.news.NewsController.NewsType;
 import com.cheesemobile.util._Log;
 

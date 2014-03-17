@@ -18,6 +18,7 @@ public class NewsStyle extends BoundNewsObject {
 	private boolean hasBackground = false;
 	private boolean hasSplitLines = false;
 	private Rectangle _container;
+
 	public NewsStyle(int ind, NewsType type, String parentName) {
 		super(ind, type, parentName);
 	}
@@ -40,7 +41,8 @@ public class NewsStyle extends BoundNewsObject {
 	}
 
 	@Override
-	public void added(NewsStyle parent, int toInd) {////no childs add allafter has childs
+	public void added(NewsStyle parent, int toInd) {// //no childs add allafter
+													// has childs
 		if (typeInLayer(NewsType.BACKGROUND).size() != 0) {
 			this.setBackground(parent.getPlacesPointsRects().get(toInd));
 			hasBackground = true;
@@ -131,20 +133,19 @@ public class NewsStyle extends BoundNewsObject {
 			}
 		}
 		enlargePlacesPointsRects(newList, _container);
-
 		for (int i = 0; i < newList.size(); i++) {
 			get(i).move(get(i).getBound().getPoints()[0],
 					newList.get(i).getPoints()[0]);
 			get(i).added(this, i);
 		}
-		// for (int i = 0; i < notExists.size(); i++) {
-		// get(i).move(newList.get(notExists.get(i)).getCenter());
-		// get(i).added(this, notExists.get(i));
-		// }
+//		for (int i = 0; i < notExists.size(); i++) {
+//			get(i).move(newList.get(notExists.get(i)).getCenter());
+//			get(i).added(this, notExists.get(i));
+//		}
 		addAllAfter();
 	}
 
-	private void addAllBefore() {//inited _container only
+	private void addAllBefore() {// inited _container only
 		attatchForeigns();
 	}
 
@@ -204,13 +205,13 @@ public class NewsStyle extends BoundNewsObject {
 	public void enlargePlacesPointsRects(List<Rectangle> list,
 			Rectangle contentBound) {
 		for (Rectangle rect : list) {
-			float level = 0;
+			int level;
 			if (rect.getWidth() < rect.getHeight()) {
-				level = rect.getWidth() / 2 + 1;
+				level = (int) Math.floor(rect.getWidth() / 2);
 			} else {
-				level = rect.getHeight() / 2 + 1;
+				level = (int) Math.floor(rect.getHeight() / 2);
 			}
-			rect.scale(-level);
+			rect.scale(-level + 3);
 		}
 		Pool pool = new Pool(list, contentBound);
 		placePointsRects = pool.getPlacesRects();

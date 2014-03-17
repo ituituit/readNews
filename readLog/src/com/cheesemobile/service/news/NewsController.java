@@ -138,11 +138,20 @@ public class NewsController {
 		}
 
 		public static NewsType typeFromString(String type) {
-			if (type.contains("speak")) {
+			if (type.contains("我来说两句")) {
 				return NewsType.I_SPEAK;
 			}
 			if (type.contains("第一版")) {
 				return NewsType.SCENIC_NEWS;
+			}
+			if (type.contains("组")) {
+				return NewsType.GROUP;
+			}
+			
+			for (NewsType iterable_element : NewsType.values()) {
+				if(iterable_element.toString().equals(type)){
+					return iterable_element;
+				}
 			}
 			return null;
 		}
@@ -156,8 +165,8 @@ public class NewsController {
 		// 荣誉证
 		// book(Constants.CUSTOM_LIBRARY_PATH,Constants.CUSTOM_TEXT_LIBRARY_PATH,NewsType.CUSTOM);
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
-		genOthers(5);
-//		genPages(4);
+//		genOthers(5);
+		genPages(5);
 		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;
@@ -233,8 +242,8 @@ public class NewsController {
 		release4.setAll(3, NewsType.SCENIC_BLOGS);
 		release2.getArticles().addAll(release4.getArticles());
 //		release2.expand();// page3
-		release3.expand();//page4
-		// release.expand();//page2
+//		release3.expand();//page4
+		release.expand();//page2
 	}
 
 	private void transformNews(NewsBean articles) {
@@ -538,8 +547,8 @@ public class NewsController {
 			String date = getDate(line);
 			title = title + getTitles(line);
 			department = department + getDepartment(line);
-			pick = getPick(line);
-			if (getImgs(line) != "" ||getDate(line) != "" || getType(line) != ""
+			pick = pick + getPick(line);
+			if (getPage(line) != "" || getImgs(line) != "" ||getDate(line) != "" || getType(line) != ""
 					|| getTitles(line) != "" || getDepartment(line) != ""
 					|| getPick(line) != "") {
 				continue;
@@ -656,7 +665,7 @@ public class NewsController {
 		if (result == null) {
 			return "";
 		}
-		return result;
+		return "摘自" + result;
 	}
 
 	private String getDepartment(String str) {

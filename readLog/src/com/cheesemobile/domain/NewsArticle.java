@@ -99,6 +99,9 @@ public class NewsArticle {
 	public String getContent() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(content);
+		if(content.equals("\r")){
+			return "\r";
+		}
 		while (sb.lastIndexOf("\r") == sb.length() - 1
 				|| sb.lastIndexOf("\n") == sb.length() - 1
 				|| sb.lastIndexOf(" ") == sb.length() - 1) {

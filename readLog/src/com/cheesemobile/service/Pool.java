@@ -79,7 +79,7 @@ public class Pool {
 			}
 		}
 		for (Rectangle rect : placesRects) {
-			rect.scale(-2);
+//			rect.scale(-2);
 			_Log.i("enlarged:" + rect);
 		}
 		_Log.i("end");

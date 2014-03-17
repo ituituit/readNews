@@ -29,7 +29,7 @@ public class NewsBean {
 		NewsStyle _rect3 = new NewsStyle(-1, NewsType.RECT_3, "");
 		NewsStyle _rect4 = new NewsStyle(-1, NewsType.RECT_4, "");
 		NewsStyle[] pagesObj = { _rect1, _rect2, _rect3, _rect4 };
-		for (int i = 0; i < pagesObj.length; i++) {
+		for (int i = 0; i < 1; i++) {
 			List<NewsArticle> thisPage = pageMatched(articles, i + 1);
 			if (thisPage.size() == 0) {
 				continue;
@@ -51,18 +51,21 @@ public class NewsBean {
 				List<NewsStyle> memberGroup = new ArrayList<NewsStyle>();
 				List<List<BoundNewsObject>> memberGroupChilds = new ArrayList<List<BoundNewsObject>>();
 				// List<NewsText> textsObj = new ArrayList<NewsText>();
+				List<NewsImage> images = new ArrayList<>();
 				for (NewsArticle newsArticle : articleList) {
 					String content = newsArticle.getContent();
 					NewsText artText = new NewsText(newsArticle.getOrder(),
-							NewsType.TEXT, content,newsArticle.getTitle());
+							NewsType.TEXT, content, newsArticle.getTitle());
 					List<String> pics = newsArticle.getPicsUrl();
 					if (pics.size() != 0) {
 						List<BoundNewsObject> memberGroupChildCell = new ArrayList<>();
 						NewsStyle style = new NewsStyle(orderInd++,
 								NewsType.GROUP, pagesObj[i].getFullName());
 						for (String string : pics) {
-							NewsImage image = new NewsImage(i, string,style.getFullName());
+							NewsImage image = new NewsImage(i, string,
+									style.getFullName());
 							memberGroupChildCell.add(image);
+							images.add(image);
 						}
 						memberGroup.add(style);
 						memberGroupChildCell.add(artText);
@@ -77,6 +80,9 @@ public class NewsBean {
 				int ind = 0;
 				for (NewsStyle member1 : memberGroup) {
 					member1.addAll(memberGroupChilds.get(ind++));
+				}
+				for (NewsImage newsImage : images) {
+					newsImage.changeImage(newsImage.getPath());
 				}
 			}
 		}

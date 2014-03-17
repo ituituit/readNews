@@ -130,8 +130,6 @@ public class LayersInfoParser {
 	}
 
 	public void importImage(String path, String tempName) {
-		int width = 0;
-		int height = 0;
 		// try {
 		// Iterator readers = ImageIO.getImageReadersByFormatName("psd");
 		// ImageReader reader = (ImageReader) readers.next();
@@ -144,7 +142,7 @@ public class LayersInfoParser {
 		// }
 		LayerInfoBean bean = new LayerInfoBean();
 		bean.setFullName(tempName);
-		bean.setRect(new Rectangle(0, 0, width, height));
+		bean.setRect(new Rectangle(0, 0, 0, 0));
 		list.add(bean);
 	}
 

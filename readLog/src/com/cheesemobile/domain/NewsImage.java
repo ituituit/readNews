@@ -69,4 +69,8 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface, Se
 		moveLayerInto(this.getParentName(), dumplicateNew());
 		scaleToFit(rect);
 	}
+	
+	public String getPath(){
+		return _imagePath;
+	}
 }

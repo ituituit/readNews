@@ -558,7 +558,7 @@ function makePathSelectArea(params){
     contentBound.push( eval(params[2]))
     contentBound.push( eval(params[3]))
     contentBound[1] += 5
-    contentBound[3] += 500
+   // contentBound[3] += 500
     textObjName = params[4]
     objIndex(textObjName)
     textObj = app.activeDocument.activeLayer
@@ -579,7 +579,7 @@ function makePathSelectArea(params){
     app.activeDocument.activeLayer .move(objIndex(textObjName),ElementPlacement.PLACEBEFORE)
     objIndex("tempText")
     copyTextItem(textObj.textItem,active.textItem)
-    setContent(active,textObj.textItem.content)
+    setContent(active,textObj.textItem.contents)
     deleteLayer(textObjName)
     tempText.name = nameFromFullName(textObjName)
 }
