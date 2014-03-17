@@ -1,21 +1,14 @@
 package com.cheesemobile.service.news;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import com.cheesemobile.domain.BoundNewsObject;
 import com.cheesemobile.domain.NewsArticle;
 import com.cheesemobile.domain.NewsBean;
 import com.cheesemobile.domain.NewsBeanArray;
 import com.cheesemobile.domain.NewsImage;
 import com.cheesemobile.domain.NewsStyle;
 import com.cheesemobile.domain.NewsText;
-import com.cheesemobile.domain.Point;
-import com.cheesemobile.domain.Rectangle;
 import com.cheesemobile.service.Constants;
 import com.cheesemobile.service.JSXController;
 import com.cheesemobile.util.FileUtil;
@@ -163,8 +156,8 @@ public class NewsController {
 		// 荣誉证
 		// book(Constants.CUSTOM_LIBRARY_PATH,Constants.CUSTOM_TEXT_LIBRARY_PATH,NewsType.CUSTOM);
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
-//		genOthers(5);
-		genPages(4);
+		genOthers(5);
+//		genPages(4);
 		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;

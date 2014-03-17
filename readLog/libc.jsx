@@ -489,11 +489,11 @@ function moveLayerInto(params){
    app.activeDocument.activeLayer .move(objIndex(dest).layers[0],ElementPlacement.PLACEBEFORE)
 }
 
-function changeText(params){
-    objName = params[0];
-    content = params[1];
-    objIndex(objName).textItem.contents = content
-}
+//function changeText(params){
+//    objName = params[0];
+ //   content = params[1];
+ //   objIndex(objName).textItem.contents = content
+//}
 
 function changeName(params){
     objName = params[0];
@@ -579,8 +579,18 @@ function makePathSelectArea(params){
     app.activeDocument.activeLayer .move(objIndex(textObjName),ElementPlacement.PLACEBEFORE)
     objIndex("tempText")
     copyTextItem(textObj.textItem,active.textItem)
+    setContent(active,textObj.textItem.content)
     deleteLayer(textObjName)
     tempText.name = nameFromFullName(textObjName)
+}
+
+function setContent(dest,srcText){
+    app.activeDocument.activeLayer = dest
+    dest.textItem.contents = srcText
+    tFont = dest.textItem.font;
+
+    fontType("simsun");
+    fontType(tFont);
 }
 
 function copyTextItem(from,to){
@@ -596,7 +606,7 @@ if(from.useAutoLeading){
     leading(from.useAutoLeading,from.leading)
 }
 idHard()
-to.contents = from.contents
+//setContent(to, from.contents)
 /*
 to.alternateLigatures = from.alternateLigatures
 to.antiAliasMethod = from.antiAliasMethod
@@ -654,8 +664,8 @@ to.width = from.width
 function setText(params){
     var textName = params[0]
     text = params[1]
-    objIndex(textName) 
-    app.activeDocument.activeLayer.textItem.contents = text
+    
+    setContent (objIndex(textName), text)
 }
 
 function objIndexJSX(params){
