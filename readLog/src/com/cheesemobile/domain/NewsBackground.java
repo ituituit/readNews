@@ -21,7 +21,7 @@ public class NewsBackground extends NewsStyle implements
 	
 	public NewsBackground(String parentName) {
 		super(-1, NewsType.BACKGROUND,parentName);
-		scalePoint = this.getPlacesPointsRects().get(0).getCenter();
+		scalePoint = this.getBound().getCenter();
 //		List<String> list = JSXController.getInstance().invoke("namesInLayer", this.getFullName());
 		List<String> list = LayersInfoParser.getInstance().namesInLayer(this.getFullName());
 		

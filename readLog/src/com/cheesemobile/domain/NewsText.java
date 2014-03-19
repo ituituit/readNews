@@ -57,7 +57,7 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 
 	@Override
 	public void added(NewsStyle parent, int toInd) {
-		Rectangle rectangle = parent.getPlacesPointsRects().get(toInd);
+		Rectangle rectangle = parent.getChildScaledRects().get(toInd);
 		List<String> foreigns = parent.getForeigns();
 
 		assoicatedObjNames.addAll(foreigns);
@@ -68,5 +68,12 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 	@Override
 	public void scaleToFit(Rectangle rect) {
 	}
-
+	
+	@Override
+	protected boolean canDraw(){
+		if(text  == null){
+			return false;
+		}
+		return super.canDraw();
+	}
 }

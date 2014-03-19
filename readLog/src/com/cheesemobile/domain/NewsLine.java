@@ -22,7 +22,7 @@ public class NewsLine extends NewsStyle implements MovementsInterface {
 				rowType = NewsType.COW;
 			}
 			for (Rectangle rectangle : linesGroup.get(i)) {
-				NewsImage newsImage = new NewsImage(ind++,rowType,"") {
+				NewsImage newsImage = new NewsImage(ind++,rowType) {
 					protected String dumplicateNew() {
 						JSXController.getInstance().invoke(
 								"dumplicate",

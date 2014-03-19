@@ -29,7 +29,7 @@ public class NewsBean {
 		NewsStyle _rect3 = new NewsStyle(-1, NewsType.RECT_3, "");
 		NewsStyle _rect4 = new NewsStyle(-1, NewsType.RECT_4, "");
 		NewsStyle[] pagesObj = { _rect1, _rect2, _rect3, _rect4 };
-		for (int i = 0; i < 1; i++) {
+		for (int i = 1; i < pagesObj.length; i++) {
 			List<NewsArticle> thisPage = pageMatched(articles, i + 1);
 			if (thisPage.size() == 0) {
 				continue;
@@ -61,9 +61,14 @@ public class NewsBean {
 						List<BoundNewsObject> memberGroupChildCell = new ArrayList<>();
 						NewsStyle style = new NewsStyle(orderInd++,
 								NewsType.GROUP, pagesObj[i].getFullName());
+						_Log.i(style.getFullName());
+						int picsInd = 0;
 						for (String string : pics) {
-							NewsImage image = new NewsImage(i, string,
+							NewsImage image = new NewsImage(picsInd++, string,
 									style.getFullName());
+							if(artText.canDraw()){
+								image.toggleForeign();
+							}
 							memberGroupChildCell.add(image);
 							images.add(image);
 						}

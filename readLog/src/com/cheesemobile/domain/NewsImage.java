@@ -3,9 +3,9 @@ package com.cheesemobile.domain;
 import java.io.Serializable;
 
 import com.cheesemobile.parser.LayersInfoParser;
-import com.cheesemobile.service.Constants;
 import com.cheesemobile.service.JSXController;
 import com.cheesemobile.service.news.NewsController.NewsType;
+import com.cheesemobile.util._Log;
 
 public class NewsImage extends BoundNewsObject implements MovementsInterface, Serializable {
 	private static final long serialVersionUID = -6800973055100673960L;
@@ -14,6 +14,8 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface, Se
 	public NewsImage(int id,String imagePath,String parentName) {
 		super(id, NewsType.IMAGE,parentName);
 		_imagePath = imagePath;
+		_Log.i(this.getFullName());
+		
 	}
 
 	public NewsImage(String fullName){
@@ -51,12 +53,13 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface, Se
 		bound2.setWidth(rect.getWidth());
 		bound2.setHeight(0);
 		this.setBound(bound2);
+//		mergeMask();
 		applyMask(rect);
 	}
 
 	@Override
 	public void added(NewsStyle parent, int toInd) {
-		Rectangle rectangle = parent.getPlacesPointsRects().get(toInd);
+		Rectangle rectangle = parent.getChildScaledRects().get(toInd);
 		scaleToFit(rectangle);
 	}
 
@@ -73,4 +76,5 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface, Se
 	public String getPath(){
 		return _imagePath;
 	}
+	
 }

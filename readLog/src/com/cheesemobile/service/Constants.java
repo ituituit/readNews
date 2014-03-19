@@ -1,7 +1,7 @@
 package com.cheesemobile.service;
 
 public class Constants {
-	public final static int RULER_1 = 41 + 3;
+	public final static int RULER_1 = 41 + 2;
 	public final static int NEWS_RULER_2 = 11;
 	public final static float CONTENT_HEIGHT_FIX_VALUE = 100f;
 	public final static float CONTENT_HEIGHT = 999f;

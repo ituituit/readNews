@@ -588,7 +588,6 @@ function makePathSelectArea(params){
 }
 
 function setContent(dest,srcText){
-    app.activeDocument.activeLayer = dest
     dest.textItem.contents = srcText
     tFont = dest.textItem.font;
 
@@ -597,7 +596,7 @@ function setContent(dest,srcText){
 }
 
 function copyTextItem(from,to){
-to.color = from.color
+from.color?to.color = from.color:""
 textDirection(from.direction)
 fontType(from.font)
 fontSize(from.size)
@@ -679,6 +678,8 @@ function deleteLayerJSX(params){
     deleteLayer(params[0])
 }
 
+//$.write("\"" + genFullName(app.activeDocument.activeLayer) + "\"")
+//manuPath("/_rect_2/景区快讯0/正文组1/image0_foreign")
 function manuPath(masklayer){
     textObj = app.activeDocument.activeLayer
     array = [textObj.bounds[0],textObj.bounds[1],textObj.bounds[2],textObj.bounds[3],genFullName(textObj),masklayer]

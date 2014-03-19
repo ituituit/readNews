@@ -17,16 +17,18 @@ public abstract class BoundNewsObject implements Serializable {
 	private NewsBackground background;
 	private String parentName;
 	private String customName = null;
-//	private NewsBean article;
-//	
-//	public NewsBean getArticle() {
-//		return article;
-//	}
-//
-//	public void setArticle(NewsBean article) {
-//		this.article = article;
-//	}
+	private boolean foreign = false;
 
+	public void toggleForeign() {
+		if (!foreign) {
+			this.customName = this.getName() + "_foreign";
+			foreign = true;
+		}
+	}
+
+	public boolean foreign(){
+		return foreign;
+	}
 	public BoundNewsObject(int id, NewsType type) {
 		super();
 		init(id, type, "");
@@ -93,7 +95,7 @@ public abstract class BoundNewsObject implements Serializable {
 			tmpName = dumplicateNew();
 			moveLayerInto(this.getParentName(), tmpName);
 			return false;
-		}else{
+		} else {
 			return true;
 		}
 	}
@@ -164,7 +166,7 @@ public abstract class BoundNewsObject implements Serializable {
 	}
 
 	public String getName() {
-		if(customName != null){
+		if (customName != null) {
 			return customName;
 		}
 		String idStr = id + "";
@@ -181,5 +183,12 @@ public abstract class BoundNewsObject implements Serializable {
 
 	public void setBackground(Rectangle rect) {
 		getBackground().scaleToFit(rect);
+	}
+
+	protected boolean canDraw() {
+//		if (foreign) {
+//			return false;
+//		}
+		return true;
 	}
 }

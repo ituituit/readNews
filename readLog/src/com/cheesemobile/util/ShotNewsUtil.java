@@ -232,7 +232,12 @@ public class ShotNewsUtil {
 					i, Direction.HORTICAL);
 			groupsH.add(pixelDataLengthOfLineVertical);
 		}
-		lineResult.addAll(delShorterCloseLine(groupsH));
+		
+		List<PixelDataBean> lineResultH = delShorterCloseLine(groupsH);
+		lineResultH.get(0).setMiny(0);
+		lineResultH.get(lineResultH.size() - 1).setMiny((int)(srcData.getHeight()));
+		lineResult.addAll(lineResultH);
+		
 		List<Point[]> pointFromPixelDataBean = ensLines(lineResult);
 		for(Point[] r : pointFromPixelDataBean){
 			r[0].x += contentRect.getX() - 1;

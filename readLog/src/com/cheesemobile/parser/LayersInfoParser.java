@@ -83,6 +83,7 @@ public class LayersInfoParser {
 				returnVal.add(nl.get(nl.size() - 1));
 			} else {
 				if (bean.getName().indexOf("/") != -1) {// skip group
+					returnVal.add(bean.getName().split("/")[0]);
 				} else {
 					returnVal.add(bean.getName());
 				}

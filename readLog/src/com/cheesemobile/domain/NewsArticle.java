@@ -100,7 +100,7 @@ public class NewsArticle {
 		StringBuilder sb = new StringBuilder();
 		sb.append(content);
 		if(content.equals("\r")){
-			return "\r";
+			return null;
 		}
 		while (sb.lastIndexOf("\r") == sb.length() - 1
 				|| sb.lastIndexOf("\n") == sb.length() - 1

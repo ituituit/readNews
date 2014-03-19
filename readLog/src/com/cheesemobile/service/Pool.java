@@ -17,14 +17,15 @@ public class Pool {
 	private List<Rectangle> placesRects;
 	private List<Rectangle> lines;
 	private Rectangle containerRect;
-
-	public Pool(List<Rectangle> placesRects, Rectangle containerRect) {
+	private boolean hasSplitLine = true;
+	public Pool(List<Rectangle> placesRects, Rectangle containerRect,boolean hasSplitLine) {
 		super();
 		this.placesRects = placesRects;
 		this.containerRect = containerRect;
+		this.hasSplitLine = hasSplitLine;
 		if(placesRects.size() == 1){
 			placesRects.remove(0);
-			this.placesRects.add(containerRect);
+			placesRects.add(containerRect);
 			return;
 		}
 		scaleSquare();
@@ -44,16 +45,22 @@ public class Pool {
 //	}
 
 	private void fixCracks() {
-		containerRect.scale(Constants.RULER_1);
+		int board = Constants.RULER_1/2;
+		if (hasSplitLine) {
+			board = Constants.RULER_1;
+		}
+		containerRect.scale(board);
 		List<Rectangle> lines = ShotNewsUtil.genLines(placesRects,
 				containerRect);
-		containerRect.scale(-Constants.RULER_1);
+		containerRect.scale(-board);
 		this.lines = lines;
-//		ShotNewsUtil.print(placesRects, containerRect);
+		ShotNewsUtil.print(placesRects, containerRect);
 		for (Rectangle rectangle : placesRects) {
-			rectangle.attachLine(ShotNewsUtil.linepointFromRect(lines),Constants.RULER_1);
+			
+			rectangle.attachLine(ShotNewsUtil.linepointFromRect(lines),board);
 		}
-//		 ShotNewsUtil.print(placesRects, containerRect);
+		 ShotNewsUtil.print(placesRects, containerRect);
+		 _Log.i("containerRect");
 	}
 
 	private void scaleSquare() {
@@ -79,7 +86,7 @@ public class Pool {
 			}
 		}
 		for (Rectangle rect : placesRects) {
-//			rect.scale(-2);
+			rect.scale(-1);
 			_Log.i("enlarged:" + rect);
 		}
 		_Log.i("end");
