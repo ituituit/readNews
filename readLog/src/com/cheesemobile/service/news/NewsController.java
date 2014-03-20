@@ -242,8 +242,8 @@ public class NewsController {
 		release4.setAll(3, NewsType.SCENIC_BLOGS);
 		release2.getArticles().addAll(release4.getArticles());
 //		release2.expand();// page3
-//		release3.expand();//page4
-		release.expand();//page2
+		release3.expand();//page4
+//		release.expand();//page2
 	}
 
 	private void transformNews(NewsBean articles) {
