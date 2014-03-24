@@ -13,7 +13,7 @@ public abstract class BoundNewsObject implements Serializable {
 	private static final long serialVersionUID = -4076032451122684376L;
 	private NewsType type;
 	private int id;
-	private Rectangle bound;
+//	private Rectangle bound;
 	private NewsBackground background;
 	private String parentName;
 	private String customName = null;
@@ -144,17 +144,21 @@ public abstract class BoundNewsObject implements Serializable {
 
 	public void setBound(Rectangle bound) {
 		_Log.i("setBound:" + bound);
+		bound.setX((int)bound.getX());
+		bound.setY((int)bound.getY());
+		bound.setWidth((int)bound.getWidth());
+		bound.setHeight((int)bound.getHeight());
 		JSXController.getInstance().invoke("setBounds", this.getFullName(),
 				"" + bound.getX(), "" + bound.getY(), "" + bound.getRight(),
 				"" + bound.getButtom());
-		LayersInfoParser.getInstance().setBound(this.getFullName(), this.bound,
+		LayersInfoParser.getInstance().setBound(this.getFullName(), this.getBound(),
 				bound);
-		this.bound = bound;
+//		this.bound = bound;
 	}
 
 	public Rectangle getBound() {
-		bound = LayersInfoParser.getInstance().bound(this.getFullName());
-		return bound;
+//		bound = 
+		return LayersInfoParser.getInstance().bound(this.getFullName());
 	}
 
 	public String getFullName() {

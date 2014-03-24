@@ -43,6 +43,7 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface, Se
 	public void mergeMask(){
 		JSXController.getInstance().invoke("applyMask", "0");
 		LayersInfoParser.getInstance().applyMask(this.getName(), rectMask);
+		this.setBound(rectMask);
 	}
 	
 	@Override

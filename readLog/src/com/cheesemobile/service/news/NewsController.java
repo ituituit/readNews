@@ -21,7 +21,7 @@ public class NewsController {
 	private static int FIRST_CHARACTER = 0;
 
 	public enum NewsType {
-		FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES,BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
+		FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4,DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES,BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		public String toString() {
 			String str = "";
 			switch (this) {
@@ -133,6 +133,9 @@ public class NewsController {
 			case RECT_4:
 				str = "_rect_4";
 				break;
+			case DEVELOP_PROJECT:
+				str = "重点工程进行时";
+				break;
 			}
 			return str;
 		}
@@ -140,6 +143,9 @@ public class NewsController {
 		public static NewsType typeFromString(String type) {
 			if (type.contains("我来说两句")) {
 				return NewsType.I_SPEAK;
+			}
+			if (type.contains("重点工程进行时")) {
+				return NewsType.DEVELOP_PROJECT;
 			}
 			if (type.contains("第一版")) {
 				return NewsType.SCENIC_NEWS;
@@ -165,8 +171,8 @@ public class NewsController {
 		// 荣誉证
 		// book(Constants.CUSTOM_LIBRARY_PATH,Constants.CUSTOM_TEXT_LIBRARY_PATH,NewsType.CUSTOM);
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
-//		genOthers(5);
-		genPages(5);
+//		genOthers(6);
+		genPages(6);
 		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;
@@ -234,16 +240,17 @@ public class NewsController {
 
 		NewsBean release = articleStatues.getRelease(releaseNumber);
 		release.setAll(2, NewsType.SCENIC_NEWS);
-		NewsBean release2 = articleStatues2.getRelease(releaseNumber);
-		release2.setAll(3, NewsType.VISITORS_TRACK);
+//		NewsBean release2 = articleStatues2.getRelease(releaseNumber);
+//		release2.setAll(3, NewsType.VISITORS_TRACK);
 		NewsBean release3 = articleStatues3.getRelease(releaseNumber);
 		release3.setAll(4, NewsType.TRAVEL_LAWS);
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
 		release4.setAll(3, NewsType.SCENIC_BLOGS);
-		release2.getArticles().addAll(release4.getArticles());
+//		release2.getArticles().addAll(release4.getArticles());
 //		release2.expand();// page3
-		release3.expand();//page4
-//		release.expand();//page2
+//		release4.expand();
+//		release3.expand();//page4
+		release.expand();//page2
 	}
 
 	private void transformNews(NewsBean articles) {

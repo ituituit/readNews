@@ -128,16 +128,29 @@ public class Rectangle {
 	}
 
 	public Rectangle attachMove(Rectangle line) {
-		List<Float> attachValues = attachValues(line.getLines());
+		if(line.getX() > this.getX()){
+			this.setX(line.getX());
+		}
+		if(line.getY() > this.getY()){
+			this.setY(line.getY());
+		}
+		if(line.getRight() < this.getRight()){
+			this.setRight(line.getRight(),true);
+		}
+		if(line.getButtom() < this.getButtom()){
+			this.setButtom(line.getButtom(),true);
+		}
+		List<Float> attachValues = attachValues(line.getLines());//attach 执行后this在rect外值为this的rect值
 		int rtype = 0;
 		float minVal = Float.MAX_VALUE;
 		float[] r = new float[4];
 		r[0] = getX() - attachValues.get(0);
 		r[1] = getY() - attachValues.get(1);
-		r[0] = attachValues.get(2) - getRight();
-		r[0] = attachValues.get(3) - getButtom();
+		r[2] = attachValues.get(2) - getRight();
+		r[3] = attachValues.get(3) - getButtom();
 		for (int i = 0; i < r.length; i++) {
-			if (r[i] != 0 && r[i] < minVal) {
+			if (r[i] < minVal) {
+//			if (r[i] != 0 && r[i] < minVal) {
 				minVal = r[i];
 				rtype = i;
 			}
@@ -145,16 +158,16 @@ public class Rectangle {
 		Rectangle val = new Rectangle(getX(), getY(), getWidth(), getHeight());
 		switch (rtype) {
 		case 0:
-			val.setX(attachValues.get(0));
+			val.setX(line.getX());
 			break;
 		case 1:
-			val.setY(attachValues.get(1));
+			val.setY(line.getY());
 			break;
 		case 2:
-			val.setRight(attachValues.get(2));
+			val.setRight(line.getRight(),true);
 			break;
 		case 3:
-			val.setButtom(attachValues.get(3));
+			val.setButtom(line.getButtom(),true);
 			break;
 		}
 		return val;
@@ -300,16 +313,32 @@ public class Rectangle {
 		// boundToRectStart();
 	}
 
+	public void setButtom(float buttom,boolean move){
+		if (!move) {
+			this.height = buttom - this.getY();
+		}else{
+			this.y = buttom - this.getHeight();
+		}
+	}
+	
 	public float getRight() {
 		return this.getX() + this.getWidth();
 	}
 
+	public void setRight(float right,boolean move){
+		if (!move) {
+			this.width = right - this.getX();
+		}else{
+			this.x = right - this.getWidth();
+		}
+	}
+	
 	public void setRight(float right) {
-		this.width = right - this.getX();
+		setRight(right,false);
 	}
 
 	public void setButtom(float buttom) {
-		this.height = buttom - this.getY();
+		setButtom(buttom,false);
 	}
 
 	public float getButtom() {

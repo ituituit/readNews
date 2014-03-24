@@ -22,7 +22,6 @@ public class NewsBackground extends NewsStyle implements
 	public NewsBackground(String parentName) {
 		super(-1, NewsType.BACKGROUND,parentName);
 		scalePoint = this.getBound().getCenter();
-//		List<String> list = JSXController.getInstance().invoke("namesInLayer", this.getFullName());
 		List<String> list = LayersInfoParser.getInstance().namesInLayer(this.getFullName());
 		
 		if (list.size() == 1 && list.get(0).equals(this.getName())) {
@@ -46,12 +45,11 @@ public class NewsBackground extends NewsStyle implements
 				bound2.getY(), scalePoint.x + zone, scalePoint.y - zone));
 		_boundsCenter.add(new Rectangle().buildBound(scalePoint.x + zone,
 				scalePoint.y - zone, bound2.getRight(), scalePoint.y + zone));
-		_boundsCenter
-				.add(new Rectangle().buildBound(scalePoint.x - zone,
+		_boundsCenter.add(new Rectangle().buildBound(scalePoint.x - zone,
 						scalePoint.y + zone, scalePoint.x + zone,
 						bound2.getButtom()));
 		_boundsCenter.add(new Rectangle().buildBound(bound2.getX(),
-				scalePoint.y - zone, bound2.getRight(), scalePoint.y + zone));
+				scalePoint.y - zone, scalePoint.x - zone, scalePoint.y + zone));
 		_boundsCenter.add(new Rectangle().buildBound(scalePoint.x - zone,
 				scalePoint.y - zone, scalePoint.x + zone, scalePoint.y
 						+ zone));
@@ -61,9 +59,10 @@ public class NewsBackground extends NewsStyle implements
 			NewsImage newsImage = new NewsImage(-1,backgroundInds[i]) {
 				protected String dumplicateNew() {
 					JSXController.getInstance().invoke("dumplicate",this.getParentName() + "/0", this.getName());
-					LayersInfoParser.getInstance().dumplicate(this.getParentName() + "/0",this.getName(),null);
+					LayersInfoParser.getInstance().dumplicate(this.getParentName() + "/0",this.getFullName(),null);
 					this.applyMask(_bounds.get(images.indexOf(this)));
 					this.mergeMask();
+					
 					return this.getName();
 				}
 				@Override
@@ -73,23 +72,23 @@ public class NewsBackground extends NewsStyle implements
 			};
 			images.add(newsImage);
 		}
-		this.addAll(images);
+		this.addStaticObjs(images);
 	}
 
 	public void scaleToFit(Rectangle rect) {
-		if(this.size() == 0){
+		if(this.staticSize() == 0){
 			this.setBound(rect);
 			return;
 		}
 		Point[] points = rect.getPoints();
 
-		BoundNewsObject topLeft = get(0, NewsType.BACKGROUND_TOP_LEFT);
+		BoundNewsObject topLeft = getStatic( NewsType.BACKGROUND_TOP_LEFT);
 		topLeft.move(topLeft.getBound().getPoints()[0], points[0]);
-		BoundNewsObject topRight = get(0, NewsType.BACKGROUND_TOP_RIGHT);
+		BoundNewsObject topRight = getStatic( NewsType.BACKGROUND_TOP_RIGHT);
 		topRight.move(topRight.getBound().getPoints()[1], points[1]);
-		BoundNewsObject btnRight = get(0, NewsType.BACKGROUND_BTN_RIGHT);
+		BoundNewsObject btnRight = getStatic( NewsType.BACKGROUND_BTN_RIGHT);
 		btnRight.move(btnRight.getBound().getPoints()[2], points[2]);
-		BoundNewsObject btnLeft = get(0, NewsType.BACKGROUND_BTN_LEFT);
+		BoundNewsObject btnLeft = getStatic( NewsType.BACKGROUND_BTN_LEFT);
 		btnLeft.move(btnLeft.getBound().getPoints()[3], points[3]);
 		
 		List<Rectangle> bounds = new ArrayList<Rectangle>();
@@ -99,14 +98,14 @@ public class NewsBackground extends NewsStyle implements
 		bounds.add(new Rectangle().buildBound(topLeft.getBound().getPoints()[3],btnLeft.getBound().getPoints()[1]));
 		bounds.add(new Rectangle().buildBound(topLeft.getBound().getPoints()[2],btnRight.getBound().getPoints()[0]));
 		
-		get(0, NewsType.BACKGROUND_TOP).setBound(bounds.get(0));
-		BoundNewsObject right = get(0, NewsType.BACKGROUND_RIGHT);
+		getStatic(  NewsType.BACKGROUND_TOP).setBound(bounds.get(0));
+		BoundNewsObject right = getStatic( NewsType.BACKGROUND_RIGHT);
 		right.setBound(bounds.get(1));
-		BoundNewsObject buttom = get(0, NewsType.BACKGROUND_BUTTOM);
+		BoundNewsObject buttom = getStatic( NewsType.BACKGROUND_BUTTOM);
 		buttom.setBound(bounds.get(2));
-		BoundNewsObject left = get(0, NewsType.BACKGROUND_LEFT);
+		BoundNewsObject left = getStatic( NewsType.BACKGROUND_LEFT);
 		left.setBound(bounds.get(3));
-		BoundNewsObject center = get(0, NewsType.BACKGROUND_CENTER);
+		BoundNewsObject center = getStatic( NewsType.BACKGROUND_CENTER);
 		center.setBound(bounds.get(4));
 //		Rectangle rectangle = _bounds.get(Arrays.asList(_newLayerInd).indexOf(top.getType()));
 	}

@@ -407,6 +407,17 @@ executeAction( idsetd, desc86, DialogModes.NO );
 }
 
 function applyMask(){
+// ==============================栅格化图层=========================
+var idrasterizeLayer = stringIDToTypeID( "rasterizeLayer" );
+    var desc5 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref2 = new ActionReference();
+        var idLyr = charIDToTypeID( "Lyr " );
+        var idOrdn = charIDToTypeID( "Ordn" );
+        var idTrgt = charIDToTypeID( "Trgt" );
+        ref2.putEnumerated( idLyr, idOrdn, idTrgt );
+    desc5.putReference( idnull, ref2 );
+executeAction( idrasterizeLayer, desc5, DialogModes.NO );
 // =======================================================
 var idDlt = charIDToTypeID( "Dlt " );
     var desc3487 = new ActionDescriptor();
@@ -420,6 +431,11 @@ var idDlt = charIDToTypeID( "Dlt " );
     var idAply = charIDToTypeID( "Aply" );
     desc3487.putBoolean( idAply, true );
 executeAction( idDlt, desc3487, DialogModes.NO );
+// ==============================新建智能对象=========================
+var idnewPlacedLayer = stringIDToTypeID( "newPlacedLayer" );
+executeAction( idnewPlacedLayer, undefined, DialogModes.NO );
+
+
 }
 
 function addMask(){

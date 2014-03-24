@@ -16,6 +16,7 @@ public class NewsStyle extends BoundNewsObject {
 	private static List<Rectangle> childScaledRects;
 	private List<Rectangle> placePointsLines;
 	private List<String> staticTexts;
+	private List<BoundNewsObject> staticObjs = new ArrayList<>();
 	private List<BoundNewsObject> childs = new ArrayList<>();
 	private boolean hasBackground = false;
 	private boolean hasSplitLines = false;
@@ -23,6 +24,23 @@ public class NewsStyle extends BoundNewsObject {
 
 	public NewsStyle(int ind, NewsType type, String parentName) {
 		super(ind, type, parentName);
+	}
+
+	public void addStaticObjs(List<BoundNewsObject> objs) {
+		for (BoundNewsObject boundNewsObject : objs) {
+			addStaticObjs(boundNewsObject);
+		}
+	}
+	
+	public int staticSize(){
+		return staticObjs.size(); 
+	}
+
+	public void addStaticObjs(BoundNewsObject obj) {
+		staticObjs.add(obj);
+		obj.setParentName(this.getFullName());
+		boolean exists = obj.existsLayer();
+		obj.added(this, staticObjs.size() - 1);
 	}
 
 	public void addStaticText(String str) {
@@ -37,7 +55,6 @@ public class NewsStyle extends BoundNewsObject {
 		for (String fullName : foreigns) {
 			BoundNewsObject newsImage = new NewsImage(fullName);
 			Rectangle one = newsImage.getBound().attachMove(_container);
-			// Rectangle attachMove = one.attachMove(rectangle);
 			newsImage.setBound(one);
 		}
 	}
@@ -84,7 +101,7 @@ public class NewsStyle extends BoundNewsObject {
 		for (BoundNewsObject e : objs) {
 			list.add(e);
 		}
-		addAll(list);
+		addAllSubObjects(list);
 	}
 
 	public void addAll2(List list) {
@@ -92,7 +109,7 @@ public class NewsStyle extends BoundNewsObject {
 		for (Object object : list) {
 			bo.add((BoundNewsObject) object);
 		}
-		addAll(bo);
+		addAllSubObjects(bo);
 	}
 
 	public void deleteCantDraws(List<BoundNewsObject> list) {
@@ -111,7 +128,11 @@ public class NewsStyle extends BoundNewsObject {
 		}
 	}
 
-	public void addAll(List<BoundNewsObject> list) {
+	public void setContainer() {
+
+	}
+
+	public void addAllSubObjects(List<BoundNewsObject> list) {
 		deleteCantDraws(list);
 		Rectangle background = placesPointsBackgroundRect();
 		if (background != null) {
@@ -155,7 +176,6 @@ public class NewsStyle extends BoundNewsObject {
 				Rectangle rect = new Rectangle(memBound.getX(),
 						memBound.getY(), memBound.getWidth(),
 						memBound.getHeight());
-
 				childScaledRects.add(rect);// ÎÄ±¾µÄrect
 			}
 		}
@@ -190,7 +210,7 @@ public class NewsStyle extends BoundNewsObject {
 	}
 
 	private void addAllBefore() {// inited _container only
-	// attatchForeigns();
+		attatchForeigns();
 	}
 
 	private void addAllAfter() {
@@ -259,6 +279,18 @@ public class NewsStyle extends BoundNewsObject {
 
 	}
 
+	public BoundNewsObject getStatic(NewsType type){
+		int i = 0;
+		int ind = 0;
+		for (BoundNewsObject c : staticObjs) {
+			if (c.getType() == type) {
+				if (ind++ == i) {
+					return c;
+				}
+			}
+		}
+		return null;
+	}
 	public BoundNewsObject get(int i, NewsType type) {
 		int ind = 0;
 		for (BoundNewsObject c : childs) {
