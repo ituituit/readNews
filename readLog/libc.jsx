@@ -577,7 +577,7 @@ function makePathSelectArea(params){
     contentBound.push( eval(params[2]))
     contentBound.push( eval(params[3]))
     contentBound[1] += 5
-   // contentBound[3] += 500
+    contentBound[3] += 500
     textObjName = params[4]
     objIndex(textObjName)
     textObj = app.activeDocument.activeLayer
@@ -587,6 +587,7 @@ function makePathSelectArea(params){
     for(var i = 5; i<params.length; i++){
         objNames.push(params[i])
     }
+
     sa.applyPath(objNames,contentBound)
     sa.outputPath (_scriptPath + "newPath.ai" );
     points = sa.readAI (_scriptPath + "newPath.ai" );
@@ -606,7 +607,6 @@ function makePathSelectArea(params){
 function setContent(dest,srcText){
     dest.textItem.contents = srcText
     tFont = dest.textItem.font;
-
     fontType("simsun");
     fontType(tFont);
 }
@@ -694,11 +694,35 @@ function deleteLayerJSX(params){
     deleteLayer(params[0])
 }
 
+function mergeLayerJSX(params){
+    objIndex(params[0])
+// =======================================================
+var idMrgtwo = charIDToTypeID( "Mrg2" );
+executeAction( idMrgtwo, undefined, DialogModes.NO );
+}
+
 //$.write("\"" + genFullName(app.activeDocument.activeLayer) + "\"")
 //manuPath("/_rect_2/景区快讯0/正文组1/image0_foreign")
+function manPath(){
+    var parent  =app.activeDocument.activeLayer.parent
+    layers = parent.layers
+    var theName = new Array()
+    for (var i = 0; i < layers.length; i++) {
+        if(layers[i].name.search("foreign") != -1){
+            theName.push(genFullName(layers[i]))
+        }
+    }
+    if(theName){
+        manuPath(theName)
+    }
+}
+
 function manuPath(masklayer){
     textObj = app.activeDocument.activeLayer
-    array = [textObj.bounds[0],textObj.bounds[1],textObj.bounds[2],textObj.bounds[3],genFullName(textObj),masklayer]
+    array = [textObj.bounds[0],textObj.bounds[1],textObj.bounds[2],textObj.bounds[3],genFullName(textObj)]
+    for(var i = 0; i < masklayer.length; i++){
+            array.push(masklayer[i])
+    }
     makePathSelectArea(array)
 }
 

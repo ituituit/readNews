@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.cheesemobile.service.news.NewsController.NewsType;
+import com.cheesemobile.util._Log;
 
 public class NewsArticle {
 	private int id;
@@ -16,10 +17,11 @@ public class NewsArticle {
 	private String department;
 	private String title;
 	private List<String> picsUrl;
+	private int bracketsType = 1;
 
 	public NewsArticle(int id, Date sendDate, String content, String pick,
 			String department, String title, List<String> picsUrl,
-			NewsType type, int page) {
+			NewsType type, int page, int bracketsType) {
 		super();
 		this.id = id;
 		this.sendDate = sendDate;
@@ -28,7 +30,7 @@ public class NewsArticle {
 		if (pick.length() < 1 && department.indexOf(" ") != -1) {
 			this.author = department.substring(department.indexOf(" ") + 1);
 			this.department = department.substring(0, department.indexOf(" "));
-		}else{
+		} else {
 			this.department = department;
 		}
 		if (pick.length() > 1) {
@@ -38,6 +40,7 @@ public class NewsArticle {
 		this.picsUrl = picsUrl;
 		this.type = type;
 		this.page = page;
+		this.bracketsType = bracketsType;
 	}
 
 	public int getPage() {
@@ -96,34 +99,45 @@ public class NewsArticle {
 		this.sendDate = sendDate;
 	}
 
-	public String getContent() {
+	public static StringBuilder jsxOutputFormat(String str){
 		StringBuilder sb = new StringBuilder();
-		sb.append(content);
-		if(content.equals("\r")){
-			return null;
-		}
+		sb.append(str);
 		while (sb.lastIndexOf("\r") == sb.length() - 1
 				|| sb.lastIndexOf("\n") == sb.length() - 1
 				|| sb.lastIndexOf(" ") == sb.length() - 1) {
 			sb.deleteCharAt(sb.length() - 1);
 		}
-		sb.append("(");
-		if (departmentExists()) {
-			sb.append(getDepartment());
+		return sb;
+	}
+	public static String jsxOutputFormat1(String str){
+		return str.replaceAll("\r","\\\\r");
+	}
+	public String getContent() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(content);
+		_Log.i("" + sb.length());
+		if (sb.length() <= 1) {
+			return null;
 		}
-		sb.append("");
-		if (!getAuthor().equals("")) {
+		sb = jsxOutputFormat(sb.toString());
+		if (bracketsType == 1) {
+			sb.append("(");
 			if (departmentExists()) {
-				sb.append("！！");
+				sb.append(getDepartment());
 			}
-			sb.append(getAuthor());
+			sb.append("");
+			if (!getAuthor().equals("")) {
+				if (departmentExists()) {
+					sb.append("！！");
+				}
+				sb.append(getAuthor());
+			}
+			sb.append(")");
 		}
-		sb.append(")");
 		if (sb.lastIndexOf("()") == sb.length() - "()".length()) {
 			return sb.substring(0, sb.length() - "()".length());
 		}
-		String str = sb.toString().replaceAll("\r", "\\\\r");
-		return str;
+		return jsxOutputFormat1(sb.toString());
 	}
 
 	private boolean departmentExists() {

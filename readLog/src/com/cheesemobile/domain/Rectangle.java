@@ -93,6 +93,13 @@ public class Rectangle {
 		}
 	}
 
+	public List<Rectangle> getLinesRect(){
+		List<Rectangle> rect = new ArrayList<>();
+		List<Point[]> pointLines = getLines();
+		rect = ShotNewsUtil.rectsOfLinePoint(pointLines);
+		return rect;
+	}
+	
 	public List<Point[]> getLines() {
 		Point[] thisPoints = this.getPoints();
 		Point[] left = { thisPoints[0], thisPoints[3] };

@@ -39,7 +39,7 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 		List<String> params = new ArrayList<>();
 		params.addAll(Arrays.asList(bounds));
 		params.add(this.getFullName());
-		params.addAll(assoicatedObjNames);
+//		params.addAll(assoicatedObjNames);
 		JSXController.getInstance().invoke("makePathSelectArea",
 				(String[]) params.toArray(new String[params.size()]));
 	}
@@ -76,4 +76,7 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 		}
 		return super.canDraw();
 	}
+	
+
+
 }

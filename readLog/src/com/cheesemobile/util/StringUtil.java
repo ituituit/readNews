@@ -80,7 +80,7 @@ public class StringUtil {
 				}
 
 			}
-			return Integer.parseInt(str.substring(inds.get(0), end));
+			return Integer.parseInt(str.substring(inds.get(0), end + 1));
 		}
 	}
 

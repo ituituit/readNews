@@ -169,6 +169,13 @@ public class LayersInfoParser {
 			newBean.setParent(newName);
 			newIndexByName.add(newBean);
 		}
+		if(list.size() == 0){
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		list.addAll(newIndexByName);
 	}
 
@@ -200,4 +207,9 @@ public class LayersInfoParser {
 		}
 		list.remove(indexByName.get(0));
 	}
+	
+	public void mergeLayer(String groupName){
+		JSXController.getInstance().invoke("mergeLayerJSX", groupName);
+	}
+	
 }

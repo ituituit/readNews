@@ -3,7 +3,7 @@ function arrayIndex(array,content){
     for(var i =0; i < array.length; i++){
         if(array[i].indexOf (content,0) == 0 && array[i].length == content.length){
             return i;
-        }
+        }textJustify
     }
     return -1
 }    
@@ -64,34 +64,34 @@ executeAction( idsetd, desc1875, DialogModes.NO );
 function textJustify(justification){
     be = justification.toString()
     ba = be.substr (be.indexOf(".",0) + 1,100)
-
    // list1 = ["LEFT","CENTER","RIGHT","LEFTJUSTIFIED","CENTERJUSTIFIED","RIGHTJUSTIFIED","FULLYJUSTIFIED"]
     lists = ["FULLYJUSTIFIED","RIGHTJUSTIFIED","CENTERJUSTIFIED","LEFTJUSTIFIED","RIGHT","CENTER","LEFT"]
-    listt = ["JstA","justifyRight","justifyCenter","justifyLeft","Rght","Cntr","Left"]
+    listt = [charIDToTypeID( "JstA" ),stringIDToTypeID( "justifyRight" ),stringIDToTypeID( "justifyCenter" ),
+                stringIDToTypeID( "justifyLeft" ),charIDToTypeID( "Rght" ),charIDToTypeID( "Cntr" ),charIDToTypeID( "Left" )]
     strJust = listt[arrayIndex(lists, ba)]
-var idsetd = charIDToTypeID( "setd" );
-    var desc1958 = new ActionDescriptor();
+    var idsetd = charIDToTypeID( "setd" );
+    var desc700 = new ActionDescriptor();
     var idnull = charIDToTypeID( "null" );
-        var ref759 = new ActionReference();
+        var ref108 = new ActionReference();
         var idPrpr = charIDToTypeID( "Prpr" );
         var idparagraphStyle = stringIDToTypeID( "paragraphStyle" );
-        ref759.putProperty( idPrpr, idparagraphStyle );
+        ref108.putProperty( idPrpr, idparagraphStyle );
         var idTxLr = charIDToTypeID( "TxLr" );
         var idOrdn = charIDToTypeID( "Ordn" );
         var idTrgt = charIDToTypeID( "Trgt" );
-        ref759.putEnumerated( idTxLr, idOrdn, idTrgt );
-    desc1958.putReference( idnull, ref759 );
+        ref108.putEnumerated( idTxLr, idOrdn, idTrgt );
+    desc700.putReference( idnull, ref108 );
     var idT = charIDToTypeID( "T   " );
-        var desc1959 = new ActionDescriptor();
+        var desc701 = new ActionDescriptor();
         var idtextOverrideFeatureName = stringIDToTypeID( "textOverrideFeatureName" );
-        desc1959.putInteger( idtextOverrideFeatureName, 808464433 );
+        desc701.putInteger( idtextOverrideFeatureName, 808464433 );
         var idAlgn = charIDToTypeID( "Algn" );
         var idAlg = charIDToTypeID( "Alg " );
-        var idjustifyRight = stringIDToTypeID( strJust);
-        desc1959.putEnumerated( idAlgn, idAlg, idjustifyRight );
+        //var idjust = stringIDToTypeID(  );
+        desc701.putEnumerated( idAlgn, idAlg, strJust );
     var idparagraphStyle = stringIDToTypeID( "paragraphStyle" );
-    desc1958.putObject( idT, idparagraphStyle, desc1959 );
-executeAction( idsetd, desc1958, DialogModes.NO );
+    desc700.putObject( idT, idparagraphStyle, desc701 );
+executeAction( idsetd, desc700, DialogModes.NO );
 }
 function leading(isAuto,size){
 // =======================================================

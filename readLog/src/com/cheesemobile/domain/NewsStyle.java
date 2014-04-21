@@ -26,14 +26,18 @@ public class NewsStyle extends BoundNewsObject {
 		super(ind, type, parentName);
 	}
 
-	public void addStaticObjs(List<BoundNewsObject> objs) {
-		for (BoundNewsObject boundNewsObject : objs) {
+	public void addStaticObjs(List objs) {
+		List<BoundNewsObject> bo = new ArrayList<BoundNewsObject>();
+		for (Object object : objs) {
+			bo.add((BoundNewsObject) object);
+		}
+		for (BoundNewsObject boundNewsObject : bo) {
 			addStaticObjs(boundNewsObject);
 		}
 	}
-	
-	public int staticSize(){
-		return staticObjs.size(); 
+
+	public int staticSize() {
+		return staticObjs.size();
 	}
 
 	public void addStaticObjs(BoundNewsObject obj) {
@@ -53,9 +57,8 @@ public class NewsStyle extends BoundNewsObject {
 	private void attatchForeigns() {
 		List<String> foreigns = this.getForeigns();
 		for (String fullName : foreigns) {
-			BoundNewsObject newsImage = new NewsImage(fullName);
-			Rectangle one = newsImage.getBound().attachMove(_container);
-			newsImage.setBound(one);
+			NewsImage newsImage = new NewsImage(fullName);
+			newsImage.attatch(_container);
 		}
 	}
 
@@ -73,7 +76,10 @@ public class NewsStyle extends BoundNewsObject {
 		if (typeInLayer(NewsType.SPLIT_LINES).size() != 0) {
 			hasSplitLines = true;
 		}
-		_container = parent.getChildScaledRects().get(toInd);
+		if (parent.getChildScaledRects() != null
+				&& parent.getChildScaledRects().size() > 0) {
+			_container = parent.getChildScaledRects().get(toInd);
+		}
 	}
 
 	public void updateStaticTexts() {
@@ -82,7 +88,7 @@ public class NewsStyle extends BoundNewsObject {
 		for (String string : typeInLayer) {
 			NewsText nt = new NewsText(string);
 			if (staticTexts != null && staticTexts.size() > ind) {
-				String str = staticTexts.get(ind);
+				String str = NewsArticle.jsxOutputFormat1( staticTexts.get(ind));
 				if (!str.equals("")) {
 					nt.refreshText(str);
 				}
@@ -239,7 +245,6 @@ public class NewsStyle extends BoundNewsObject {
 
 	public void enlargePlacesPointsRects(List<Rectangle> list,
 			Rectangle contentBound) {
-
 		spreadPlacesPointsRects(list, contentBound);
 		for (Rectangle rect : list) {
 			int level;
@@ -252,7 +257,6 @@ public class NewsStyle extends BoundNewsObject {
 		}
 
 		Pool pool = new Pool(list, contentBound, hasSplitLines);
-		// placePointsRects = pool.getPlacesRects();
 		placePointsLines = pool.getLines();
 	}
 
@@ -260,9 +264,10 @@ public class NewsStyle extends BoundNewsObject {
 			Rectangle contentBound) {
 		float maxY = contentBound.getY();
 		List<Rectangle> pointRects = new ArrayList<Rectangle>();
-		for (Rectangle rectangle : list) {
-			if (rectangle.getWidth() != _placePointsRectsMin
-					&& rectangle.getHeight() != _placePointsRectsMin) {
+		for (int i = 0; i < list.size(); i++) {
+			Rectangle rectangle = list.get(i);
+			if ((rectangle.getWidth() != _placePointsRectsMin
+					&& rectangle.getHeight() != _placePointsRectsMin) || (i != 0 && !rectangle.equals(list.get(i-1)))){
 				if (maxY < rectangle.getY()) {
 					maxY = rectangle.getY();
 				}
@@ -276,10 +281,9 @@ public class NewsStyle extends BoundNewsObject {
 			float y = (i + 1) * (length / (pointRects.size() + 1));
 			rectangle.setY(contentBound.getY() + y);
 		}
-
 	}
 
-	public BoundNewsObject getStatic(NewsType type){
+	public BoundNewsObject getStatic(NewsType type) {
 		int i = 0;
 		int ind = 0;
 		for (BoundNewsObject c : staticObjs) {
@@ -291,6 +295,7 @@ public class NewsStyle extends BoundNewsObject {
 		}
 		return null;
 	}
+
 	public BoundNewsObject get(int i, NewsType type) {
 		int ind = 0;
 		for (BoundNewsObject c : childs) {

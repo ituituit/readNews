@@ -88,14 +88,12 @@ public abstract class BoundNewsObject implements Serializable {
 		List<String> list = LayersInfoParser.getInstance().namesInLayer(
 				this.getFullName());
 		String tmpName = "";
-		if (this.getName().equals("background_top_left")) {
-			_Log.i("");
-		}
 		if (list.size() == 0) {
 			tmpName = dumplicateNew();
 			moveLayerInto(this.getParentName(), tmpName);
 			return false;
 		} else {
+			layerExists();
 			return true;
 		}
 	}
@@ -195,4 +193,8 @@ public abstract class BoundNewsObject implements Serializable {
 //		}
 		return true;
 	}
+	protected void layerExists(){
+		
+	}
+
 }

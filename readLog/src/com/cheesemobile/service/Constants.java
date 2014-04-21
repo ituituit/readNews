@@ -9,28 +9,28 @@ public class Constants {
 	public final static float CONTENT_WIDTH = 459.36f;
 	public final static String XSL_DEBUG_ERROR_RETURN = "error:";
 	
+	public static String SCRIPT_FOLDER = "/Users/pwl/Documents/Adobe Scripts/";
 	public static String HOME_FOLDER = "/Users/pwl/git/readNews_remote/readLog/";
 	public static String PREFERENCE_TEMP_PATH = "/Users/pwl/Documents/Adobe Scripts/prefs.txt";
 	public static String XSL_SOURCE_PATH = HOME_FOLDER + "include.jsx";
 	public static String PREFERENCE_LIB_XML_PATH = "/Users/pwl/Documents/Adobe Scripts/libXML.xml";
 	public static String PREFERENCE_XML_PATH = "/Users/pwl/Documents/Adobe Scripts/newXML.xml";
-	public static String PREFERENCE_LIB_XML_PATH_WIN = "D:/我的文档/Adobe Scripts/libXML.xml";
-	public static String PIC_OUTPUT_PATH = "D:/我的文档/Adobe Scripts/";
-	public static String PREFERENCE_XML_PATH_WIN = "D:/我的文档/Adobe Scripts/newXML.xml";
+	public static String PIC_OUTPUT_PATH = "/Users/pwl/Documents/Adobe Scripts/";
 	public static String XSL_DESTINATION_PATH = "/Users/pwl/Documents/Adobe Scripts/tmp.jsx";
 	public static String IMG_DESTINATION_PATH = "/Users/pwl/git/readNews_remote/readLog/image/photo/";
-	public static String IMG_DESTINATION_PATH_WIN = "C:/Documents and Settings/Administrator/git/readNews_remote/readLog/image/photo/";
 	private static String AUTOMATION_FOLDER = "/Users/pwl/Downloads/automation/";
 	static{
 		if (SystemTool.getOSName().indexOf("windows") != -1) {
-			IMG_DESTINATION_PATH = IMG_DESTINATION_PATH_WIN;
-			HOME_FOLDER = "C:/Documents and Settings/Administrator/git/readNews_remote/readLog/";
+			HOME_FOLDER = "F:/Documents and Settings/Administrator/git/readNews_remote/readLog/";
+			SCRIPT_FOLDER = "C:/Users/wenhuake/Documents/Adobe Scripts/";
 			XSL_SOURCE_PATH = HOME_FOLDER + "include_win.jsx";
-			XSL_DESTINATION_PATH = "D:\\我的文档\\Adobe Scripts\\tmp.jsx";
-			PREFERENCE_TEMP_PATH = "D:/我的文档/Adobe Scripts/prefs.txt";
+			XSL_DESTINATION_PATH = SCRIPT_FOLDER + "tmp.jsx";
+			PREFERENCE_TEMP_PATH = SCRIPT_FOLDER + "prefs.txt";
 			NEWS_LIBRARY_PATH = "F:/BaiduYunDownload/automation/sample.txt";
-			PREFERENCE_LIB_XML_PATH = PREFERENCE_LIB_XML_PATH_WIN;
-			PREFERENCE_XML_PATH = PREFERENCE_XML_PATH_WIN;
+			PREFERENCE_LIB_XML_PATH = SCRIPT_FOLDER + "libXML.xml";
+			PREFERENCE_XML_PATH = SCRIPT_FOLDER + "newXML.xml";
+			IMG_DESTINATION_PATH = HOME_FOLDER + "image/photo/";
+			PIC_OUTPUT_PATH = SCRIPT_FOLDER;
 		}
 	}
 	
@@ -48,11 +48,13 @@ public class Constants {
 	public static String NEWS_LIBRARY_PATH_VISITORS_TRACK = HOME_FOLDER + "texts/travel.txt";
 	public static String NEWS_LIBRARY_PATH_TRAVEL_LAWS = HOME_FOLDER + "texts/travel_law.txt";
 	public static String NEWS_LIBRARY_PATH_SCENIC_BLOGS = HOME_FOLDER + "texts/blog.txt";
+	public static String NEWS_LIBRARY_PATH_EXAMS = HOME_FOLDER + "texts/exams.txt";
+	public static String NEWS_LIBRARY_DAODE = HOME_FOLDER + "texts/tao.txt";
 	public static String NEWS_LIBRARY_PATH_OTHERS = HOME_FOLDER + "texts/other.txt";
 	public static String VISITORS_TRACK_PSD_GROUP = "文化研究";
 	public static String SCENIC_BLOGS_PSD_GROUP = "博客珏山";
 	public static String SCENIC_NEWS_PSD_GROUP = "景区快讯";
-	public static String TRAVEL_LAWS_PSD_GROUP = "旅游法的学习";
+	public static String TRAVEL_LAWS_PSD_GROUP = "聚焦安全生产法";
 	public static String TRAVEL_LINKS_PSD_GROUP = "旅游链接";
 	public static String I_SPEAK_PSD_GROUP = "我来说两句";
 
@@ -91,7 +93,7 @@ public class Constants {
 			+ Constants.ptnTime + " - " + Constants.ptnDate + " "
 			+ Constants.ptnTime;
 	public final static String spreadSignOfAbortCase = "&&";
-
+	
 	public static String patternWords() {
 		// StringBuilder str= new StringBuilder();
 		// for(int i = 0; i < 20; i++){

@@ -20,11 +20,26 @@ public class NewsController {
 	public String _str = null;
 	private static int FIRST_CHARACTER = 0;
 
-	public enum NewsType {
+	public enum NewsType {POAM,SAFETY,SPRING_THEME,CENTER_1,CENTER_2,CENTER_FRONT,CENTER_BACKWARD,
 		FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4,DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES,BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		public String toString() {
 			String str = "";
 			switch (this) {
+			case POAM:
+				str = "唐宋游人诗词";
+				break;
+			case CENTER_FRONT:
+				str = "中缝正";
+				break;
+			case CENTER_BACKWARD:
+				str = "中缝反";
+				break;
+			case CENTER_1:
+				str = "景区应知应会";
+				break;
+			case CENTER_2:
+				str = "国学解析";
+				break;
 			case STATIC_TEXT:
 				str = "static";
 				break;
@@ -136,11 +151,20 @@ public class NewsController {
 			case DEVELOP_PROJECT:
 				str = "重点工程进行时";
 				break;
+			case SPRING_THEME:
+				str = "春的声音";
+				break;
+			case SAFETY:
+				str = "安全专栏";
+				break;
 			}
 			return str;
 		}
 
 		public static NewsType typeFromString(String type) {
+			if (type.contains("图片")) {
+				return NewsType.GROUP;
+			}
 			if (type.contains("我来说两句")) {
 				return NewsType.I_SPEAK;
 			}
@@ -153,7 +177,9 @@ public class NewsController {
 			if (type.contains("组")) {
 				return NewsType.GROUP;
 			}
-			
+			if (type.contains("春的声音")) {
+				return NewsType.SPRING_THEME;
+			}
 			for (NewsType iterable_element : NewsType.values()) {
 				if(iterable_element.toString().equals(type)){
 					return iterable_element;
@@ -171,8 +197,12 @@ public class NewsController {
 		// 荣誉证
 		// book(Constants.CUSTOM_LIBRARY_PATH,Constants.CUSTOM_TEXT_LIBRARY_PATH,NewsType.CUSTOM);
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
-//		genOthers(6);
-		genPages(6);
+//		genCenter1(24);
+//		genCenter2(24);
+//		genOthers(9);
+		genPages(9);
+//		genSafe(16);
+//		genPoam(10);
 		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;
@@ -198,6 +228,32 @@ public class NewsController {
 //		}
 	}
 
+	private void gendishes() {
+		Constants.IMG_DESTINATION_PATH = "C:/Documents and Settings/Administrator/桌面/dishes/";
+		String LIB_DISHES_PATH = "C:/Documents and Settings/Administrator/桌面/dishes.txt";
+		NewsBeanArray articleStatues = articlesFromString(LIB_DISHES_PATH);
+		NewsBean release = articleStatues.getRelease(4);
+		release.setAll(1, NewsType.GROUP);
+		release.expandStatic();
+	}
+	
+	private void genSafe(int i){
+//		Constants.IMG_DESTINATION_PATH = "C:/Documents and Settings/Administrator/桌面/dishes/";
+		String LIB_DISHES_PATH = Constants.HOME_FOLDER + "texts/safety_publicity.txt";
+		NewsBeanArray articleStatues = articlesFromString(LIB_DISHES_PATH);
+		NewsBean release = articleStatues.getRelease(i);
+		release.setAll(1, NewsType.SAFETY);
+		release.expand();
+	}
+	private void genPoam(int i){
+//		Constants.IMG_DESTINATION_PATH = "C:/Documents and Settings/Administrator/桌面/dishes/";
+		String LIB_DISHES_PATH = Constants.HOME_FOLDER + "texts/travel.txt";
+		NewsBeanArray articleStatues = articlesFromString(LIB_DISHES_PATH);
+		NewsBean release = articleStatues.getRelease(i);
+		release.setAll(1, NewsType.POAM);
+		release.expand();
+	}
+
 	private void genOthers(int releaseNumber) {
 		NewsBeanArray articleStatues = articlesFromString(Constants.NEWS_LIBRARY_PATH_OTHERS);
 		_Log.i(articleStatues.getReleaseSize(releaseNumber) + "");
@@ -207,7 +263,9 @@ public class NewsController {
 		NewsStyle _rect2 = new NewsStyle(-1, NewsType.RECT_2, "");
 		NewsStyle _rect3 = new NewsStyle(-1, NewsType.RECT_3, "");
 		NewsStyle _rect4 = new NewsStyle(-1, NewsType.RECT_4, "");
-
+		NewsStyle centerFront = new NewsStyle(-1, NewsType.CENTER_FRONT, "");
+		NewsStyle centerBackward = new NewsStyle(-1, NewsType.CENTER_BACKWARD, "");
+		
 		NewsStyle _back1 = new NewsStyle(-1, NewsType.BACK_1,
 				_rect1.getFullName());
 		NewsStyle _back2 = new NewsStyle(-1, NewsType.BACK_2,
@@ -219,6 +277,10 @@ public class NewsController {
 		_back1.addStaticText(release.getArticles().get(1).getContent());
 		NewsImage newsImage = new NewsImage(0,"",_back1.getFullName());
 		newsImage.changeImage(release.getArticles().get(1).getPicsUrl().get(0));
+		NewsImage frontImage = new NewsImage(0,"",centerFront.getFullName());
+		frontImage.changeImage(release.getArticles().get(1).getPicsUrl().get(1));
+		NewsImage backwardImage = new NewsImage(0,"",centerBackward.getFullName());
+		backwardImage.changeImage(release.getArticles().get(1).getPicsUrl().get(2));
 		_back2.addStaticText(release.getArticles().get(0).getContent());
 		_back3.addStaticText(release.getArticles().get(0).getContent());
 		_back4.addStaticText(release.getArticles().get(0).getContent());
@@ -228,6 +290,32 @@ public class NewsController {
 		_back4.updateStaticTexts();
 	}
 
+	private void genCenter2(int releaseNumber){
+		NewsBeanArray articleStatues = articlesFromString(Constants.NEWS_LIBRARY_DAODE);
+		_Log.i(articleStatues.getReleaseSize(releaseNumber) + "");
+		NewsBean release = articleStatues.getRelease(releaseNumber);
+
+		NewsStyle _rect1 = new NewsStyle(-1, NewsType.CENTER_2, "");
+
+		_rect1.addStaticText(release.getArticles().get(0).getContent());
+		_rect1.addStaticText(release.getArticles().get(1).getContent());
+//		NewsImage newsImage = new NewsImage(0,"",_rect1.getFullName());
+//		newsImage.changeImage(release.getArticles().get(1).getPicsUrl().get(0));
+		_rect1.updateStaticTexts();
+	}
+	private void genCenter1(int releaseNumber){
+		NewsBeanArray articleStatues = articlesFromString(Constants.NEWS_LIBRARY_PATH_EXAMS);
+		_Log.i(articleStatues.getReleaseSize(releaseNumber) + "");
+		NewsBean release = articleStatues.getRelease(releaseNumber);
+
+		NewsStyle _rect1 = new NewsStyle(-1, NewsType.CENTER_1, "");
+
+		_rect1.addStaticText(release.getArticles().get(0).getContent());
+//		NewsImage newsImage = new NewsImage(0,"",_rect1.getFullName());
+//		newsImage.changeImage(release.getArticles().get(1).getPicsUrl().get(0));
+		_rect1.updateStaticTexts();
+	}
+	
 	private void genPages(int releaseNumber) {
 		NewsBeanArray articleStatues = articlesFromString(Constants.NEWS_LIBRARY_PATH);
 		_Log.i(articleStatues.getReleaseSize(releaseNumber) + "");
@@ -240,17 +328,17 @@ public class NewsController {
 
 		NewsBean release = articleStatues.getRelease(releaseNumber);
 		release.setAll(2, NewsType.SCENIC_NEWS);
-//		NewsBean release2 = articleStatues2.getRelease(releaseNumber);
-//		release2.setAll(3, NewsType.VISITORS_TRACK);
+		NewsBean release2 = articleStatues2.getRelease(releaseNumber);
+		release2.setAll(3, NewsType.VISITORS_TRACK);
 		NewsBean release3 = articleStatues3.getRelease(releaseNumber);
 		release3.setAll(4, NewsType.TRAVEL_LAWS);
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
 		release4.setAll(3, NewsType.SCENIC_BLOGS);
-//		release2.getArticles().addAll(release4.getArticles());
-//		release2.expand();// page3
+		release2.getArticles().addAll(release4.getArticles());
+//		release4.expand();// page3
 //		release4.expand();
-//		release3.expand();//page4
-		release.expand();//page2
+		release3.expand();//page4
+//		release.expand();//page2
 	}
 
 	private void transformNews(NewsBean articles) {
@@ -537,6 +625,7 @@ public class NewsController {
 		String department = "";
 		String pick = "";
 		int page = -1;
+		int bracketsType = 1;
 		NewsType type = null;
 		for (String line : lines) {
 			String getImgs = getImgs(line);
@@ -551,11 +640,15 @@ public class NewsController {
 			if (!getPage.equals("")) {
 				page = Integer.parseInt(getPage);
 			}
+			String getbracketsType = getbracketsType(line);
+			if (!getbracketsType.equals("")) {
+				bracketsType = Integer.parseInt(getbracketsType);
+			}
 			String date = getDate(line);
 			title = title + getTitles(line);
 			department = department + getDepartment(line);
 			pick = pick + getPick(line);
-			if (getPage(line) != "" || getImgs(line) != "" ||getDate(line) != "" || getType(line) != ""
+			if (getbracketsType(line) != "" || getPage(line) != "" || getImgs(line) != "" ||getDate(line) != "" || getType(line) != ""
 					|| getTitles(line) != "" || getDepartment(line) != ""
 					|| getPick(line) != "") {
 				continue;
@@ -573,7 +666,7 @@ public class NewsController {
 		}
 		int articlesId = 0;
 		return new NewsArticle(articlesId++, null, content, pick, department,
-				title, urls, type, page);
+				title, urls, type, page,bracketsType);
 	}
 
 //	private void reboundArticle(NewsBean news) {
@@ -666,6 +759,15 @@ public class NewsController {
 		return result;
 	}
 
+	private String getbracketsType(String str) {
+		String tag = "<brackets_type>";
+		String result = rowByTag(str, tag);
+		if (result == null) {
+			return "";
+		}
+		return result;
+	}
+	
 	private String getPick(String str) {
 		String tag = "<pick>";
 		String result = rowByTag(str, tag);

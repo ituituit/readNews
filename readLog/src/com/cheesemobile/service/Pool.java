@@ -26,6 +26,7 @@ public class Pool {
 		if(placesRects.size() == 1){
 			placesRects.remove(0);
 			placesRects.add(containerRect);
+			lines = containerRect.getLinesRect();
 			return;
 		}
 		scaleSquare();

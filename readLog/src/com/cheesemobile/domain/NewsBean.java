@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.cheesemobile.parser.LayersInfoParser;
 import com.cheesemobile.service.news.NewsController.NewsType;
 import com.cheesemobile.util._Log;
 
@@ -23,6 +24,32 @@ public class NewsBean {
 		this.releaseVer = releaseVer;
 	}
 
+	public void expandStatic(){
+		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
+		List<NewsArticle> pageArticle = pageMatched(articles, 1);
+		// //////////////////////////////////
+		List<NewsStyle> styles = new ArrayList<>();
+		for(int i =0; i < pageArticle.size(); i++){
+			NewsStyle style = new NewsStyle(i, pageArticle.get(i).getType(),
+					_rect1.getFullName());
+			styles.add(style);
+		}
+		_rect1.addStaticObjs(styles);
+		for(int i =0; i < pageArticle.size(); i++){
+			NewsArticle articleList = pageArticle.get(i);
+			String content = articleList.getContent();
+			List<String> pics = articleList.getPicsUrl();
+			NewsImage image = new NewsImage(0, pics.get(0),
+					styles.get(i).getFullName());
+			image.toggleForeign();
+			styles.get(i).addStaticObjs(image);
+			image.changeImage(image.getPath());
+		}
+		for(int i =0; i < pageArticle.size(); i++){
+		LayersInfoParser.getInstance().mergeLayer(styles.get(i).getFullName());
+		}
+	}
+	
 	public void expand() {
 		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
 		NewsStyle _rect2 = new NewsStyle(-1, NewsType.RECT_2, "");
@@ -39,7 +66,7 @@ public class NewsBean {
 			int orderInd = 0;
 			for (List<NewsArticle> articleList : groups) {
 				NewsType type = articleList.get(0).getType();
-				NewsStyle style = new NewsStyle(orderInd, type,
+				NewsStyle style = new NewsStyle(orderInd++, type,
 						pagesObj[i].getFullName());
 				styles.add(style);
 			}
@@ -54,12 +81,13 @@ public class NewsBean {
 				List<NewsImage> images = new ArrayList<>();
 				for (NewsArticle newsArticle : articleList) {
 					String content = newsArticle.getContent();
-					NewsText artText = new NewsText(newsArticle.getOrder(),
-							NewsType.TEXT, content, newsArticle.getTitle());
+					
 					List<String> pics = newsArticle.getPicsUrl();
 					if (pics.size() != 0) {
+						NewsText artText = new NewsText(0,
+								NewsType.TEXT, content, newsArticle.getTitle());
 						List<BoundNewsObject> memberGroupChildCell = new ArrayList<>();
-						NewsStyle style = new NewsStyle(orderInd++,
+						NewsStyle style = new NewsStyle(newsArticle.getOrder(),
 								NewsType.GROUP, pagesObj[i].getFullName());
 						_Log.i(style.getFullName());
 						int picsInd = 0;
@@ -76,6 +104,8 @@ public class NewsBean {
 						memberGroupChildCell.add(artText);
 						memberGroupChilds.add(memberGroupChildCell);
 					} else {
+						NewsText artText = new NewsText(newsArticle.getOrder(),
+								NewsType.TEXT, content, newsArticle.getTitle());
 						member.add(artText);
 					}
 				}
@@ -86,9 +116,9 @@ public class NewsBean {
 				for (NewsStyle member1 : memberGroup) {
 					member1.addAllSubObjects(memberGroupChilds.get(ind++));
 				}
-				for (NewsImage newsImage : images) {
-					newsImage.changeImage(newsImage.getPath());
-				}
+//				for (NewsImage newsImage : images) {
+//					newsImage.changeImage(newsImage.getPath());
+//				}
 			}
 		}
 	}

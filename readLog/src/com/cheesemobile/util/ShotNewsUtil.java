@@ -65,7 +65,7 @@ public class ShotNewsUtil {
 		return rects;
 	}
 
-	private static List<Rectangle> rectsOfLinePoint(List<Point[]> linePoints) {
+	public static List<Rectangle> rectsOfLinePoint(List<Point[]> linePoints) {
 		List<Rectangle> rectsReturn = new ArrayList<Rectangle>();
 		for (Point[] points : linePoints) {
 			Rectangle r = new Rectangle();
