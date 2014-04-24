@@ -199,8 +199,8 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 //		genCenter1(24);
 //		genCenter2(24);
-//		genOthers(9);
-		genPages(9);
+//		genOthers(10);
+		genPages(10);
 //		genSafe(16);
 //		genPoam(10);
 		JSXController.getInstance().flush();
@@ -337,8 +337,8 @@ public class NewsController {
 		release2.getArticles().addAll(release4.getArticles());
 //		release4.expand();// page3
 //		release4.expand();
-		release3.expand();//page4
-//		release.expand();//page2
+//		release3.expand();//page4
+		release.expand();//page2
 	}
 
 	private void transformNews(NewsBean articles) {

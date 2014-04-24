@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.cheesemobile.domain.Rectangle.ReleativePosition;
 import com.cheesemobile.parser.LayersInfoParser;
 import com.cheesemobile.service.Constants;
 import com.cheesemobile.service.Pool;
@@ -88,7 +89,7 @@ public class NewsStyle extends BoundNewsObject {
 		for (String string : typeInLayer) {
 			NewsText nt = new NewsText(string);
 			if (staticTexts != null && staticTexts.size() > ind) {
-				String str = NewsArticle.jsxOutputFormat1( staticTexts.get(ind));
+				String str = NewsArticle.jsxOutputFormat1(staticTexts.get(ind));
 				if (!str.equals("")) {
 					nt.refreshText(str);
 				}
@@ -266,13 +267,21 @@ public class NewsStyle extends BoundNewsObject {
 		List<Rectangle> pointRects = new ArrayList<Rectangle>();
 		for (int i = 0; i < list.size(); i++) {
 			Rectangle rectangle = list.get(i);
-			if ((rectangle.getWidth() != _placePointsRectsMin
-					&& rectangle.getHeight() != _placePointsRectsMin) || (i != 0 && !rectangle.equals(list.get(i-1)))){
+			boolean same = false;
+			if (rectangle.getWidth() == _placePointsRectsMin
+					&& rectangle.getHeight() == _placePointsRectsMin) {
+				same = true;
+				pointRects.add(rectangle);
+			}
+			if ((i != 0 && rectangle.rectInRect(list.get(i - 1)).inside())) {
+				same = true;
+				pointRects.add(rectangle);
+				pointRects.add(list.get(i - 1));
+			}
+			if (!same) {
 				if (maxY < rectangle.getY()) {
 					maxY = rectangle.getY();
 				}
-			} else {
-				pointRects.add(rectangle);
 			}
 		}
 		for (int i = 0; i < pointRects.size(); i++) {

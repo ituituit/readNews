@@ -23,6 +23,12 @@ public class Rectangle {
 		public boolean inside() {
 			return !(this == ReleativePosition.OUTSIDE);
 		}
+//		public boolean touch(){
+//			if(this == ReleativePosition.TOUCH || this == ReleativePosition.INSIDE){
+//				return true;
+//			}
+//			return false;
+//		}
 	}
 
 	public Rectangle() {
@@ -265,6 +271,7 @@ public class Rectangle {
 		// boundToRectEnd();
 	}
 
+	
 	// private void boundToRectStart() {
 	// buttom = y + height;
 	// right = x + width;
@@ -369,7 +376,6 @@ public class Rectangle {
 	}
 
 	public ReleativePosition rectInRect(Rectangle rect) {
-
 		int edgeSum = 0;
 		Point[] points = this.getPoints();
 		Point[] pointsOut = rect.getPoints();
@@ -383,7 +389,6 @@ public class Rectangle {
 				edgeSum++;
 			}
 		}
-
 		switch (edgeSum) {
 		case 0:
 			return ReleativePosition.OUTSIDE;
