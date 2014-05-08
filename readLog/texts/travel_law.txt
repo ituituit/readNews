@@ -127,3 +127,10 @@
 >文化科
 <type>图片
 <img>edited/safety5.psd
+
+12
+>文化科
+<type>图片
+<img>五一大赛.jpg
+
+

@@ -20,11 +20,14 @@ public class NewsController {
 	public String _str = null;
 	private static int FIRST_CHARACTER = 0;
 
-	public enum NewsType {POAM,SAFETY,SPRING_THEME,CENTER_1,CENTER_2,CENTER_FRONT,CENTER_BACKWARD,
+	public enum NewsType {TOP_LINE,POAM,SAFETY,SPRING_THEME,CENTER_1,CENTER_2,CENTER_FRONT,CENTER_BACKWARD,
 		FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4,DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES,BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		public String toString() {
 			String str = "";
 			switch (this) {
+			case TOP_LINE:
+				str = "第一版";
+				break;
 			case POAM:
 				str = "唐宋游人诗词";
 				break;
@@ -172,7 +175,7 @@ public class NewsController {
 				return NewsType.DEVELOP_PROJECT;
 			}
 			if (type.contains("第一版")) {
-				return NewsType.SCENIC_NEWS;
+				return NewsType.TOP_LINE;
 			}
 			if (type.contains("组")) {
 				return NewsType.GROUP;
@@ -199,10 +202,10 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 //		genCenter1(24);
 //		genCenter2(24);
-//		genOthers(10);
-		genPages(10);
+//		genOthers(12);
+		genPages(12);
 //		genSafe(16);
-//		genPoam(10);
+//		genPoam(15);
 		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;
@@ -265,7 +268,7 @@ public class NewsController {
 		NewsStyle _rect4 = new NewsStyle(-1, NewsType.RECT_4, "");
 		NewsStyle centerFront = new NewsStyle(-1, NewsType.CENTER_FRONT, "");
 		NewsStyle centerBackward = new NewsStyle(-1, NewsType.CENTER_BACKWARD, "");
-		
+
 		NewsStyle _back1 = new NewsStyle(-1, NewsType.BACK_1,
 				_rect1.getFullName());
 		NewsStyle _back2 = new NewsStyle(-1, NewsType.BACK_2,
@@ -334,7 +337,7 @@ public class NewsController {
 		release3.setAll(4, NewsType.TRAVEL_LAWS);
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
 		release4.setAll(3, NewsType.SCENIC_BLOGS);
-		release2.getArticles().addAll(release4.getArticles());
+//		release2.getArticles().addAll(release4.getArticles());
 //		release4.expand();// page3
 //		release4.expand();
 //		release3.expand();//page4
