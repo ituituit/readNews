@@ -92,7 +92,7 @@ SelectArea.prototype.applyPath = function(objNames,contentBound){
     this.makePath("newTempPath")
     this.buildArea(objNames,"newTempPath")
     for(var i =0; i < objNames.length; i++){
-       // this.deletePath(objNames[i]);//buildArea invoked eraseAndDeletePath
+        this.deletePath(objNames[i]);//buildArea invoked eraseAndDeletePath for cc only
     }
     this.deletePath("newTempPath")
     this.load()  
@@ -100,6 +100,7 @@ SelectArea.prototype.applyPath = function(objNames,contentBound){
     this.makePath("newTempPath")
     this.buildArea("","newTempPath")
     deleteLayer("newTempLayer")
+    this.selectPath("newTempPath")
 }
 SelectArea.prototype.buildArea = function(objNames,contentName){
     newLayer = this.fillPath(contentName)
@@ -589,6 +590,7 @@ function makePathSelectArea(params){
     }
 
     sa.applyPath(objNames,contentBound)
+    
     sa.outputPath (_scriptPath + "newPath.ai" );
     points = sa.readAI (_scriptPath + "newPath.ai" );
     tempText = kaiti("tempText",points)
