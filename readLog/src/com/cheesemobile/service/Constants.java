@@ -8,7 +8,7 @@ public class Constants {
 	public final static float CONTENT_WIDTH_FIX_VALUE = 100f;
 	public final static float CONTENT_WIDTH = 459.36f;
 	public final static String XSL_DEBUG_ERROR_RETURN = "error:";
-	
+
 	public static String SCRIPT_FOLDER = "/Users/pwl/Documents/Adobe Scripts/";
 	public static String HOME_FOLDER = "/Users/pwl/git/readNews_remote/readLog/";
 	public static String PREFERENCE_TEMP_PATH = "/Users/pwl/Documents/Adobe Scripts/prefs.txt";
@@ -33,7 +33,7 @@ public class Constants {
 			PIC_OUTPUT_PATH = SCRIPT_FOLDER;
 		}
 	}
-	
+
 	public final static int ARTICLE_HEIGHT_DEFAULT = 300;
 	public static String PAGE_2_3_PATH = HOME_FOLDER + "image/news.psd";
 	public static String PAGE_1_4_PATH = HOME_FOLDER + "image/news1.psd";
@@ -42,8 +42,8 @@ public class Constants {
 	public static String SCENIC_BLOGS_LIBRARY_PATH = AUTOMATION_FOLDER + "scenic_blogs.txt";
 	public static String SCENIC_NEWS_LIBRARY_PATH = AUTOMATION_FOLDER + "scenic_news.txt";
 	public static String TRAVEL_LAWS_LIBRARY_PATH = AUTOMATION_FOLDER + "travel_laws.txt";
-	public static String CUSTOM_TEXT_LIBRARY_PATH = "C:/Documents and Settings/Administrator/×ÀÃæ/¼¯Ìå½±Ïî.txt";
-	public static String CUSTOM_LIBRARY_PATH = "C:/Documents and Settings/Administrator/×ÀÃæ/123.psd";
+	public static String CUSTOM_TEXT_LIBRARY_PATH = "C:/Documents and Settings/Administrator/æ¡Œé¢/é›†ä½“å¥–é¡¹.txt";
+	public static String CUSTOM_LIBRARY_PATH = "C:/Documents and Settings/Administrator/æ¡Œé¢/123.psd";
 	public static String NEWS_LIBRARY_PATH = HOME_FOLDER + "texts/contribution.txt";
 	public static String NEWS_LIBRARY_PATH_VISITORS_TRACK = HOME_FOLDER + "texts/travel.txt";
 	public static String NEWS_LIBRARY_PATH_TRAVEL_LAWS = HOME_FOLDER + "texts/travel_law.txt";
@@ -51,12 +51,12 @@ public class Constants {
 	public static String NEWS_LIBRARY_PATH_EXAMS = HOME_FOLDER + "texts/exams.txt";
 	public static String NEWS_LIBRARY_DAODE = HOME_FOLDER + "texts/tao.txt";
 	public static String NEWS_LIBRARY_PATH_OTHERS = HOME_FOLDER + "texts/other.txt";
-	public static String VISITORS_TRACK_PSD_GROUP = "ÎÄ»¯ÑĞ¾¿";
-	public static String SCENIC_BLOGS_PSD_GROUP = "²©¿ÍçåÉ½";
-	public static String SCENIC_NEWS_PSD_GROUP = "¾°Çø¿ìÑ¶";
-	public static String TRAVEL_LAWS_PSD_GROUP = "¾Û½¹°²È«Éú²ú·¨";
-	public static String TRAVEL_LINKS_PSD_GROUP = "ÂÃÓÎÁ´½Ó";
-	public static String I_SPEAK_PSD_GROUP = "ÎÒÀ´ËµÁ½¾ä";
+	public static String VISITORS_TRACK_PSD_GROUP = "æ–‡åŒ–ç ”ç©¶";
+	public static String SCENIC_BLOGS_PSD_GROUP = "åšå®¢çå±±";
+	public static String SCENIC_NEWS_PSD_GROUP = "æ™¯åŒºå¿«è®¯";
+	public static String TRAVEL_LAWS_PSD_GROUP = "èšç„¦å®‰å…¨ç”Ÿäº§æ³•";
+	public static String TRAVEL_LINKS_PSD_GROUP = "æ—…æ¸¸é“¾æ¥";
+	public static String I_SPEAK_PSD_GROUP = "æˆ‘æ¥è¯´ä¸¤å¥";
 
 	public static boolean _SET_CONTENT_NOTE_TO_TITLE = true;
 
@@ -93,7 +93,7 @@ public class Constants {
 			+ Constants.ptnTime + " - " + Constants.ptnDate + " "
 			+ Constants.ptnTime;
 	public final static String spreadSignOfAbortCase = "&&";
-	
+
 	public static String patternWords() {
 		// StringBuilder str= new StringBuilder();
 		// for(int i = 0; i < 20; i++){
