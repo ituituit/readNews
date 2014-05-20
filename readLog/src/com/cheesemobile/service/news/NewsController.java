@@ -208,7 +208,8 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 //		genCenter1(24);
 //		genCenter2(24);
-		print(false);
+
+		printPage(false);
 //		genOthers(13);
 //		genPages(13);
 //		genSafe(16);
@@ -238,7 +239,17 @@ public class NewsController {
 //		}
 	}
 
-	private void print(boolean pageOne){
+	private void printPage(int printCount){
+		String[] names = {};
+		for(int i = 0; i < 13; i++){
+			String path = names[i];
+			JSXController.getInstance().invoke("openDoc",path);
+			printSide(true);
+			JSXController.getInstance().invoke("closeDoc","0");
+		}
+	}
+	
+	private void printSide(boolean pageOne){
 		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
 		NewsStyle _rect2 = new NewsStyle(-1, NewsType.RECT_2, "");
 		NewsStyle _rect3 = new NewsStyle(-1, NewsType.RECT_3, "");
