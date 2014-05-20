@@ -128,7 +128,7 @@ public class NewsArticle {
 			sb.append("");
 			if (!getAuthor().equals("")) {
 				if (departmentExists()) {
-					sb.append("¡ª¡ª");
+					sb.append("â€”â€”");
 				}
 				sb.append(getAuthor());
 			}

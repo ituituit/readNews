@@ -161,9 +161,7 @@ public abstract class BoundNewsObject implements Serializable {
 
 	public String getFullName() {
 		String par = getParentName();
-		// if(par == ""){
-		// return getName();
-		// }
+		_Log.i("this name is:" + getName());
 		return par + "/" + getName();
 	}
 
