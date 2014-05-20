@@ -1,5 +1,6 @@
 package com.cheesemobile.service.news;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,7 +205,11 @@ public class NewsController {
 
 	public NewsController() {
 		// 荣誉证
-		// book(Constants.CUSTOM_LIBRARY_PATH,Constants.CUSTOM_TEXT_LIBRARY_PATH,NewsType.CUSTOM);
+//		 book(Constants.CUSTOM_LIBRARY_PATH,Constants.CUSTOM_TEXT_LIBRARY_PATH,NewsType.CUSTOM);
+		 // 牌
+//		card();
+		
+		printPapersDate();
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 //		genCenter1(24);
 //		genCenter2(24);
@@ -214,6 +219,7 @@ public class NewsController {
 //		genPages(13);
 //		genSafe(16);
 //		genPoam(15);
+		
 		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;
@@ -429,7 +435,84 @@ public class NewsController {
 		JSXController.getInstance().flush();
 	}
 
+	public void printPapersDate(){
+		String[] names = { "2012珏山动态第一期", "2012珏山动态第二期", "2012珏山动态第三期",
+				"2012珏山动态第四期", "2012珏山动态第五期", "2012珏山动态第六期", "2012珏山动态第七期",
+				"2012珏山动态第八期", "2012珏山动态第九期", "2012珏山动态第十期", "2012珏山动态第十一期",
+				"2012珏山动态第十二期", "2012珏山动态第十三期", "2012珏山动态第十四期",
+				"2012珏山动态第十五期", "2012珏山动态第十六期", "2012珏山动态第十七期",
+				"2012珏山动态第十八期", "2012珏山动态第十九期", "2012珏山动态第二十期",
+				"2012珏山动态第二十一期", "2012珏山动态第二十二期", "2012珏山动态第二十三期",
+				"2012珏山动态第二十四期", "2012珏山动态第二十五期", "2012珏山动态第二十六期",
+				"2012珏山动态第二十七期", "2012珏山动态第二十八期", "2012珏山动态第二十九期",
+				"2012珏山动态第三十期", "2012珏山动态第三十一期", "2012珏山动态第三十二期",
+				"2012珏山动态第三十三期", "2012珏山动态第三十四期", "2012珏山动态第三十五期",
+				"2012珏山动态第三十六期", "2012珏山动态第三十七期", "2012珏山动态第三十八期",
+				"2012珏山动态第三十九期", "2012珏山动态第四十期", "2012珏山动态第四十一期",
+				"2012珏山动态第四十二期", "2012珏山动态第四十三期", "2012珏山动态第四十四期",
+				"2012珏山动态第四十五期", "2012珏山动态第四十六期", "2012珏山动态第四十七期",
+				"2012珏山动态第四十八期", "2012珏山动态第四十九期", "2012珏山动态第五十期",
+				"2012珏山动态第五十一期", "2012珏山动态第五十二期" };
+		String[] names13 = { "第一期", "第二期", "第三期",
+				"第四期", "第五期", "第六期", "第七期",
+				"第八期", "第九期", "第十期", "第十一期",
+				"第十二期", "第十三期", "第十四期",
+				"第十五期", "第十六期", "第十七期",
+				"第十八期", "第十九期", "第二十期",
+				"第二十一期", "第二十二期", "第二十三期",
+				"第二十四期", "第二十五期", "第二十六期",
+				"第二十七期", "第二十八期", "第二十九期",
+				"第三十期", "第三十一期", "第三十二期",
+				"第三十三期", "第三十四期", "第三十五期",
+				"第三十六期", "第三十七期", "第三十八期"};
+		printAllPapers(names,2012 + "");
+//		printAllPapers(names13,2013 + "年");
+	}
+	public void printAllPapers(String[] names,String year) {
+		
+		for (int i = 0; i < names.length; i++) {
+			String path = "E:/珏山动态/"+year+"珏山动态/" + names[i];
+			File file = new File(path);
+			List picPaths = new ArrayList();
+			if (file.isDirectory()) {
+				String newPath = path + "/" + names[i];
+				picPaths.add(newPath + "1.psd");
+				picPaths.add(newPath + "2.psd");
+				picPaths.add(newPath + "3.psd");
+				picPaths.add(newPath + "4.psd");
+			} else {
+				if (!file.exists()) {
+					picPaths.add(path + "1.psd");
+					picPaths.add(path + "2.psd");
+				}
+			}
+//			_Log.i("" + picPaths);
+			FileUtil.checkFilesExists((String[]) picPaths.toArray(new String[picPaths.size()]));
+			_Log.i("" + picPaths.get(0));
+			
+			NewsImage backwardImage = new NewsImage(0,"","_rect_1");
+			backwardImage.changeImage("" + picPaths.get(0));
+			JSXController.getInstance().invoke("printJSX", "0");
+			if(picPaths.size() > 2){
+				backwardImage.changeImage("" + picPaths.get(2));
+				JSXController.getInstance().invoke("printJSX", "0");
+			}
+			
+		}
+	}
 	
+	public void card() {
+		String[] array = { "毋 永", "城 区", "泽 州", "陵 川", "高 平", "沁 水", "阳 城",
+				"佛 教", "道 教", "伊斯兰教", "天主教", "基督教" };
+		for (int i = 0; i < array.length; i++) {
+			NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
+			_rect1.addStaticText(array[i]);
+			_rect1.addStaticText(array[i]);
+			_rect1.updateStaticTexts();
+			JSXController.getInstance().invoke("printJSX", "0");
+			//JSXController.getInstance().flush();
+		}
+	}
 	public void book(String libPath, String textPath, NewsType layerDumped) {
 		NewsBeanArray nbs = articlesFromString(textPath);
 		List<NewsArticle> articles = new ArrayList<>();
