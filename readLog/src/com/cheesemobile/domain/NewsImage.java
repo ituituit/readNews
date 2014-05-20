@@ -32,16 +32,17 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 	protected String dumplicateNew() {
 		JSXController.getInstance().invoke("addImage", _imagePath,
 				this.getName());
-		LayersInfoParser.getInstance().importImage(_imagePath, this.getName());
+		LayersInfoParser.getInstance().importImage(_imagePath, this.getName(),rectMask);
 		return this.getName();
 	}
 
 	public void applyMask(Rectangle bound) {
-		JSXController.getInstance().invoke("selectBound", "" + bound.getX(),
-				"" + bound.getY(), "" + bound.getRight(),
-				"" + bound.getButtom());
-		JSXController.getInstance().invoke("addMask", "0");
+//		JSXController.getInstance().invoke("selectBound", "" + bound.getX(),
+//				"" + bound.getY(), "" + bound.getRight(),
+//				"" + bound.getButtom());
+//		JSXController.getInstance().invoke("addMask", "0");
 		this.rectMask = bound;
+		this.setBound(bound);
 	}
 
 	public void mergeMask() {
@@ -57,7 +58,7 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 		bound2.setY(rect.getY());
 		bound2.setWidth(rect.getWidth());
 		bound2.setHeight(0);
-		this.setBound(bound2);
+//		this.setBound(bound2);//no height
 		// mergeMask();
 		applyMask(rect);
 	}
@@ -75,6 +76,11 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 	public void changeImage(String path) {
 		this._imagePath = path;
 		Rectangle rect = this.getBound();
+		
+		if(rectMask == null){
+			rectMask = rect;
+		}
+		
 		// delete
 		LayersInfoParser.getInstance().deleteLayer(this.getFullName());
 		// dumplicate

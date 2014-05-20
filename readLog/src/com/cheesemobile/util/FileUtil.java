@@ -63,12 +63,12 @@ public class FileUtil {
 //				bw = new OutputStreamWriter(new FileOutputStream(filePath),"UTF-8");
 //				
 //			}
-			// 灏嗗唴�?�瑰啓鍏ユ枃浠朵�?
+			// 灏嗗唴�?�瑰啓鍏ユ枃浠朵�?
 			bw.write(content);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			// 鍏抽棴娴�?
+			// 鍏抽棴娴�?
 			if (bw != null) {
 				try {
 					bw.close();
@@ -437,4 +437,16 @@ public class FileUtil {
 		return null;
 	}
 
+	public static boolean checkFilesExists(String[] strs){
+		boolean passed = true;
+		for (String string : strs) {
+			File file = new File(string);
+//			_Log.i("check files exists:" + string);
+			if(!file.exists()){
+				_Log.i("file not exists:" + string);
+				passed = false;
+			}
+		}
+		return passed;
+	}
 }
