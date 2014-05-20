@@ -112,6 +112,14 @@ public abstract class BoundNewsObject implements Serializable {
 		return this.getName();
 	}
 
+	public void hide(){
+		JSXController.getInstance().invoke("hide",this.getName());
+	}
+	
+	public void show(){
+		JSXController.getInstance().invoke("show", this.getName());
+	}
+	
 	public void move(Point toPoint) {
 		Rectangle bound2 = getBound();
 		move(bound2.getCenter(), toPoint);

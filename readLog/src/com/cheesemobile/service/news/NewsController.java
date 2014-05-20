@@ -20,11 +20,17 @@ public class NewsController {
 	public String _str = null;
 	private static int FIRST_CHARACTER = 0; 
 
-	public enum NewsType {TOP_LINE,POAM,SAFETY,SPRING_THEME,CENTER_1,CENTER_2,CENTER_FRONT,CENTER_BACKWARD,
+	public enum NewsType {FILTER_1,FILTER_2,TOP_LINE,POAM,SAFETY,SPRING_THEME,CENTER_1,CENTER_2,CENTER_FRONT,CENTER_BACKWARD,
 		FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4,DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES,BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		public String toString() {
 			String str = "";
 			switch (this) {
+			case FILTER_1:
+				str = "组 4";
+				break;
+			case FILTER_2:
+				str = "组 5";
+				break;
 			case TOP_LINE:
 				str = "第一版";
 				break;
@@ -202,7 +208,8 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 //		genCenter1(24);
 //		genCenter2(24);
-		genOthers(13);
+		print(false);
+//		genOthers(13);
 //		genPages(13);
 //		genSafe(16);
 //		genPoam(15);
@@ -231,6 +238,37 @@ public class NewsController {
 //		}
 	}
 
+	private void print(boolean pageOne){
+		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
+		NewsStyle _rect2 = new NewsStyle(-1, NewsType.RECT_2, "");
+		NewsStyle _rect3 = new NewsStyle(-1, NewsType.RECT_3, "");
+		NewsStyle _rect4 = new NewsStyle(-1, NewsType.RECT_4, "");
+		NewsStyle centerFront = new NewsStyle(-1, NewsType.CENTER_FRONT, "");
+		NewsStyle centerBackward = new NewsStyle(-1, NewsType.CENTER_BACKWARD, "");
+		NewsStyle filterFront = new NewsStyle(-1, NewsType.FILTER_1, "");
+		NewsStyle filterBackward = new NewsStyle(-1, NewsType.FILTER_2, "");
+		_rect1.hide();
+		_rect2.hide();
+		_rect3.hide();
+		_rect4.hide();
+		centerFront.hide();
+		centerBackward.hide();
+		filterFront.hide();
+		filterBackward.hide();
+		
+		if(pageOne){
+		_rect1.show();
+		_rect4.show();
+		centerFront.show();
+		filterFront.show();
+		}else{
+		_rect2.show();
+		_rect3.show();
+		centerBackward.show();
+		filterBackward.show();
+		}
+	}
+	
 	private void gendishes() {
 		Constants.IMG_DESTINATION_PATH = "C:/Documents and Settings/Administrator/桌面/dishes/";
 		String LIB_DISHES_PATH = "C:/Documents and Settings/Administrator/桌面/dishes.txt";
