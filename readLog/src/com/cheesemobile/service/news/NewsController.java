@@ -214,7 +214,6 @@ public class NewsController {
 //		genCenter1(24);
 //		genCenter2(24);
 
-		printPage(false);
 //		genOthers(13);
 //		genPages(13);
 //		genSafe(16);
@@ -245,12 +244,12 @@ public class NewsController {
 //		}
 	}
 
-	private void printPage(int printCount){
-		String[] names = {};
-		for(int i = 0; i < 13; i++){
-			String path = names[i];
+	private void printNewPage(String[] names,String Path){
+		for(int i = 0; i < names.length; i++){
+			String path = Path + names[i] + ".psd";
 			JSXController.getInstance().invoke("openDoc",path);
-			printSide(true);
+			printSide(false);
+			JSXController.getInstance().invoke("save", path);
 			JSXController.getInstance().invoke("closeDoc","0");
 		}
 	}
@@ -465,13 +464,19 @@ public class NewsController {
 				"第三十期", "第三十一期", "第三十二期",
 				"第三十三期", "第三十四期", "第三十五期",
 				"第三十六期", "第三十七期", "第三十八期"};
-		printAllPapers(names,2012 + "");
-//		printAllPapers(names13,2013 + "年");
+		String[] names14 = {
+				"第四期", "第五期", "第六期", "第七期",
+				"第八期", "第九期", "第十期", "第十一期",
+				"第十二期", "第十三期"};
+//		printAllPapers(names,2012 + "");
+//		printAllPapers(names13,2013 + "H:/备份/2014珏山动态/" "年");
+		printAllPapers(names14,"H:/备份/2014珏山动态/");
+//		printNewPage(names14,"H:/备份/2014珏山动态/");
 	}
 	public void printAllPapers(String[] names,String year) {
 		
 		for (int i = 0; i < names.length; i++) {
-			String path = "E:/珏山动态/"+year+"珏山动态/" + names[i];
+			String path = year + names[i];
 			File file = new File(path);
 			List picPaths = new ArrayList();
 			if (file.isDirectory()) {

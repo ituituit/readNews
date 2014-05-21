@@ -771,9 +771,6 @@ executeAction( idShw, desc1174, DialogModes.NO );
 function openDoc(params){
 var fileRef = File(params[0])
 var dest = app.open(fileRef)    
-app.activeDocument = dest
-collegeInfo("newXML.xml")
-$.write("ok")
 fileRef.close();
 }
 
@@ -788,3 +785,18 @@ var idCls = charIDToTypeID( "Cls " );
 executeAction( idCls, desc1177, DialogModes.NO );
 }
 
+function save(params){
+var fileRef = File(params[0])
+    // =======================================================
+    var idsave = charIDToTypeID( "save" );
+    var desc41 = new ActionDescriptor();
+    var idIn = charIDToTypeID( "In  " );
+    desc41.putPath( idIn, new File(fileRef) );
+    var idDocI = charIDToTypeID( "DocI" );
+    desc41.putInteger( idDocI, 346 );
+    var idsaveStage = stringIDToTypeID( "saveStage" );
+    var idsaveStageType = stringIDToTypeID( "saveStageType" );
+    var idsaveSucceeded = stringIDToTypeID( "saveSucceeded" );
+    desc41.putEnumerated( idsaveStage, idsaveStageType, idsaveSucceeded );
+executeAction( idsave, desc41, DialogModes.NO );
+}
