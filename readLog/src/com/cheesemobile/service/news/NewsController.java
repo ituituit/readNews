@@ -209,7 +209,7 @@ public class NewsController {
 		 // 牌
 //		card();
 		
-		printPapersDate();
+		printPics();
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 //		genCenter1(24);
 //		genCenter2(24);
@@ -434,6 +434,17 @@ public class NewsController {
 		JSXController.getInstance().flush();
 	}
 
+	public void printPics(){
+		String[] names = {"0758248951.jpg","135441468878-1 (dragged).tiff","08162080923.jpg","13544151729.jpg","09071100134ee51a7b20094a29.jpg","135471912147.gif","09111214512523274e811dca9e.jpg","135497440364-1 (dragged).tiff","1-14010G01P9150.gif","13551155278.jpg","10190775168.jpg","135532267994-1 (dragged).tiff","1111181432b6a474e174460580.jpg","135563301244-1 (dragged).tiff","11122716401a9a983cae91bfc7.jpg","135573028139.gif","11P45B164-8.jpg","13562286386.jpg","1201051203b8bd1d18df4ede28.gif","1377504019_b.jpg","135095439786.jpg","20130227162745_JEzzZ.jpeg","135095440067.jpg","3360_1290149540lR6F.jpg","135115197398.gif","4c91e6bdb88ef8f4c07fe333e5ca545f.jpg","135115197443.jpg","8-130Q6102I3.jpg","135175845364.gif","8e42fc75097afe8cbc293057f781fd74.gif","135187774703-1 (dragged).tiff","f8QVZ.jpeg","135204523089-1 (dragged).tiff","jbh10072322030c7e91a8cb4cfba0.gif","135237962449.jpg","jianbihua558.gif","135259674356.jpg","sy_57164692682.jpg","135383449733.jpg"};
+		String path = "/Users/pwl/Desktop/untitled folder 2/";
+		
+		for (String string : names) {
+			String url = path + string;
+			NewsImage backwardImage = new NewsImage(0,"","_rect_1");
+			backwardImage.changeImage("" + url);
+//			JSXController.getInstance().invoke("printJSX", "0");
+		}
+	}
 	public void printPapersDate(){
 		String[] names = { "2012珏山动态第一期", "2012珏山动态第二期", "2012珏山动态第三期",
 				"2012珏山动态第四期", "2012珏山动态第五期", "2012珏山动态第六期", "2012珏山动态第七期",
