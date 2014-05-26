@@ -151,9 +151,10 @@ public class LayersInfoParser {
 		// } catch (IOException e) {
 		// e.printStackTrace();
 		// }
+		Rectangle newRect = new Rectangle(rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight());
 		LayerInfoBean bean = new LayerInfoBean();
 		bean.setFullName(tempName);
-		bean.setRect(rect);
+		bean.setRect(newRect);
 		list.add(bean);
 	}
 

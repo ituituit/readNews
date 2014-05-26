@@ -17,7 +17,7 @@ public class NewsArticle {
 	private String department;
 	private String title;
 	private List<String> picsUrl;
-	TextRangeBean trb;
+	private TextRangeBean trb;
 	private int bracketsType = 1;
 
 	public NewsArticle(int id, Date sendDate, String content, String pick,

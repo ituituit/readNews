@@ -73,7 +73,7 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 	
 	@Override
 	protected boolean canDraw(){
-		if(text  == null){
+		if(text  == null || text.length() == 0){
 			return false;
 		}
 		return super.canDraw();

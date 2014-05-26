@@ -24,32 +24,33 @@ public class NewsBean {
 		this.releaseVer = releaseVer;
 	}
 
-	public void expandStatic(){
+	public void expandStatic() {
 		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
 		List<NewsArticle> pageArticle = pageMatched(articles, 1);
 		// //////////////////////////////////
 		List<NewsStyle> styles = new ArrayList<>();
-		for(int i =0; i < pageArticle.size(); i++){
+		for (int i = 0; i < pageArticle.size(); i++) {
 			NewsStyle style = new NewsStyle(i, pageArticle.get(i).getType(),
 					_rect1.getFullName());
 			styles.add(style);
 		}
 		_rect1.addStaticObjs(styles);
-		for(int i =0; i < pageArticle.size(); i++){
+		for (int i = 0; i < pageArticle.size(); i++) {
 			NewsArticle articleList = pageArticle.get(i);
 			String content = articleList.getContent();
 			List<String> pics = articleList.getPicsUrl();
-			NewsImage image = new NewsImage(0, pics.get(0),
-					styles.get(i).getFullName());
+			NewsImage image = new NewsImage(0, pics.get(0), styles.get(i)
+					.getFullName());
 			image.toggleForeign();
 			styles.get(i).addStaticObjs(image);
 			image.changeImage(image.getPath());
 		}
-		for(int i =0; i < pageArticle.size(); i++){
-		LayersInfoParser.getInstance().mergeLayer(styles.get(i).getFullName());
+		for (int i = 0; i < pageArticle.size(); i++) {
+			LayersInfoParser.getInstance().mergeLayer(
+					styles.get(i).getFullName());
 		}
 	}
-	
+
 	public void expand() {
 		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
 		NewsStyle _rect2 = new NewsStyle(-1, NewsType.RECT_2, "");
@@ -84,8 +85,8 @@ public class NewsBean {
 					String contentTypes = newsArticle.getContentTypes();
 					List<String> pics = newsArticle.getPicsUrl();
 					if (pics.size() != 0) {
-						NewsText artText = new NewsText(0,
-								NewsType.TEXT, content, newsArticle.getTitle(),contentTypes);
+						NewsText artText = new NewsText(0, NewsType.TEXT,
+								content, newsArticle.getTitle(), contentTypes);
 						List<BoundNewsObject> memberGroupChildCell = new ArrayList<>();
 						NewsStyle style = new NewsStyle(newsArticle.getOrder(),
 								NewsType.GROUP, pagesObj[i].getFullName());
@@ -94,7 +95,7 @@ public class NewsBean {
 						for (String string : pics) {
 							NewsImage image = new NewsImage(picsInd++, string,
 									style.getFullName());
-							if(artText.canDraw()){
+							if (artText.canDraw()) {
 								image.toggleForeign();
 							}
 							memberGroupChildCell.add(image);
@@ -105,7 +106,8 @@ public class NewsBean {
 						memberGroupChilds.add(memberGroupChildCell);
 					} else {
 						NewsText artText = new NewsText(newsArticle.getOrder(),
-								NewsType.TEXT, content, newsArticle.getTitle(),contentTypes);
+								NewsType.TEXT, content, newsArticle.getTitle(),
+								contentTypes);
 						member.add(artText);
 					}
 				}
@@ -116,9 +118,6 @@ public class NewsBean {
 				for (NewsStyle member1 : memberGroup) {
 					member1.addAllSubObjects(memberGroupChilds.get(ind++));
 				}
-//				for (NewsImage newsImage : images) {
-//					newsImage.changeImage(newsImage.getPath());
-//				}
 			}
 		}
 	}

@@ -9,8 +9,8 @@ import com.cheesemobile.service.news.NewsController.NewsType;
 
 public class NewsLine extends NewsStyle implements MovementsInterface {
 	List<List<Rectangle>> linesGroup = null;
-	private List<NewsImage> imagesRow = new ArrayList<>();
-	private List<NewsImage> imagesCow = new ArrayList<>();
+	private List<NewsShape> imagesRow = new ArrayList<>();
+	private List<NewsShape> imagesCow = new ArrayList<>();
 
 	public NewsLine(String parentName, List<Rectangle> placePointsLines) {
 		super(-1, NewsType.SPLIT_LINES, parentName);
@@ -22,7 +22,7 @@ public class NewsLine extends NewsStyle implements MovementsInterface {
 				rowType = NewsType.COW;
 			}
 			for (Rectangle rectangle : linesGroup.get(i)) {
-				NewsImage newsImage = new NewsImage(ind++,rowType) {
+				NewsShape newsImage = new NewsShape(ind++,rowType) {
 					protected String dumplicateNew() {
 						JSXController.getInstance().invoke(
 								"dumplicate",
@@ -68,7 +68,7 @@ public class NewsLine extends NewsStyle implements MovementsInterface {
 			}
 
 		}
-		List<NewsImage> imagesRow2 = imagesRow;
+		List<NewsShape> imagesRow2 = imagesRow;
 		imagesRow2.addAll(imagesCow);
 		this.addAll2(imagesRow2);
 	}

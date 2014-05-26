@@ -221,8 +221,8 @@ public class NewsController {
 //		genCenter1(24);
 //		genCenter2(24);
 
-//		genOthers(13);
-		genPages(13);
+//		genOthers(14);
+		genPages(14);
 //		genSafe(16);
 //		genPoam(15);
 //		String content =  "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";

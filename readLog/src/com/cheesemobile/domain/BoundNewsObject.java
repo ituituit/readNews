@@ -13,7 +13,6 @@ public abstract class BoundNewsObject implements Serializable {
 	private static final long serialVersionUID = -4076032451122684376L;
 	private NewsType type;
 	private int id;
-//	private Rectangle bound;
 	private NewsBackground background;
 	private String parentName;
 	private String customName = null;
@@ -159,11 +158,9 @@ public abstract class BoundNewsObject implements Serializable {
 				"" + bound.getButtom());
 		LayersInfoParser.getInstance().setBound(this.getFullName(), this.getBound(),
 				bound);
-//		this.bound = bound;
 	}
 
 	public Rectangle getBound() {
-//		bound = 
 		return LayersInfoParser.getInstance().bound(this.getFullName());
 	}
 

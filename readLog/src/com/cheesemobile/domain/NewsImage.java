@@ -32,17 +32,27 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 	protected String dumplicateNew() {
 		JSXController.getInstance().invoke("addImage", _imagePath,
 				this.getName());
-		LayersInfoParser.getInstance().importImage(_imagePath, this.getName(),rectMask);
+		Rectangle rect = new Rectangle();
+		if(rectMask != null){
+			rect = rectMask;
+		}
+		LayersInfoParser.getInstance().importImage(_imagePath, this.getName(),rect);
 		return this.getName();
 	}
 
-	public void applyMask(Rectangle bound) {
-//		JSXController.getInstance().invoke("selectBound", "" + bound.getX(),
-//				"" + bound.getY(), "" + bound.getRight(),
-//				"" + bound.getButtom());
-//		JSXController.getInstance().invoke("addMask", "0");
+	public void applyMask(Rectangle bound){
+		applyMask(bound,true);
+	}
+	
+	public void applyMask(Rectangle bound,boolean setBound) {//turn off setbound used in special sloutions only!!!
+		if(setBound){
+			this.setBound(bound);
+		}
 		this.rectMask = bound;
-		this.setBound(bound);
+		JSXController.getInstance().invoke("selectBound", "" + bound.getX(),
+				"" + bound.getY(), "" + bound.getRight(),
+				"" + bound.getButtom());
+		JSXController.getInstance().invoke("addMask", "0");
 	}
 
 	public void mergeMask() {

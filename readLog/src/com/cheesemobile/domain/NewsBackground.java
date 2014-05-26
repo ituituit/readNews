@@ -56,11 +56,11 @@ public class NewsBackground extends NewsStyle implements
 		_bounds.addAll(_boundsCenter);
 		final List<BoundNewsObject> images = new ArrayList<>();
 		for (int i = 0; i < backgroundInds.length; i++) {
-			NewsImage newsImage = new NewsImage(-1,backgroundInds[i]) {
+			NewsShape newsImage = new NewsShape(-1,backgroundInds[i]) {
 				protected String dumplicateNew() {
 					JSXController.getInstance().invoke("dumplicate",this.getParentName() + "/0", this.getName());
 					LayersInfoParser.getInstance().dumplicate(this.getParentName() + "/0",this.getFullName(),null);
-					this.applyMask(_bounds.get(images.indexOf(this)));
+					this.applyMask(_bounds.get(images.indexOf(this)),false);
 					this.mergeMask();
 					
 					return this.getName();
