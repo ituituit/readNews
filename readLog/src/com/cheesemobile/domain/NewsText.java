@@ -13,20 +13,21 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 	private List<String> assoicatedObjNames = new ArrayList<>();
 	private String text;
 	private String title;
+	private String contentTypes;//a formated string to store text styles
+//	public NewsText(int id, NewsType type, String text, String contentTypes) {
+//		super(id, type);
+//		init(text, "",contentTypes);
+//	}
 
-	public NewsText(int id, NewsType type, String text) {
+	public NewsText(int id, NewsType type, String text, String title,String contentTypes) {
 		super(id, type);
-		init(text, "");
+		init(text, title,contentTypes);
 	}
 
-	public NewsText(int id, NewsType type, String text, String title) {
-		super(id, type);
-		init(text, title);
-	}
-
-	private void init(String text, String title) {
+	private void init(String text, String title,String contentTypes) {
 		this.text = text;
 		this.title = title;
+		this.contentTypes = contentTypes;
 	}
 
 	public NewsText(String fullName) {
@@ -42,6 +43,7 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 //		params.addAll(assoicatedObjNames);
 		JSXController.getInstance().invoke("makePathSelectArea",
 				(String[]) params.toArray(new String[params.size()]));
+		JSXController.getInstance().invoke("setContentTypes", getFullName(), contentTypes);
 	}
 
 	@Override

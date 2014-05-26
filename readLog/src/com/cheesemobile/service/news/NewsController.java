@@ -10,6 +10,7 @@ import com.cheesemobile.domain.NewsBeanArray;
 import com.cheesemobile.domain.NewsImage;
 import com.cheesemobile.domain.NewsStyle;
 import com.cheesemobile.domain.NewsText;
+import com.cheesemobile.domain.TextRangeBean;
 import com.cheesemobile.service.Constants;
 import com.cheesemobile.service.JSXController;
 import com.cheesemobile.util.FileUtil;
@@ -21,7 +22,7 @@ public class NewsController {
 	public String _str = null;
 	private static int FIRST_CHARACTER = 0; 
 
-	public enum NewsType {FILTER_1,FILTER_2,TOP_LINE,POAM,SAFETY,SPRING_THEME,CENTER_1,CENTER_2,CENTER_FRONT,CENTER_BACKWARD,
+	public enum NewsType {SAFETY_LAW,FILTER_1,FILTER_2,TOP_LINE,POAM,SAFETY,SPRING_THEME,CENTER_1,CENTER_2,CENTER_FRONT,CENTER_BACKWARD,
 		FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4,DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES,BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		public String toString() {
 			String str = "";
@@ -167,11 +168,17 @@ public class NewsController {
 			case SAFETY:
 				str = "安全专栏";
 				break;
+			case SAFETY_LAW:
+				str = "聚焦安全生产法";
+				break;
 			}
 			return str;
 		}
 
 		public static NewsType typeFromString(String type) {
+			if (type.contains("聚焦安全生产法")) {
+				return NewsType.SAFETY_LAW;
+			}
 			if (type.contains("图片")) {
 				return NewsType.GROUP;
 			}
@@ -209,15 +216,18 @@ public class NewsController {
 		 // 牌
 //		card();
 		
-		printPics();
+//		printPics();
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 //		genCenter1(24);
 //		genCenter2(24);
 
 //		genOthers(13);
-//		genPages(13);
+		genPages(13);
 //		genSafe(16);
 //		genPoam(15);
+//		String content =  "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
+//		TextRangeBean tx =  new TextRangeBean(content);
+//		genTravelLaw(53);
 		
 		JSXController.getInstance().flush();
 		if (0 == 0) {
@@ -310,6 +320,13 @@ public class NewsController {
 		release.setAll(1, NewsType.POAM);
 		release.expand();
 	}
+	private void genTravelLaw(int i){
+		String LIB_DISHES_PATH = Constants.HOME_FOLDER + "texts/travel_law.txt";
+		NewsBeanArray articleStatues = articlesFromString(LIB_DISHES_PATH);
+		NewsBean release = articleStatues.getRelease(i);
+		release.setAll(1, NewsType.SAFETY_LAW);
+		release.expand();
+	}
 
 	private void genOthers(int releaseNumber) {
 		NewsBeanArray articleStatues = articlesFromString(Constants.NEWS_LIBRARY_PATH_OTHERS);
@@ -395,7 +412,7 @@ public class NewsController {
 //		release4.expand();// page3
 //		release4.expand();
 //		release3.expand();//page4
-//		release.expand();//page2
+		release.expand();//page2
 	}
 
 	private void transformNews(NewsBean articles) {
@@ -529,6 +546,7 @@ public class NewsController {
 			//JSXController.getInstance().flush();
 		}
 	}
+	
 	public void book(String libPath, String textPath, NewsType layerDumped) {
 		NewsBeanArray nbs = articlesFromString(textPath);
 		List<NewsArticle> articles = new ArrayList<>();

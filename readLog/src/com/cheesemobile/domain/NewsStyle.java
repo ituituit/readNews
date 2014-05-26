@@ -183,7 +183,7 @@ public class NewsStyle extends BoundNewsObject {
 				Rectangle rect = new Rectangle(memBound.getX(),
 						memBound.getY(), memBound.getWidth(),
 						memBound.getHeight());
-				childScaledRects.add(rect);// ÎÄ±¾µÄrect
+				childScaledRects.add(rect);// ï¿½Ä±ï¿½ï¿½ï¿½rect
 			}
 		}
 		// skip foreigns:

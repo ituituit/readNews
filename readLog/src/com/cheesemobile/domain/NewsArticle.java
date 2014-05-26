@@ -12,11 +12,12 @@ public class NewsArticle {
 	private int order;
 	private NewsType type;
 	private Date sendDate;
-	private String content;
+//	private String content;
 	private String author;
 	private String department;
 	private String title;
 	private List<String> picsUrl;
+	TextRangeBean trb;
 	private int bracketsType = 1;
 
 	public NewsArticle(int id, Date sendDate, String content, String pick,
@@ -25,7 +26,7 @@ public class NewsArticle {
 		super();
 		this.id = id;
 		this.sendDate = sendDate;
-		this.content = content;
+//		this.content = trb.textContent();
 		this.author = pick;
 		if (pick.length() < 1 && department.indexOf(" ") != -1) {
 			this.author = department.substring(department.indexOf(" ") + 1);
@@ -41,6 +42,7 @@ public class NewsArticle {
 		this.type = type;
 		this.page = page;
 		this.bracketsType = bracketsType;
+		trb = new TextRangeBean(format(content));
 	}
 
 	public int getPage() {
@@ -102,17 +104,25 @@ public class NewsArticle {
 	public static StringBuilder jsxOutputFormat(String str){
 		StringBuilder sb = new StringBuilder();
 		sb.append(str);
+		if(sb.length() == 0){
+			return null;
+		}
 		while (sb.lastIndexOf("\r") == sb.length() - 1
 				|| sb.lastIndexOf("\n") == sb.length() - 1
 				|| sb.lastIndexOf(" ") == sb.length() - 1) {
-			sb.deleteCharAt(sb.length() - 1);
+			if(sb.length() - 1 <0){
+				break;
+			}
+			int i = sb.length() - 1;
+			sb.deleteCharAt(i);
 		}
 		return sb;
 	}
 	public static String jsxOutputFormat1(String str){
 		return str.replaceAll("\r","\\\\r");
 	}
-	public String getContent() {
+
+	public String format(String content){
 		StringBuilder sb = new StringBuilder();
 		sb.append(content);
 		_Log.i("" + sb.length());
@@ -137,7 +147,13 @@ public class NewsArticle {
 		if (sb.lastIndexOf("()") == sb.length() - "()".length()) {
 			return sb.substring(0, sb.length() - "()".length());
 		}
-		return jsxOutputFormat1(sb.toString());
+		return (sb.toString());
+	}
+	public String getContentTypes(){
+		return trb.textContentTypes();
+	}
+	public String getContent() {
+		return jsxOutputFormat1(trb.textContent());
 	}
 
 	private boolean departmentExists() {
@@ -148,7 +164,8 @@ public class NewsArticle {
 	}
 
 	public void setContent(String content) {
-		this.content = content;
+		trb = new TextRangeBean(format(content));
+//		this.content = content;
 	}
 
 	public String getAuthor() {
@@ -169,6 +186,7 @@ public class NewsArticle {
 
 	@Override
 	public String toString() {
+		String content = trb.textContent();
 		return id + " " + page + " " + order + ", type=" + type + ", sendDate="
 				+ sendDate + ", content="
 				+ content.substring(0, content.length() / 10) + "..."

@@ -81,11 +81,11 @@ public class NewsBean {
 				List<NewsImage> images = new ArrayList<>();
 				for (NewsArticle newsArticle : articleList) {
 					String content = newsArticle.getContent();
-					
+					String contentTypes = newsArticle.getContentTypes();
 					List<String> pics = newsArticle.getPicsUrl();
 					if (pics.size() != 0) {
 						NewsText artText = new NewsText(0,
-								NewsType.TEXT, content, newsArticle.getTitle());
+								NewsType.TEXT, content, newsArticle.getTitle(),contentTypes);
 						List<BoundNewsObject> memberGroupChildCell = new ArrayList<>();
 						NewsStyle style = new NewsStyle(newsArticle.getOrder(),
 								NewsType.GROUP, pagesObj[i].getFullName());
@@ -105,7 +105,7 @@ public class NewsBean {
 						memberGroupChilds.add(memberGroupChildCell);
 					} else {
 						NewsText artText = new NewsText(newsArticle.getOrder(),
-								NewsType.TEXT, content, newsArticle.getTitle());
+								NewsType.TEXT, content, newsArticle.getTitle(),contentTypes);
 						member.add(artText);
 					}
 				}
@@ -269,7 +269,7 @@ public class NewsBean {
 		return mySet;
 	}
 
-	// Í³¼ÆÃ¿¸ö²¿ÃÅÍ¶¸åÊý
+	// Í³ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½
 	public List<List<Integer>> repeatList(List<String> list) {
 		List<List<Integer>> repeatList = new ArrayList<List<Integer>>();
 
@@ -289,7 +289,7 @@ public class NewsBean {
 		return repeatList;
 	}
 
-	// ÏÔÊ¾Ã¿¸ö²¿ÃÅÍ¶¸åÊý
+	// ï¿½ï¿½Ê¾Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½
 	private void traceRepeatList(List<List<Integer>> department,
 			List<String> dnames) {
 		for (int i = 0; i < department.size(); i++) {
