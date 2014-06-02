@@ -733,6 +733,9 @@ public class CustomCtrl {
 		cc.setActY(cc.getY() + cc.getHeight() / 2);
 	}
 
+	public ArrayList<CustomCtrlBean> getControlList(){
+		return controlList;
+	}
 	public void write(String iniPath) {
 		_Log.i("wirting");
 		IniReader reader = new IniReader(iniPath);

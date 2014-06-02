@@ -220,10 +220,7 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		printSide(false);
-		printSide(false);
-		printSide(false);
-		printSide(false);
+		printSide(true,5);
 		// genOthers(14);
 		// genPages(14);
 		// genSafe(16);
@@ -268,7 +265,7 @@ public class NewsController {
 		}
 	}
 
-	private void printSide(boolean pageOne) {
+	private void printSide(boolean pageOne,int number) {
 		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
 		NewsStyle _rect2 = new NewsStyle(-1, NewsType.RECT_2, "");
 		NewsStyle _rect3 = new NewsStyle(-1, NewsType.RECT_3, "");
@@ -298,7 +295,9 @@ public class NewsController {
 			centerBackward.show();
 			filterBackward.show();
 		}
-		JSXController.getInstance().invoke("printJSX", "0");
+		for(int i = 0; i < number;i ++){
+			JSXController.getInstance().invoke("printJSX", "0");
+		}
 	}
 
 	private void gendishes() {
