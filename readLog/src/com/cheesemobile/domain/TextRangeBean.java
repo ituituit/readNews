@@ -23,7 +23,6 @@ public class TextRangeBean extends ArrayList<TextRange> {
 		}
 		Document document = Jsoup.parse(content);
 		Element child = document.child(0).child(1);
-//		_Log.i("" +child.text());
 //		_text.append(child.ownText());
 		for (Node node : child.childNodes()) {
 			String tex = "";
@@ -32,7 +31,6 @@ public class TextRangeBean extends ArrayList<TextRange> {
 			}else if(TextNode.class == node.getClass()){
 				tex = ((TextNode)node).getWholeText();
 			}
-//			_Log.i(node.toString() + "");
 			int s = _text.length();
 			_text.append(tex);
 			int e = _text.length();
@@ -47,10 +45,6 @@ public class TextRangeBean extends ArrayList<TextRange> {
 //				trs.add(new TextRange(s, e, "正文"));
 			}
 		}
-
-		_Log.i(_text + "");
-		_Log.i(trs + "");
-
 	}
 
 	public String textContentTypes() {

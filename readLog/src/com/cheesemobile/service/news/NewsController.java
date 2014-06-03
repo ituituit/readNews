@@ -12,6 +12,7 @@ import com.cheesemobile.domain.NewsStyle;
 import com.cheesemobile.domain.NewsText;
 import com.cheesemobile.domain.TextRangeBean;
 import com.cheesemobile.service.Constants;
+import com.cheesemobile.service.CustomCtrl;
 import com.cheesemobile.service.JSXController;
 import com.cheesemobile.util.FileUtil;
 import com.cheesemobile.util.StringUtil;
@@ -220,16 +221,18 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		printSide(true,5);
+//		printSide(true,5);
 		// genOthers(14);
 		// genPages(14);
 		// genSafe(16);
 		// genPoam(15);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
-		// genTravelLaw(53);
-
-		JSXController.getInstance().flush();
+//		genTravelLaw(59);
+		manPath();
+//		String [] strs = {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
+//		CustomCtrl.getInstance().ctrlOnSample(strs);
+//		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;
 		}
@@ -255,6 +258,15 @@ public class NewsController {
 		// }
 	}
 
+	private void manPath(){
+		JavaApplescriptTest as = new JavaApplescriptTest();
+		JSXController.getInstance().flush();
+		as.copy();
+		JSXController.getInstance().invoke("manPath","0");
+		JSXController.getInstance().flush();
+		as.paste();
+	}
+	
 	private void printNewPage(String[] names, String Path) {
 		for (int i = 0; i < names.length; i++) {
 			String path = Path + names[i] + ".psd";

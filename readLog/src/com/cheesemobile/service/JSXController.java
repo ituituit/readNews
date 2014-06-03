@@ -16,7 +16,7 @@ import com.cheesemobile.util._Log;
 
 public class JSXController {
 
-	private static int timeOut = 50000;
+	private static int timeOut = 500000;
 	private static int timePassed = 0;
 	private static int timedelay = 1;
 	private static String _lastPreferenceStr = "";
@@ -297,10 +297,21 @@ public class JSXController {
 
 	}
 
+	private String addrandomValue(){
+		String write = "var prefs = new File(\""
+		+ Constants.PREFERENCE_TEMP_PATH
+		+ "\");\r prefs.open(\"a\"); \r prefs.encoding = \"utf-8\" \r prefs.writeln(\""
+		+ _randomValue
+		+ " \\n function:"
+//		+ functionName
+		+ "\\n names:undefinied\\n values:\"+_returntojavavalues)  \r  prefs.close(); \r ";
+		return write;
+	}
 	public void flush() {
 		if(stringBuilder == null){
 			return;
 		}
+		stringBuilder.append(addrandomValue());
 		try {
 			FileUtil.write(destDir, stringBuilder.toString());
 			Process p;
@@ -316,7 +327,7 @@ public class JSXController {
 			is.close();
 			// reader.close();
 			p.destroy();
-//			getPreferences();
+			getPreferences();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

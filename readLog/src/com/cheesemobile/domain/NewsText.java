@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.cheesemobile.service.JSXController;
+import com.cheesemobile.service.news.JavaApplescriptTest;
 import com.cheesemobile.service.news.NewsController.NewsType;
 
 public class NewsText extends BoundNewsObject implements MovementsInterface,
@@ -41,9 +42,14 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 		params.addAll(Arrays.asList(bounds));
 		params.add(this.getFullName());
 //		params.addAll(assoicatedObjNames);
-		JSXController.getInstance().invoke("makePathSelectArea",
+		JavaApplescriptTest as = new JavaApplescriptTest();
+		
+		JSXController.getInstance().flush();
+		as.copy();
+		JSXController.getInstance().invoke("makePathSelectJSX",
 				(String[]) params.toArray(new String[params.size()]));
-		JSXController.getInstance().invoke("setContentTypes", getFullName(), contentTypes);
+		JSXController.getInstance().flush();
+		as.paste();
 	}
 
 	@Override
@@ -55,6 +61,7 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 
 	public void refreshText(String text) {
 		JSXController.getInstance().invoke("setText", getFullName(), text);
+		JSXController.getInstance().invoke("setContentTypes", getFullName(), contentTypes);
 	}
 
 	@Override
