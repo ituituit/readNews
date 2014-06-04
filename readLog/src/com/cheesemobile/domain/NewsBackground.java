@@ -56,7 +56,7 @@ public class NewsBackground extends NewsStyle implements
 		_bounds.addAll(_boundsCenter);
 		final List<BoundNewsObject> images = new ArrayList<>();
 		for (int i = 0; i < backgroundInds.length; i++) {
-			NewsShape newsImage = new NewsShape(-1,backgroundInds[i]) {
+			NewsShape newsShape = new NewsShape(-1,backgroundInds[i]) {
 				protected String dumplicateNew() {
 					JSXController.getInstance().invoke("dumplicate",this.getParentName() + "/0", this.getName());
 					LayersInfoParser.getInstance().dumplicate(this.getParentName() + "/0",this.getFullName(),null);
@@ -70,14 +70,15 @@ public class NewsBackground extends NewsStyle implements
 					JSXController.getInstance().invoke("objIndexJSX",this.getFullName());
 				}
 			};
-			images.add(newsImage);
+			images.add(newsShape);
 		}
 		this.addStaticObjs(images);
 	}
 
 	public void scaleToFit(Rectangle rect) {
 		if(this.staticSize() == 0){
-			this.setBound(rect);
+			NewsShape newsShape = new NewsShape(this.getFullName());
+			newsShape.setBound(rect);
 			return;
 		}
 		Point[] points = rect.getPoints();

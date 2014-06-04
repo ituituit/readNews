@@ -9,6 +9,10 @@ public class NewsShape extends NewsImage {
 		super(id, type);
 	}
 
+	public NewsShape(String fullName) {
+		super(fullName);
+	}
+
 	/**
 	 * 
 	 */
