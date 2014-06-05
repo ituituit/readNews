@@ -33,19 +33,24 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 		JSXController.getInstance().invoke("addImage", _imagePath,
 				this.getName());
 		Rectangle rect = new Rectangle();
-		if(rectMask != null){
+		if (rectMask != null) {
 			rect = rectMask;
 		}
-		LayersInfoParser.getInstance().importImage(_imagePath, this.getName(),rect);
+		LayersInfoParser.getInstance().importImage(_imagePath, this.getName(),
+				rect);
 		return this.getName();
 	}
 
-	public void applyMask(Rectangle bound){
-		applyMask(bound,true);
+	public void applyMask(Rectangle bound) {
+		applyMask(bound, true);
 	}
-	
-	public void applyMask(Rectangle bound,boolean setBound) {//turn off setbound used in special sloutions only!!!
-		if(setBound){
+
+	public void applyMask(Rectangle bound, boolean setBound) {// turn off
+																// setbound used
+																// in special
+																// sloutions
+																// only!!!
+		if (setBound) {
 			this.setBound(bound);
 		}
 		this.rectMask = bound;
@@ -68,7 +73,7 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 		bound2.setY(rect.getY());
 		bound2.setWidth(rect.getWidth());
 		bound2.setHeight(0);
-//		this.setBound(bound2);//no height
+		// this.setBound(bound2);//no height
 		// mergeMask();
 		applyMask(rect);
 	}
@@ -77,7 +82,7 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 	public void added(NewsStyle parent, int toInd) {
 		if (parent.getChildScaledRects() != null) {
 			Rectangle rectangle = parent.getChildScaledRects().get(toInd);
-			if(rectangle.getWidth() > 0){
+			if (rectangle.getWidth() > 0) {
 				scaleToFit(rectangle);
 			}
 		}
@@ -86,11 +91,11 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 	public void changeImage(String path) {
 		this._imagePath = path;
 		Rectangle rect = this.getBound();
-		
-		if(rectMask == null){
+
+		if (rectMask == null) {
 			rectMask = rect;
 		}
-		
+
 		// delete
 		LayersInfoParser.getInstance().deleteLayer(this.getFullName());
 		// dumplicate
@@ -101,14 +106,14 @@ public class NewsImage extends BoundNewsObject implements MovementsInterface,
 	public String getPath() {
 		return _imagePath;
 	}
-	
+
 	public void attatch(Rectangle _container) {
 		Rectangle one = this.getBound().attachMove(_container);
 		this.setBound(one);
 	}
-	
+
 	@Override
-	protected void layerExists(){
+	protected void layerExists() {
 		this.changeImage(this.getPath());
 	}
 }
