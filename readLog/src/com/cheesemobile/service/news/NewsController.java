@@ -227,15 +227,15 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-//		printSide(false,4);
+//		printSide(true,5);
 //		 genOthers(16);
-//		 genPages(16);
+		 genPages(17);
 		// genSafe(16);
-//		 genPoam(17);
+//		 genPoam(18);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 //		genTravelLaw(59);
-		manPath();
+//		manPath();
 //		String [] strs = {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 //		CustomCtrl.getInstance().ctrlOnSample(strs);
 		JSXController.getInstance().flush();
@@ -444,8 +444,8 @@ public class NewsController {
 //		 release2.getArticles().addAll(release4.getArticles());
 //		 release4.expand();// page3
 		// release4.expand();
-//		 release3.expand();//page4
-		release.expand();// page2
+		 release3.expand();//page4
+//		release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {

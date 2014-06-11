@@ -182,6 +182,10 @@
 17
 >文化科
 <type>图片
+<img>edited/safety_text16.psd
+
+>文化科
+<type>图片
 <img>edited/safety9.psd
 
 18
