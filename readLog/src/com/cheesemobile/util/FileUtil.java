@@ -29,6 +29,11 @@ import java.util.zip.GZIPInputStream;
 
 public class FileUtil {
 
+	public static void rename(String from,String to){
+		File file = new File(from);
+		if(file.exists()) { file.renameTo(new File(to));
+		}
+	}
 	public static void transferFile(File file) {
 		try {
 			BufferedInputStream bin = new BufferedInputStream(

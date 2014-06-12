@@ -24,7 +24,7 @@ public class NewsController {
 	private static int FIRST_CHARACTER = 0;
 
 	public enum NewsType {
-		SUPERVISE,SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
+		SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		public String toString() {
 			String str = "";
 			switch (this) {
@@ -227,17 +227,19 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-//		printSide(true,5);
-//		 genOthers(16);
-		 genPages(17);
+		outputImage(16);
+		// printSide(true,5);
+		// genOthers(16);
+		// genPages(17);
 		// genSafe(16);
-//		 genPoam(18);
+		// genPoam(18);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
-//		genTravelLaw(59);
-//		manPath();
-//		String [] strs = {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
-//		CustomCtrl.getInstance().ctrlOnSample(strs);
+		// genTravelLaw(59);
+		// manPath();
+		// String [] strs =
+		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
+		// CustomCtrl.getInstance().ctrlOnSample(strs);
 		JSXController.getInstance().flush();
 		if (0 == 0) {
 			return;
@@ -264,15 +266,15 @@ public class NewsController {
 		// }
 	}
 
-	private void manPath(){
+	private void manPath() {
 		JavaApplescriptTest as = new JavaApplescriptTest();
 		JSXController.getInstance().flush();
 		as.copy();
-		JSXController.getInstance().invoke("manPath","0");
+		JSXController.getInstance().invoke("manPath", "0");
 		JSXController.getInstance().flush();
 		as.paste();
 	}
-	
+
 	private void printNewPage(String[] names, String Path) {
 		for (int i = 0; i < names.length; i++) {
 			String path = Path + names[i] + ".psd";
@@ -283,7 +285,43 @@ public class NewsController {
 		}
 	}
 
-	private void printSide(boolean pageOne,int number) {
+	private void outputImage(int releaseNum){
+		String[] names = {"", "2014珏山动态第一期", "2014珏山动态第二期", "2014珏山动态第三期",
+				"2014珏山动态第四期", "2014珏山动态第五期", "2014珏山动态第六期", "2014珏山动态第七期",
+				"2014珏山动态第八期", "2014珏山动态第九期", "2014珏山动态第十期", "2014珏山动态第十一期",
+				"2014珏山动态第十二期", "2014珏山动态第十三期", "2014珏山动态第十四期", "2014珏山动态第十五期",
+				"2014珏山动态第十六期", "2014珏山动态第十七期", "2014珏山动态第十八期", "2014珏山动态第十九期",
+				"2014珏山动态第二十期", "2014珏山动态第二十一期", "2014珏山动态第二十二期",
+				"2014珏山动态第二十三期", "2014珏山动态第二十四期", "2014珏山动态第二十五期",
+				"2014珏山动态第二十六期", "2014珏山动态第二十七期", "2014珏山动态第二十八期",
+				"2014珏山动态第二十九期", "2014珏山动态第三十期", "2014珏山动态第三十一期",
+				"2014珏山动态第三十二期", "2014珏山动态第三十三期", "2014珏山动态第三十四期",
+				"2014珏山动态第三十五期", "2014珏山动态第三十六期", "2014珏山动态第三十七期",
+				"2014珏山动态第三十八期", "2014珏山动态第三十九期", "2014珏山动态第四十期",
+				"2014珏山动态第四十一期", "2014珏山动态第四十二期", "2014珏山动态第四十三期",
+				"2014珏山动态第四十四期", "2014珏山动态第四十五期", "2014珏山动态第四十六期",
+				"2014珏山动态第四十七期", "2014珏山动态第四十八期", "2014珏山动态第四十九期",
+				"2014珏山动态第五十期", "2014珏山动态第五十一期", "2014珏山动态第五十二期" };
+		String name = names[releaseNum];
+		String folder = "/Users/pwl/Desktop/";
+		showPage(true);
+		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
+		JSXController.getInstance().flush();
+		FileUtil.rename(folder + "newOutput.jpg",folder + name + "1.jpg");
+		showPage(false);
+		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
+		JSXController.getInstance().flush();
+		FileUtil.rename(folder + "newOutput.jpg",folder + name + "2.jpg");
+	}
+
+	private void printSide(boolean pageOne, int number) {
+		showPage(pageOne);
+		for (int i = 0; i < number; i++) {
+			JSXController.getInstance().invoke("printJSX", "0");
+		}
+	}
+
+	private void showPage(boolean pageOne) {
 		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
 		NewsStyle _rect2 = new NewsStyle(-1, NewsType.RECT_2, "");
 		NewsStyle _rect3 = new NewsStyle(-1, NewsType.RECT_3, "");
@@ -312,9 +350,6 @@ public class NewsController {
 			_rect3.show();
 			centerBackward.show();
 			filterBackward.show();
-		}
-		for(int i = 0; i < number;i ++){
-			JSXController.getInstance().invoke("printJSX", "0");
 		}
 	}
 
@@ -441,11 +476,11 @@ public class NewsController {
 		release3.setAll(4, NewsType.TRAVEL_LAWS);
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
 		release4.setAll(3, NewsType.SCENIC_BLOGS);
-//		 release2.getArticles().addAll(release4.getArticles());
-//		 release4.expand();// page3
+		// release2.getArticles().addAll(release4.getArticles());
+		// release4.expand();// page3
 		// release4.expand();
-		 release3.expand();//page4
-//		release.expand();// page2
+		release3.expand();// page4
+		// release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {
