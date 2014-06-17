@@ -18,7 +18,7 @@ public class JSXController {
 
 	private static int timeOut = 500000;
 	private static int timePassed = 0;
-	private static int timedelay = 1;
+	private static int timedelay = 1000;
 	private static String _lastPreferenceStr = "";
 	private static int _randomValue = 0;
 	private static JSXController jsxController = null;
@@ -175,7 +175,7 @@ public class JSXController {
 					while (!preferenceFileExists()) {
 						Thread.sleep(timedelay);
 						timePassed += timedelay;
-						System.out.print(".");
+						_Log.i("preferences.");
 						if (timePassed > timeOut) {
 							break;
 						}

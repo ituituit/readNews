@@ -227,16 +227,16 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		outputImage(16);
+		// outputImage(16);
 		// printSide(true,5);
 		// genOthers(16);
-		// genPages(17);
+//		genPages(17);
 		// genSafe(16);
 		// genPoam(18);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-		// manPath();
+		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -285,8 +285,8 @@ public class NewsController {
 		}
 	}
 
-	private void outputImage(int releaseNum){
-		String[] names = {"", "2014珏山动态第一期", "2014珏山动态第二期", "2014珏山动态第三期",
+	private void outputImage(int releaseNum) {
+		String[] names = { "", "2014珏山动态第一期", "2014珏山动态第二期", "2014珏山动态第三期",
 				"2014珏山动态第四期", "2014珏山动态第五期", "2014珏山动态第六期", "2014珏山动态第七期",
 				"2014珏山动态第八期", "2014珏山动态第九期", "2014珏山动态第十期", "2014珏山动态第十一期",
 				"2014珏山动态第十二期", "2014珏山动态第十三期", "2014珏山动态第十四期", "2014珏山动态第十五期",
@@ -307,11 +307,11 @@ public class NewsController {
 		showPage(true);
 		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
 		JSXController.getInstance().flush();
-		FileUtil.rename(folder + "newOutput.jpg",folder + name + "1.jpg");
+		FileUtil.rename(folder + "newOutput.jpg", folder + name + "1.jpg");
 		showPage(false);
 		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
 		JSXController.getInstance().flush();
-		FileUtil.rename(folder + "newOutput.jpg",folder + name + "2.jpg");
+		FileUtil.rename(folder + "newOutput.jpg", folder + name + "2.jpg");
 	}
 
 	private void printSide(boolean pageOne, int number) {
@@ -479,8 +479,8 @@ public class NewsController {
 		// release2.getArticles().addAll(release4.getArticles());
 		// release4.expand();// page3
 		// release4.expand();
-		release3.expand();// page4
-		// release.expand();// page2
+		// release3.expand();// page4
+		release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {
