@@ -228,7 +228,7 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 		// outputImage(16);
-		// printSide(true,5);
+		 printSide(false,1);
 		// genOthers(16);
 //		genPages(17);
 		// genSafe(16);
@@ -236,7 +236,7 @@ public class NewsController {
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-		 manPath();
+//		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
