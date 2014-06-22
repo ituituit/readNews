@@ -227,8 +227,8 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		// outputImage(16);
-		 printSide(false,1);
+		 outputImage(17);
+//		 printSide(false,1);
 		// genOthers(16);
 //		genPages(17);
 		// genSafe(16);
