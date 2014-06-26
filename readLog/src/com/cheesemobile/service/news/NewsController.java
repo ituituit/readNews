@@ -10,9 +10,7 @@ import com.cheesemobile.domain.NewsBeanArray;
 import com.cheesemobile.domain.NewsImage;
 import com.cheesemobile.domain.NewsStyle;
 import com.cheesemobile.domain.NewsText;
-import com.cheesemobile.domain.TextRangeBean;
 import com.cheesemobile.service.Constants;
-import com.cheesemobile.service.CustomCtrl;
 import com.cheesemobile.service.JSXController;
 import com.cheesemobile.util.FileUtil;
 import com.cheesemobile.util.StringUtil;
@@ -25,6 +23,8 @@ public class NewsController {
 
 	public enum NewsType {
 		SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
+		String customVal;
+
 		public String toString() {
 			String str = "";
 			switch (this) {
@@ -75,9 +75,6 @@ public class NewsController {
 				break;
 			case I_SPEAK:
 				str = Constants.I_SPEAK_PSD_GROUP;
-				break;
-			case CUSTOM:
-				str = "content";
 				break;
 			case GALLERY:
 				str = "gallery";
@@ -175,6 +172,9 @@ public class NewsController {
 			case SAFETY_LAW:
 				str = "聚焦安全生产法";
 				break;
+			case CUSTOM:
+				str = customVal;
+				break;
 			}
 			return str;
 		}
@@ -211,6 +211,12 @@ public class NewsController {
 			}
 			return null;
 		}
+
+		public static NewsType setCustom(String str) {
+			NewsType n = NewsType.CUSTOM;
+			n.customVal = str;
+			return n;
+		}
 	};
 
 	// public abstract interface DataCallback<T> {
@@ -227,16 +233,18 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		 outputImage(17);
-//		 printSide(false,1);
-		// genOthers(16);
-//		genPages(17);
+		// outputImage(18);
+		articleStatues(Constants.NEWS_LIBRARY_PATH);
+//		FootBall fb = new FootBall();
+		// printSide(true,5);
+		// genOthers(18);
+		// genPages(18);
 		// genSafe(16);
 		// genPoam(18);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-//		 manPath();
+		// manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -244,7 +252,7 @@ public class NewsController {
 		if (0 == 0) {
 			return;
 		}
-		// articleStatues();
+//		articleStatues();
 		// String[] str = { "text_1" };
 		// VoBean invoke = JSXController.getInstance().invoke("bounds",
 		// Arrays.asList(str));
@@ -721,26 +729,27 @@ public class NewsController {
 	// return returnList;
 	// }
 
-	// private NewsBeanArray articleStatues(String path) {
-	// NewsBeanArray articlesFromString = articlesFromString(path);
-	// reFormNews(articlesFromString);
-	// List<String> names = new ArrayList<String>();
-	// List<String> dnames = new ArrayList<String>();
+	private NewsBeanArray articleStatues(String path) {
+		NewsBeanArray articlesFromString = articlesFromString(path);
+//		reFormNews(articlesFromString);
+		List<String> names = new ArrayList<String>();
+		List<String> dnames = new ArrayList<String>();
 
-	// for (NewsBean newBean : articlesFromString) {
-	// for (NewsArticle na : newBean.getArticles()) {
-	// names.add(na.getAuthor());
-	// dnames.add(na.getDepartment());
-	// // _Log.i(na.toString());
-	// }
-	// }
-	// return articlesFromString;
-	// List<List<Integer>> result = repeatList(names);
-	// List<List<Integer>> department = repeatList(dnames);
-	// _Log.i(result + "\n" + department);
-	// traceRepeatList(result, names);
-	// traceRepeatList(department,dnames);
-	// }
+		for (NewsBean newBean : articlesFromString) {
+			for (NewsArticle na : newBean.getArticles()) {
+				_Log.i(na.toString());
+				names.add(na.getAuthor());
+				dnames.add(na.getDepartment());
+			}
+		}
+		
+		List<List<Integer>> result = NewsBean.repeatList(names);
+		List<List<Integer>> department = NewsBean.repeatList(dnames);
+//		_Log.i(result + "\n" + department);
+//		NewsBean.traceRepeatList(result, names);
+		NewsBean.traceRepeatList(department, dnames);
+		return articlesFromString;
+	}
 
 	private void reFormNews(List<NewsBean> articlesFromString) {
 		int sum = 0;
