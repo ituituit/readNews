@@ -260,7 +260,7 @@ public class NewsBean {
 
 	}
 
-	public Set<String> group(List<String> list) {
+	public static Set<String> group(List<String> list) {
 		Set<String> mySet = new HashSet<String>();
 		for (String str : list) {
 			mySet.add(str);
@@ -269,7 +269,7 @@ public class NewsBean {
 	}
 
 	// ͳ��ÿ������Ͷ����
-	public List<List<Integer>> repeatList(List<String> list) {
+	public static List<List<Integer>> repeatList(List<String> list) {
 		List<List<Integer>> repeatList = new ArrayList<List<Integer>>();
 
 		Set<String> mySet = group(list);
@@ -289,14 +289,17 @@ public class NewsBean {
 	}
 
 	// ��ʾÿ������Ͷ����
-	private void traceRepeatList(List<List<Integer>> department,
+	public static void  traceRepeatList(List<List<Integer>> department,
 			List<String> dnames) {
+		int count = 0;
 		for (int i = 0; i < department.size(); i++) {
 			int nameI = department.get(i).get(0);
 			int numDepName = department.get(i).size();
 			String depName = dnames.get(nameI);
 			_Log.i(depName + " " + numDepName);
+			count += numDepName;
 		}
+		_Log.i("共" + count + "篇");
 	}
 
 }

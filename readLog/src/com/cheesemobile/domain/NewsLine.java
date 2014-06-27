@@ -42,7 +42,7 @@ public class NewsLine extends NewsStyle implements MovementsInterface {
 						Rectangle bound2 = this.getBound();
 						int i = 0;
 						int j = 0;
-						if(this.getType() == NewsType.ROW){
+						if(this.getType() == NewsType.ROW.toString()){
 							i = 0;
 							j = imagesRow.indexOf(this);
 						}else{

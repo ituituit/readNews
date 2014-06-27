@@ -22,9 +22,15 @@ public class NewsController {
 	private static int FIRST_CHARACTER = 0;
 
 	public enum NewsType {
+		custom,
 		SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		String customVal;
-
+		private int nCode;
+		private NewsType() {
+		}
+		private NewsType(int _nCode) {
+			this.nCode = _nCode;
+		}
 		public String toString() {
 			String str = "";
 			switch (this) {
@@ -234,17 +240,19 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 		// outputImage(18);
-		articleStatues(Constants.NEWS_LIBRARY_PATH);
+		// articleStatues(Constants.NEWS_LIBRARY_PATH);
+		
+		
 //		FootBall fb = new FootBall();
 		// printSide(true,5);
-		// genOthers(18);
-		// genPages(18);
+//		 genOthers(19);
+//		 genPages(19);
 		// genSafe(16);
 		// genPoam(18);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-		// manPath();
+		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -252,7 +260,7 @@ public class NewsController {
 		if (0 == 0) {
 			return;
 		}
-//		articleStatues();
+		// articleStatues();
 		// String[] str = { "text_1" };
 		// VoBean invoke = JSXController.getInstance().invoke("bounds",
 		// Arrays.asList(str));
@@ -731,7 +739,7 @@ public class NewsController {
 
 	private NewsBeanArray articleStatues(String path) {
 		NewsBeanArray articlesFromString = articlesFromString(path);
-//		reFormNews(articlesFromString);
+		// reFormNews(articlesFromString);
 		List<String> names = new ArrayList<String>();
 		List<String> dnames = new ArrayList<String>();
 
@@ -742,11 +750,11 @@ public class NewsController {
 				dnames.add(na.getDepartment());
 			}
 		}
-		
+
 		List<List<Integer>> result = NewsBean.repeatList(names);
 		List<List<Integer>> department = NewsBean.repeatList(dnames);
-//		_Log.i(result + "\n" + department);
-//		NewsBean.traceRepeatList(result, names);
+		// _Log.i(result + "\n" + department);
+		// NewsBean.traceRepeatList(result, names);
 		NewsBean.traceRepeatList(department, dnames);
 		return articlesFromString;
 	}

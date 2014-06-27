@@ -23,7 +23,11 @@ public class NewsStyle extends BoundNewsObject {
 	private boolean hasSplitLines = false;
 	private Rectangle _container;
 
+	public boolean shotType = true;
 	public NewsStyle(int ind, NewsType type, String parentName) {
+		super(ind, type, parentName);
+	}
+	public NewsStyle(int ind, String type, String parentName) {
 		super(ind, type, parentName);
 	}
 
@@ -108,7 +112,11 @@ public class NewsStyle extends BoundNewsObject {
 		for (BoundNewsObject e : objs) {
 			list.add(e);
 		}
-		addAllSubObjects(list);
+		if(shotType){
+			addAllSubObjects(list);
+		}else{
+			addAllNoShot(list);
+		}
 	}
 
 	public void addAll2(List list) {
@@ -116,7 +124,12 @@ public class NewsStyle extends BoundNewsObject {
 		for (Object object : list) {
 			bo.add((BoundNewsObject) object);
 		}
-		addAllSubObjects(bo);
+//		addAllSubObjects(bo);
+		if(shotType){
+			addAllSubObjects(bo);
+		}else{
+			addAllNoShot(bo);
+		}
 	}
 
 	public void deleteCantDraws(List<BoundNewsObject> list) {
@@ -139,6 +152,32 @@ public class NewsStyle extends BoundNewsObject {
 
 	}
 
+	public void addAllNoShot(List<BoundNewsObject> list){
+		addAllBefore();
+		List<Integer> notExists = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			childs.add(list.get(i));
+			list.get(i).setParentName(this.getFullName());
+			boolean exists = list.get(i).existsLayer();
+			if (exists) {
+			} else {
+				notExists.add(i);
+			}
+		}
+		childScaledRects = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+		Rectangle memBound = list.get(i).getBound();
+		Rectangle rect = new Rectangle(memBound.getX(),
+				memBound.getY(), memBound.getWidth(),
+				memBound.getHeight());
+		childScaledRects.add(rect);// �ı���rect
+		}
+		for (int i = 1; i < childScaledRects.size(); i++) {
+			get(i).setBound(childScaledRects,i);//preview bound
+			get(i).added(this, i);
+		}
+	}
+	
 	public void addAllSubObjects(List<BoundNewsObject> list) {
 		deleteCantDraws(list);
 		Rectangle background = placesPointsBackgroundRect();
@@ -296,7 +335,7 @@ public class NewsStyle extends BoundNewsObject {
 		int i = 0;
 		int ind = 0;
 		for (BoundNewsObject c : staticObjs) {
-			if (c.getType() == type) {
+			if (c.getType() == type.toString()) {
 				if (ind++ == i) {
 					return c;
 				}
@@ -308,7 +347,7 @@ public class NewsStyle extends BoundNewsObject {
 	public BoundNewsObject get(int i, NewsType type) {
 		int ind = 0;
 		for (BoundNewsObject c : childs) {
-			if (c.getType() == type) {
+			if (c.getType() == type.toString()) {
 				if (ind++ == i) {
 					return c;
 				}

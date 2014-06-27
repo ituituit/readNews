@@ -24,7 +24,12 @@ public class NewsText extends BoundNewsObject implements MovementsInterface,
 		super(id, type);
 		init(text, title,contentTypes);
 	}
-
+//
+//	public static NewsText setText(String text){
+//		NewsText nt = new NewsText(0,NewsType.TEXT);
+//		return nt;
+//	}
+//	
 	private void init(String text, String title,String contentTypes) {
 		this.text = text;
 		this.title = title;

@@ -19,7 +19,7 @@ public class NewsArticle {
 	private List<String> picsUrl;
 	private TextRangeBean trb;
 	private int bracketsType = 1;
-
+	private boolean pick = false;
 	public NewsArticle(int id, Date sendDate, String content, String pick,
 			String department, String title, List<String> picsUrl,
 			NewsType type, int page, int bracketsType) {
@@ -35,7 +35,8 @@ public class NewsArticle {
 			this.department = department;
 		}
 		if (pick.length() > 1) {
-			this.department = "";
+			this.pick = true;
+//			this.department = "";
 		}
 		this.title = title;
 		this.picsUrl = picsUrl;

@@ -153,7 +153,7 @@ public class Rectangle {
 		if(line.getButtom() < this.getButtom()){
 			this.setButtom(line.getButtom(),true);
 		}
-		List<Float> attachValues = attachValues(line.getLines());//attach 执行后this在rect外值为this的rect值
+		List<Float> attachValues = attachValues(line.getLines());//attach 执锟叫猴拷this锟斤拷rect锟斤拷值为this锟斤拷rect值
 		int rtype = 0;
 		float minVal = Float.MAX_VALUE;
 		float[] r = new float[4];
@@ -408,5 +408,10 @@ public class Rectangle {
 		this.setRight(StringUtil.floatInString(asList.get(2)));
 		this.setButtom(StringUtil.floatInString(asList.get(3)));
 		return this;
+	}
+
+	public Rectangle dumplicateBound() {
+		Rectangle newB = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+		return newB;
 	}
 }

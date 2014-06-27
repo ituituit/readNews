@@ -11,7 +11,7 @@ import com.cheesemobile.util._Log;
 
 public abstract class BoundNewsObject implements Serializable {
 	private static final long serialVersionUID = -4076032451122684376L;
-	private NewsType type;
+	private String type;
 	private int id;
 	private NewsBackground background;
 	private String parentName;
@@ -25,35 +25,41 @@ public abstract class BoundNewsObject implements Serializable {
 		}
 	}
 
-	public boolean foreign(){
+	public boolean foreign() {
 		return foreign;
 	}
+
 	public BoundNewsObject(int id, NewsType type) {
 		super();
-		init(id, type, "");
+		init(id, type.toString(), "");
 	}
 
 	public BoundNewsObject(String fullName, NewsType type) {
 		List<String> namesList = LayerInfoBean.getNamesList(fullName);
 		customName = namesList.get(namesList.size() - 1);
 		String parentName = LayerInfoBean.minusLast(fullName, customName);
-		init(-1, type, parentName);
+		init(-1, type.toString(), parentName);
 	}
 
-	public BoundNewsObject(int id, NewsType type, String parentName) {
+	public BoundNewsObject(int id, String type, String parentName) {
 		super();
 		init(id, type, parentName);
 	}
 
-	private void init(int id, NewsType type, String parentName) {
+	public BoundNewsObject(int id, NewsType type, String parentName) {
+		super();
+		init(id, type.toString(), parentName);
+	}
+
+	private void init(int id, String type, String parentName) {
 		this.id = id;
 		this.type = type;
 		this.parentName = parentName;
 
 	}
 
-	public NewsType getType() {
-		return type;
+	public String getType() {
+		return type.toString();
 	}
 
 	// public List<Point> getPlacesPoints() {
@@ -111,15 +117,15 @@ public abstract class BoundNewsObject implements Serializable {
 		return this.getName();
 	}
 
-	public void hide(){
-		JSXController.getInstance().invoke("hide",this.getName());
+	public void hide() {
+		JSXController.getInstance().invoke("hide", this.getName());
 	}
-	
-	public void show(){
+
+	public void show() {
 		JSXController.getInstance().invoke("show", this.getName());
 	}
-	
-	public void move(Point toPoint) {
+
+	private void move(Point toPoint) {
 		Rectangle bound2 = getBound();
 		move(bound2.getCenter(), toPoint);
 	}
@@ -149,15 +155,15 @@ public abstract class BoundNewsObject implements Serializable {
 
 	public void setBound(Rectangle bound) {
 		_Log.i("setBound:" + bound);
-		bound.setX((int)bound.getX());
-		bound.setY((int)bound.getY());
-		bound.setWidth((int)bound.getWidth());
-		bound.setHeight((int)bound.getHeight());
+		bound.setX((int) bound.getX());
+		bound.setY((int) bound.getY());
+		bound.setWidth((int) bound.getWidth());
+		bound.setHeight((int) bound.getHeight());
 		JSXController.getInstance().invoke("setBounds", this.getFullName(),
 				"" + bound.getX(), "" + bound.getY(), "" + bound.getRight(),
 				"" + bound.getButtom());
-		LayersInfoParser.getInstance().setBound(this.getFullName(), this.getBound(),
-				bound);
+		LayersInfoParser.getInstance().setBound(this.getFullName(),
+				this.getBound(), bound);
 	}
 
 	public Rectangle getBound() {
@@ -191,13 +197,15 @@ public abstract class BoundNewsObject implements Serializable {
 	}
 
 	protected boolean canDraw() {
-//		if (foreign) {
-//			return false;
-//		}
+		// if (foreign) {
+		// return false;
+		// }
 		return true;
 	}
-	protected void layerExists(){
-		
+
+	protected void layerExists() {
+
 	}
 
+	public void setBound(List<Rectangle> childScaledRects, int i){};//for addAllNoShot() in newsstyle
 }
