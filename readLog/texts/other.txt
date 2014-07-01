@@ -149,8 +149,8 @@ ad = "广告_0009_38.psd"
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年六月二十三日      第十九期      总第297期
 <img>24.jpg
-<img>edited/center0_15.psd
-<img>edited/center1_15.psd
+<img>edited/center0_16.psd
+<img>edited/center1_16.psd
 
 20
 >
@@ -158,8 +158,8 @@ ad = "广告_0009_38.psd"
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年六月三十日      第二十期      总第298期
 <img>25.jpg
-<img>edited/center0_15.psd
-<img>edited/center1_15.psd
+<img>edited/center0_17.psd
+<img>edited/center1_17.psd
 
 21
 >
@@ -167,8 +167,8 @@ ad = "广告_0009_38.psd"
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年七月七日      第二十一期      总第299期
 <img>26.jpg
-<img>edited/center0_15.psd
-<img>edited/center1_15.psd
+<img>edited/center0_18.psd
+<img>edited/center1_18.psd
 
 22
 >
@@ -176,8 +176,8 @@ ad = "广告_0009_38.psd"
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年七月十四日      第二十二期      总第300期
 <img>27.jpg
-<img>edited/center0_15.psd
-<img>edited/center1_15.psd
+<img>edited/center0_19.psd
+<img>edited/center1_19.psd
 
 23
 >
@@ -185,8 +185,8 @@ ad = "广告_0009_38.psd"
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年七月二十一日      第二十三期      总第301期
 <img>28.jpg
-<img>edited/center0_15.psd
-<img>edited/center1_15.psd
+<img>edited/center0_20.psd
+<img>edited/center1_20.psd
 
 24
 >
@@ -194,8 +194,8 @@ ad = "广告_0009_38.psd"
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年七月二十八日      第二十四期      总第302期
 <img>29.jpg
-<img>edited/center0_15.psd
-<img>edited/center1_15.psd
+<img>edited/center0_21.psd
+<img>edited/center1_21.psd
 
 25
 >
@@ -203,8 +203,8 @@ ad = "广告_0009_38.psd"
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年八月四日      第二十五期      总第303期
 <img>30.jpg
-<img>edited/center0_15.psd
-<img>edited/center1_15.psd
+<img>edited/center0_22.psd
+<img>edited/center1_22.psd
 
 
 

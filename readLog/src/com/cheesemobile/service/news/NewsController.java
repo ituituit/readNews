@@ -244,15 +244,15 @@ public class NewsController {
 		
 		
 //		FootBall fb = new FootBall();
-		// printSide(true,5);
+		 printSide(false,5);
 //		 genOthers(19);
 //		 genPages(19);
 		// genSafe(16);
-		// genPoam(18);
+//		 genPoam(19);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-		 manPath();
+//		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -395,7 +395,7 @@ public class NewsController {
 		String LIB_DISHES_PATH = Constants.HOME_FOLDER + "texts/travel.txt";
 		NewsBeanArray articleStatues = articlesFromString(LIB_DISHES_PATH);
 		NewsBean release = articleStatues.getRelease(i);
-		release.setAll(1, NewsType.POAM);
+		release.setAll(4, NewsType.POAM);
 		release.expand();
 	}
 
@@ -493,10 +493,10 @@ public class NewsController {
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
 		release4.setAll(3, NewsType.SCENIC_BLOGS);
 		// release2.getArticles().addAll(release4.getArticles());
-		// release4.expand();// page3
+		 release4.expand();// page3
 		// release4.expand();
-		// release3.expand();// page4
-		release.expand();// page2
+		 release3.expand();// page4
+//		release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {
