@@ -240,11 +240,11 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 		// outputImage(18);
-		// articleStatues(Constants.NEWS_LIBRARY_PATH);
+		 articleStatues(Constants.NEWS_LIBRARY_PATH);
 		
 		
 //		FootBall fb = new FootBall();
-		 printSide(false,5);
+//		 printSide(false,5);
 //		 genOthers(19);
 //		 genPages(19);
 		// genSafe(16);
@@ -737,8 +737,8 @@ public class NewsController {
 	// return returnList;
 	// }
 
-	private NewsBeanArray articleStatues(String path) {
-		NewsBeanArray articlesFromString = articlesFromString(path);
+	
+	private NewsBeanArray articleStatues(NewsBeanArray articlesFromString) {
 		// reFormNews(articlesFromString);
 		List<String> names = new ArrayList<String>();
 		List<String> dnames = new ArrayList<String>();
@@ -757,6 +757,15 @@ public class NewsController {
 		// NewsBean.traceRepeatList(result, names);
 		NewsBean.traceRepeatList(department, dnames);
 		return articlesFromString;
+	}
+	
+	private NewsBeanArray articleStatues(String path) {
+		NewsBeanArray articleStatues = articleStatues(articlesFromString(path));
+		NewsBeanArray nNewsBeanArray = new NewsBeanArray();
+		NewsBean newsBean = articleStatues.get(articleStatues.size() - 1);
+		nNewsBeanArray.add(newsBean);
+		articleStatues(nNewsBeanArray);
+		return articleStatues;
 	}
 
 	private void reFormNews(List<NewsBean> articlesFromString) {

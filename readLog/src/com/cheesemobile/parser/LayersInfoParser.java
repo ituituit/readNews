@@ -1,6 +1,7 @@
 package com.cheesemobile.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -50,6 +51,14 @@ public class LayersInfoParser {
 	private LayerInfoList list = new LayerInfoList();
 	private LayerInfoList lib = new LayerInfoList();
 
+	public String objExists(String layerName){
+		List<LayerInfoBean> indexByName = list.indexByName(layerName);
+		if(indexByName.size() == 1){
+			return indexByName.get(0).getFullName();
+		}
+		return indexByName.get(0).getParent();
+	}
+	
 	private static void parse(String path, LayerInfoList list) {
 		String str = FileUtil.readToString(path, true);
 		Document document = Jsoup.parse(str, "", new Parser(
@@ -207,6 +216,16 @@ public class LayersInfoParser {
 			}
 		}
 		list.remove(indexByName.get(0));
+	}
+	
+	public void drawLine(Point[] Points,String lineNames){
+//		String paramPoints = Arrays.asList(Points).toString() ;
+		float x1 = Points[0].x;
+		float y1 = Points[0].y;
+		float x2 = Points[1].x;
+		float y2 = Points[1].y;
+//		String paramLineNames = Arrays.asList(lineNames).toString();
+		JSXController.getInstance().invoke("createPath", x1 + "",y1 + "",x2 + "",y2 + "",lineNames);
 	}
 	
 	public void mergeLayer(String groupName){
