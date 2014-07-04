@@ -240,19 +240,19 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 		// outputImage(18);
-		 articleStatues(Constants.NEWS_LIBRARY_PATH);
+//		 articleStatues(Constants.NEWS_LIBRARY_PATH);
 		
 		
 //		FootBall fb = new FootBall();
 //		 printSide(false,5);
-//		 genOthers(19);
-//		 genPages(19);
+//		 genOthers(20);
+//		 genPages(20);
 		// genSafe(16);
-//		 genPoam(19);
+//		 genPoam(20);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-//		 manPath();
+		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -495,7 +495,7 @@ public class NewsController {
 		// release2.getArticles().addAll(release4.getArticles());
 		 release4.expand();// page3
 		// release4.expand();
-		 release3.expand();// page4
+//		 release3.expand();// page4
 //		release.expand();// page2
 	}
 

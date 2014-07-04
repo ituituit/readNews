@@ -207,10 +207,6 @@
 <type>图片
 <img>edited/safety_text19.psd
 
->文化科
-<type>图片
-<img>edited/soccer2.psd
-
 21
 >文化科
 <type>图片
