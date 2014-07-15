@@ -20,6 +20,7 @@ public class Constants {
 	public static String XSL_DESTINATION_PATH = "/Users/pwl/Documents/Adobe Scripts/tmp.jsx";
 	public static String IMG_DESTINATION_PATH = "/Users/pwl/git/readNews_remote/readLog/image/photo/";
 	private static String AUTOMATION_FOLDER = "/Users/pwl/Downloads/automation/";
+	
 	static{
 		if (SystemTool.getOSName().indexOf("windows") != -1) {
 			HOME_FOLDER = "F:/Documents and Settings/Administrator/git/readNews_remote/readLog/";

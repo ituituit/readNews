@@ -210,20 +210,12 @@
 21
 >文化科
 <type>图片
-<img>edited/safety_text20.psd
-
->文化科
-<type>图片
-<img>edited/soccer3.psd
+<img>edited/safety_text19.psd
 
 22
 >文化科
 <type>图片
-<img>edited/safety_text21.psd
-
->文化科
-<type>图片
-<img>edited/soccer4.psd
+<img>edited/safety_text20.psd
 
 999
 关于对市场一部司机张波的
