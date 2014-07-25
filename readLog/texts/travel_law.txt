@@ -217,6 +217,15 @@
 <type>图片
 <img>edited/safety_text20.psd
 
+23
+>文化科
+<type>图片
+<img>edited/safety_text20.psd
+
+>文化科
+<type>图片
+<img>edited/safety9.psd
+
 999
 关于对市场一部司机张波的
 处罚决定

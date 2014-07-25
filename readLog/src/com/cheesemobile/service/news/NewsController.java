@@ -22,7 +22,7 @@ public class NewsController {
 	private static int FIRST_CHARACTER = 0;
 
 	public enum NewsType {
-		custom,
+		custom,ARTICLE,
 		SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		String customVal;
 		private int nCode;
@@ -35,10 +35,10 @@ public class NewsController {
 			String str = "";
 			switch (this) {
 			case FILTER_1:
-				str = "组 4";
+				str = "filter1";
 				break;
 			case FILTER_2:
-				str = "组 5";
+				str = "filter2";
 				break;
 			case TOP_LINE:
 				str = "刊头";
@@ -178,6 +178,9 @@ public class NewsController {
 			case SAFETY_LAW:
 				str = "聚焦安全生产法";
 				break;
+			case ARTICLE:
+				str = "文章";
+				break;
 			case CUSTOM:
 				str = customVal;
 				break;
@@ -210,6 +213,12 @@ public class NewsController {
 			if (type.contains("曝光台")) {
 				return NewsType.SUPERVISE;
 			}
+			if (type.contains("文章")) {
+				return NewsType.ARTICLE;
+			}
+			if (type.contains("唐宋游人诗词")) {
+				return NewsType.POAM;
+			}
 			for (NewsType iterable_element : NewsType.values()) {
 				if (iterable_element.toString().equals(type)) {
 					return iterable_element;
@@ -239,20 +248,20 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		// outputImage(18);
+//		 outputImage(21);
 //		 articleStatues(Constants.NEWS_LIBRARY_PATH);
 		
 		
 //		FootBall fb = new FootBall();
 //		 printSide(false,5);
-//		 genOthers(20);
-//		 genPages(20);
+//		 genOthers(23);
+//		 genPages(23);
 		// genSafe(16);
-//		 genPoam(20);
+//		 genPoam(22);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-		 manPath();
+//		manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -491,12 +500,13 @@ public class NewsController {
 		NewsBean release3 = articleStatues3.getRelease(releaseNumber);
 		release3.setAll(4, NewsType.TRAVEL_LAWS);
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
-		release4.setAll(3, NewsType.SCENIC_BLOGS);
+		release4.setAll(3, NewsType.POAM);
+//		release4.setAll(3, NewsType.SCENIC_BLOGS);
 		// release2.getArticles().addAll(release4.getArticles());
-		 release4.expand();// page3
+//		release4.expand();// page3
 		// release4.expand();
-//		 release3.expand();// page4
-//		release.expand();// page2
+//		release3.expand();// page4
+		release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {
