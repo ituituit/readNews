@@ -22,15 +22,17 @@ public class NewsController {
 	private static int FIRST_CHARACTER = 0;
 
 	public enum NewsType {
-		custom,ARTICLE,
-		SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
+		custom, ARTICLE, SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		String customVal;
 		private int nCode;
+
 		private NewsType() {
 		}
+
 		private NewsType(int _nCode) {
 			this.nCode = _nCode;
 		}
+
 		public String toString() {
 			String str = "";
 			switch (this) {
@@ -244,16 +246,24 @@ public class NewsController {
 		// 牌
 		// card();
 
-		// printPics();
+//		 printPics();
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-//		 outputImage(21);
+		outputImage(22);
+//		String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
+//				"第二十三期" };
+//		 printNewPage(names13, "/Users/pwl/Desktop/",new printNewPageCallBack(){
+//			 @Override
+//			public void invoke(String name) {
+//				 outputImage(name);
+//			}
+//		 });
 //		 articleStatues(Constants.NEWS_LIBRARY_PATH);
 		
 		
 //		FootBall fb = new FootBall();
-//		 printSide(false,5);
+//		 printSide(true,5);
 //		 genOthers(23);
 //		 genPages(23);
 		// genSafe(16);
@@ -300,11 +310,17 @@ public class NewsController {
 		as.paste();
 	}
 
-	private void printNewPage(String[] names, String Path) {
+	interface printNewPageCallBack {
+		public void invoke(String fileName);
+	}
+
+	private void printNewPage(String[] names, String Path,
+			printNewPageCallBack cb) {
 		for (int i = 0; i < names.length; i++) {
 			String path = Path + names[i] + ".psd";
 			JSXController.getInstance().invoke("openDoc", path);
-			printSide(false);
+			// printSide(false);
+			cb.invoke(names[i]);
 			JSXController.getInstance().invoke("save", path);
 			JSXController.getInstance().invoke("closeDoc", "0");
 		}
@@ -329,16 +345,45 @@ public class NewsController {
 				"2014珏山动态第五十期", "2014珏山动态第五十一期", "2014珏山动态第五十二期" };
 		String name = names[releaseNum];
 		String folder = "/Users/pwl/Desktop/";
-		showPage(true);
-		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
-		JSXController.getInstance().flush();
-		FileUtil.rename(folder + "newOutput.jpg", folder + name + "1.jpg");
 		showPage(false);
 		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
 		JSXController.getInstance().flush();
 		FileUtil.rename(folder + "newOutput.jpg", folder + name + "2.jpg");
+		showPage(true);
+		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
+		JSXController.getInstance().flush();
+		FileUtil.rename(folder + "newOutput.jpg", folder + name + "1.jpg");
+		_Log.i(folder + name + "1.jpg");
 	}
 
+	private void outputImage(String name) {
+		String[] names = { "", "2014珏山动态第一期", "2014珏山动态第二期", "2014珏山动态第三期",
+				"2014珏山动态第四期", "2014珏山动态第五期", "2014珏山动态第六期", "2014珏山动态第七期",
+				"2014珏山动态第八期", "2014珏山动态第九期", "2014珏山动态第十期", "2014珏山动态第十一期",
+				"2014珏山动态第十二期", "2014珏山动态第十三期", "2014珏山动态第十四期", "2014珏山动态第十五期",
+				"2014珏山动态第十六期", "2014珏山动态第十七期", "2014珏山动态第十八期", "2014珏山动态第十九期",
+				"2014珏山动态第二十期", "2014珏山动态第二十一期", "2014珏山动态第二十二期",
+				"2014珏山动态第二十三期", "2014珏山动态第二十四期", "2014珏山动态第二十五期",
+				"2014珏山动态第二十六期", "2014珏山动态第二十七期", "2014珏山动态第二十八期",
+				"2014珏山动态第二十九期", "2014珏山动态第三十期", "2014珏山动态第三十一期",
+				"2014珏山动态第三十二期", "2014珏山动态第三十三期", "2014珏山动态第三十四期",
+				"2014珏山动态第三十五期", "2014珏山动态第三十六期", "2014珏山动态第三十七期",
+				"2014珏山动态第三十八期", "2014珏山动态第三十九期", "2014珏山动态第四十期",
+				"2014珏山动态第四十一期", "2014珏山动态第四十二期", "2014珏山动态第四十三期",
+				"2014珏山动态第四十四期", "2014珏山动态第四十五期", "2014珏山动态第四十六期",
+				"2014珏山动态第四十七期", "2014珏山动态第四十八期", "2014珏山动态第四十九期",
+				"2014珏山动态第五十期", "2014珏山动态第五十一期", "2014珏山动态第五十二期" };
+		int releaseNum = -1;
+		for(int i = 0; i < names.length; i++){
+			if(names[i].indexOf(name) != -1){
+				releaseNum = i;
+			};
+		}
+		if(releaseNum != -1){
+			outputImage(releaseNum);
+		}
+	}
+	
 	private void printSide(boolean pageOne, int number) {
 		showPage(pageOne);
 		for (int i = 0; i < number; i++) {
@@ -501,11 +546,11 @@ public class NewsController {
 		release3.setAll(4, NewsType.TRAVEL_LAWS);
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
 		release4.setAll(3, NewsType.POAM);
-//		release4.setAll(3, NewsType.SCENIC_BLOGS);
+		// release4.setAll(3, NewsType.SCENIC_BLOGS);
 		// release2.getArticles().addAll(release4.getArticles());
-//		release4.expand();// page3
+		// release4.expand();// page3
 		// release4.expand();
-//		release3.expand();// page4
+		// release3.expand();// page4
 		release.expand();// page2
 	}
 
@@ -747,7 +792,6 @@ public class NewsController {
 	// return returnList;
 	// }
 
-	
 	private NewsBeanArray articleStatues(NewsBeanArray articlesFromString) {
 		// reFormNews(articlesFromString);
 		List<String> names = new ArrayList<String>();
@@ -768,7 +812,7 @@ public class NewsController {
 		NewsBean.traceRepeatList(department, dnames);
 		return articlesFromString;
 	}
-	
+
 	private NewsBeanArray articleStatues(String path) {
 		NewsBeanArray articleStatues = articleStatues(articlesFromString(path));
 		NewsBeanArray nNewsBeanArray = new NewsBeanArray();
