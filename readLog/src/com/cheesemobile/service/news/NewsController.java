@@ -250,7 +250,8 @@ public class NewsController {
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		outputImage(22);
+		
+//		outputImage(22);
 //		String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
 //				"第二十三期" };
 //		 printNewPage(names13, "/Users/pwl/Desktop/",new printNewPageCallBack(){
@@ -259,11 +260,12 @@ public class NewsController {
 //				 outputImage(name);
 //			}
 //		 });
+		
 //		 articleStatues(Constants.NEWS_LIBRARY_PATH);
 		
 		
 //		FootBall fb = new FootBall();
-//		 printSide(true,5);
+		 printSide(false,3);
 //		 genOthers(23);
 //		 genPages(23);
 		// genSafe(16);
