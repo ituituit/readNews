@@ -22,7 +22,7 @@ public class NewsController {
 	private static int FIRST_CHARACTER = 0;
 
 	public enum NewsType {
-		custom, ARTICLE, SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
+		ARTICLE_HORTANGLE, custom, ARTICLE, SUPERVISE, SAFETY_LAW, FILTER_1, FILTER_2, TOP_LINE, POAM, SAFETY, SPRING_THEME, CENTER_1, CENTER_2, CENTER_FRONT, CENTER_BACKWARD, FOREIGN, RECT_3, RECT_2, RECT_1, RECT_4, BACK_1, BACK_2, BACK_3, BACK_4, DEVELOP_PROJECT, STATIC_TEXT, VISITORS_TRACK, SCENIC_BLOGS, SCENIC_NEWS, GROUP, I_SPEAK, TRAVEL_LINKS, TRAVEL_LAWS, GALLERY, CUSTOM, IMAGE, TEXT, PLACES, BACKGROUND, SPLIT_LINES, ROW, COW, BACKGROUND_TOP_LEFT, BACKGROUND_TOP_RIGHT, BACKGROUND_BTN_LEFT, BACKGROUND_BTN_RIGHT, BACKGROUND_CENTER, BACKGROUND_TOP, BACKGROUND_RIGHT, BACKGROUND_BUTTOM, BACKGROUND_LEFT, TITLE;
 		String customVal;
 		private int nCode;
 
@@ -183,6 +183,9 @@ public class NewsController {
 			case ARTICLE:
 				str = "文章";
 				break;
+			case ARTICLE_HORTANGLE:
+				str = "散文";
+				break;
 			case CUSTOM:
 				str = customVal;
 				break;
@@ -218,6 +221,9 @@ public class NewsController {
 			if (type.contains("文章")) {
 				return NewsType.ARTICLE;
 			}
+			if (type.contains("散文")) {
+				return NewsType.ARTICLE_HORTANGLE;
+			}
 			if (type.contains("唐宋游人诗词")) {
 				return NewsType.POAM;
 			}
@@ -246,34 +252,34 @@ public class NewsController {
 		// 牌
 		// card();
 
-//		 printPics();
+		// printPics();
 		// book("C:/Documents and Settings/Administrator/桌面/集体奖项证书.psd","C:/Documents and Settings/Administrator/桌面/集体奖项.txt",NewsType.CUSTOM);
 		// genCenter1(24);
 		// genCenter2(24);
-		
-//		outputImage(22);
-//		String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
-//				"第二十三期" };
-//		 printNewPage(names13, "/Users/pwl/Desktop/",new printNewPageCallBack(){
-//			 @Override
-//			public void invoke(String name) {
-//				 outputImage(name);
-//			}
-//		 });
-		
-//		 articleStatues(Constants.NEWS_LIBRARY_PATH);
-		
-		
-//		FootBall fb = new FootBall();
-		 printSide(false,3);
-//		 genOthers(23);
-//		 genPages(23);
+
+		// outputImage(22);
+		// String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
+		// "第二十三期" };
+		// printNewPage(names13, "/Users/pwl/Desktop/",new
+		// printNewPageCallBack(){
+		// @Override
+		// public void invoke(String name) {
+		// outputImage(name);
+		// }
+		// });
+
+		// articleStatues(Constants.NEWS_LIBRARY_PATH);
+
+		// FootBall fb = new FootBall();
+		// printSide(false,3);
+		// genOthers(24);
+		genPages(24);
 		// genSafe(16);
-//		 genPoam(22);
+		// genPoam(22);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-//		manPath();
+//		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -376,16 +382,17 @@ public class NewsController {
 				"2014珏山动态第四十七期", "2014珏山动态第四十八期", "2014珏山动态第四十九期",
 				"2014珏山动态第五十期", "2014珏山动态第五十一期", "2014珏山动态第五十二期" };
 		int releaseNum = -1;
-		for(int i = 0; i < names.length; i++){
-			if(names[i].indexOf(name) != -1){
+		for (int i = 0; i < names.length; i++) {
+			if (names[i].indexOf(name) != -1) {
 				releaseNum = i;
-			};
+			}
+			;
 		}
-		if(releaseNum != -1){
+		if (releaseNum != -1) {
 			outputImage(releaseNum);
 		}
 	}
-	
+
 	private void printSide(boolean pageOne, int number) {
 		showPage(pageOne);
 		for (int i = 0; i < number; i++) {
@@ -552,8 +559,8 @@ public class NewsController {
 		// release2.getArticles().addAll(release4.getArticles());
 		// release4.expand();// page3
 		// release4.expand();
-		// release3.expand();// page4
-		release.expand();// page2
+//		release3.expand();// page4
+		 release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {
