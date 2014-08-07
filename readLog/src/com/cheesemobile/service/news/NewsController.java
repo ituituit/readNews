@@ -271,15 +271,15 @@ public class NewsController {
 		// articleStatues(Constants.NEWS_LIBRARY_PATH);
 
 		// FootBall fb = new FootBall();
-		// printSide(false,3);
+		 printSide(true,5);
 		// genOthers(24);
-		genPages(24);
+//		genPages(24);
 		// genSafe(16);
 		// genPoam(22);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-//		 manPath();
+		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
