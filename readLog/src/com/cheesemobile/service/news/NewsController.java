@@ -257,7 +257,7 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 
-		// outputImage(22);
+		 outputImage(25);
 		// String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
 		// "第二十三期" };
 		// printNewPage(names13, "/Users/pwl/Desktop/",new
@@ -271,15 +271,15 @@ public class NewsController {
 		// articleStatues(Constants.NEWS_LIBRARY_PATH);
 
 		// FootBall fb = new FootBall();
-		 printSide(true,5);
-		// genOthers(24);
-//		genPages(24);
+//		 printSide(false,5);
+//		 genOthers(25);
+//		genPages(25);
 		// genSafe(16);
 		// genPoam(22);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-		 manPath();
+//		 manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -557,7 +557,7 @@ public class NewsController {
 		release4.setAll(3, NewsType.POAM);
 		// release4.setAll(3, NewsType.SCENIC_BLOGS);
 		// release2.getArticles().addAll(release4.getArticles());
-		// release4.expand();// page3
+//		 release4.expand();// page3
 		// release4.expand();
 //		release3.expand();// page4
 		 release.expand();// page2
