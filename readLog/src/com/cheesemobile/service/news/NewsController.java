@@ -257,7 +257,7 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 
-		 outputImage(25);
+//		 outputImage(25);
 		// String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
 		// "第二十三期" };
 		// printNewPage(names13, "/Users/pwl/Desktop/",new
@@ -272,7 +272,7 @@ public class NewsController {
 
 		// FootBall fb = new FootBall();
 //		 printSide(false,5);
-//		 genOthers(25);
+		 genOthers(26);
 //		genPages(25);
 		// genSafe(16);
 		// genPoam(22);
