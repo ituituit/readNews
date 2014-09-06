@@ -304,7 +304,17 @@
 28
 >文化科
 <type>图片
-<img>edited/safety11.psd
+<img>中秋.jpg
+
+29
+>文化科
+<type>图片
+<img>中秋.jpg
+
+30
+>文化科
+<type>图片
+<img>中秋.jpg
 
 999
 关于对市场一部司机张波的
