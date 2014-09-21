@@ -257,7 +257,7 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 
-//		 outputImage(29);
+		 outputImage(30);
 		// String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
 		// "第二十三期" };
 		// printNewPage(names13, "/Users/pwl/Desktop/",new
@@ -273,7 +273,7 @@ public class NewsController {
 		// FootBall fb = new FootBall();
 //		 printSide(false,5);
 //		 genOthers(30);
-		genPages(30);
+//		genPages(30);
 		// genSafe(16);
 		// genPoam(22);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
@@ -557,10 +557,10 @@ public class NewsController {
 		release4.setAll(3, NewsType.POAM);
 		// release4.setAll(3, NewsType.SCENIC_BLOGS);
 		// release2.getArticles().addAll(release4.getArticles());
-		 release4.expand();// page3
+//		 release4.expand();// page3
 		// release4.expand();
-		release3.expand();// page4
-//		 release.expand();// page2
+//		release3.expand();// page4
+		 release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {
