@@ -41,6 +41,11 @@ public class LayersInfoParser {
 		parse(Constants.PREFERENCE_LIB_XML_PATH, lib);
 	}
 
+	public void reload(){
+		parse(Constants.PREFERENCE_XML_PATH, list);
+		parse(Constants.PREFERENCE_LIB_XML_PATH, lib);
+	}
+	
 	public static LayersInfoParser getInstance() {
 		if (instance == null) {
 			instance = new LayersInfoParser();

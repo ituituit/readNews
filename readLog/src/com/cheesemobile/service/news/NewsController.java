@@ -10,6 +10,7 @@ import com.cheesemobile.domain.NewsBeanArray;
 import com.cheesemobile.domain.NewsImage;
 import com.cheesemobile.domain.NewsStyle;
 import com.cheesemobile.domain.NewsText;
+import com.cheesemobile.parser.LayersInfoParser;
 import com.cheesemobile.service.Constants;
 import com.cheesemobile.service.JSXController;
 import com.cheesemobile.util.FileUtil;
@@ -257,14 +258,14 @@ public class NewsController {
 		// genCenter1(24);
 		// genCenter2(24);
 
-		 outputImage(30);
+//		 outputImage(31);
 		// String[] names13 = {"第十九期", "第二十期", "第二十一期", "第二十二期",
 		// "第二十三期" };
 		// printNewPage(names13, "/Users/pwl/Desktop/",new
 		// printNewPageCallBack(){
 		// @Override
 		// public void invoke(String name) {
-		// outputImage(name);
+//		 outputImage(name);
 		// }
 		// });
 
@@ -272,14 +273,15 @@ public class NewsController {
 
 		// FootBall fb = new FootBall();
 //		 printSide(false,5);
-//		 genOthers(30);
-//		genPages(30);
+		
+		 genOthers(32);
+//		genPages(31);
 		// genSafe(16);
 		// genPoam(22);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
 		// TextRangeBean tx = new TextRangeBean(content);
 		// genTravelLaw(59);
-//		 manPath();
+//		manPath();
 		// String [] strs =
 		// {"/Users/pwl/Desktop/Sam.bmp","/Users/pwl/Desktop/T.bmp"};
 		// CustomCtrl.getInstance().ctrlOnSample(strs);
@@ -471,6 +473,7 @@ public class NewsController {
 	}
 
 	private void genOthers(int releaseNumber) {
+//		genQianZiWen(releaseNumber);
 		NewsBeanArray articleStatues = articlesFromString(Constants.NEWS_LIBRARY_PATH_OTHERS);
 		_Log.i(articleStatues.getReleaseSize(releaseNumber) + "");
 		NewsBean release = articleStatues.getRelease(releaseNumber);
@@ -495,12 +498,9 @@ public class NewsController {
 		NewsImage newsImage = new NewsImage(0, "", _back1.getFullName());
 		newsImage.changeImage(release.getArticles().get(1).getPicsUrl().get(0));
 		NewsImage frontImage = new NewsImage(0, "", centerFront.getFullName());
-		frontImage
-				.changeImage(release.getArticles().get(1).getPicsUrl().get(1));
-		NewsImage backwardImage = new NewsImage(0, "",
-				centerBackward.getFullName());
-		backwardImage.changeImage(release.getArticles().get(1).getPicsUrl()
-				.get(2));
+		frontImage.changeImage(release.getArticles().get(1).getPicsUrl().get(1));
+		NewsImage backwardImage = new NewsImage(0, "", centerBackward.getFullName());
+		backwardImage.changeImage(release.getArticles().get(1).getPicsUrl().get(2));
 		_back2.addStaticText(release.getArticles().get(0).getContent());
 		_back3.addStaticText(release.getArticles().get(0).getContent());
 		_back4.addStaticText(release.getArticles().get(0).getContent());
@@ -508,6 +508,35 @@ public class NewsController {
 		_back2.updateStaticTexts();
 		_back3.updateStaticTexts();
 		_back4.updateStaticTexts();
+	}
+	
+	private void genQianZiWen(int releaseNumber) {
+		String tmpF  =Constants.PREFERENCE_XML_PATH;
+		
+		Constants.PREFERENCE_XML_PATH = "/Users/pwl/Documents/Adobe Scripts/newXMLQianZiWen.xml";
+		NewsBeanArray articleStatues = articlesFromString(Constants.NEWS_LIBRARY_DAODE);
+		_Log.i(articleStatues.getReleaseSize(releaseNumber) + "");
+		NewsBean release = articleStatues.getRelease(releaseNumber);
+		List<NewsArticle> articles = release.getArticles();
+		NewsStyle _rect1 = new NewsStyle(-1, NewsType.RECT_1, "");
+		// String[] str1 = {"content 副本","content_" + release.getOrder()};
+		// JSXController.getInstance().invoke("changeName", (str1));
+
+		_rect1.addStaticText(articles.get(0).getContent());
+		_rect1.addStaticText(articles.get(1).getContent());
+		_rect1.addStaticText(articles.get(2).getContent());
+		_rect1.addStaticText(articles.get(3).getContent());
+		_rect1.addStaticText(articles.get(4).getContent());
+		_rect1.updateStaticTexts();
+		String name = "qianziwen" + releaseNumber;
+		JSXController.getInstance().invoke("saveAsImage", "newOutput.jpg");
+		JSXController.getInstance().flush();
+		String folder = "/Users/pwl/Desktop/";
+		FileUtil.rename(folder + "newOutput.jpg", folder + name + ".jpg");
+		File f = new File(folder + name + ".jpg");
+		f.renameTo(new File("/Users/pwl/git/readNews_remote/readLog/image/photo/"+ f.getName()));
+		Constants.PREFERENCE_XML_PATH =tmpF;
+		LayersInfoParser.getInstance().reload();
 	}
 
 	private void genCenter2(int releaseNumber) {
@@ -554,13 +583,13 @@ public class NewsController {
 		NewsBean release3 = articleStatues3.getRelease(releaseNumber);
 		release3.setAll(4, NewsType.TRAVEL_LAWS);
 		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
-		release4.setAll(3, NewsType.POAM);
+//		release4.setAll(3, NewsType.POAM);
 		// release4.setAll(3, NewsType.SCENIC_BLOGS);
 		// release2.getArticles().addAll(release4.getArticles());
-//		 release4.expand();// page3
+		 release4.expand();// page3
 		// release4.expand();
 //		release3.expand();// page4
-		 release.expand();// page2
+//		 release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {

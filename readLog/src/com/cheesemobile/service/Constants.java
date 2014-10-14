@@ -38,7 +38,7 @@ public class Constants {
 
 	public final static int ARTICLE_HEIGHT_DEFAULT = 300;
 	public static String PAGE_2_3_PATH = HOME_FOLDER + "image/news.psd";
-	public static String PAGE_1_4_PATH = HOME_FOLDER + "image/news1.psd";
+//	public static String PAGE_1_4_PATH = HOME_FOLDER + "image/news1.psd";
 	public static String PSD_LIBRARY_PATH = HOME_FOLDER + "image/lib.psd";
 	public static String VISITORS_TRACK_LIBRARY_PATH = AUTOMATION_FOLDER + "visitors_track.txt";
 	public static String SCENIC_BLOGS_LIBRARY_PATH = AUTOMATION_FOLDER + "scenic_blogs.txt";
