@@ -265,7 +265,7 @@ ad = "广告_0009_38.psd"
 2014年9月22日    第三十二期    总第306期\r本版编辑：栗培文  E-mail：1513053183@qq.com
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年九月二十二日      第三十二期      总第310期
-<img>37.jpg
+<img>qianziwen32.jpg
 <img>edited/center0_29.psd
 <img>edited/center1_29.psd
 
@@ -274,7 +274,7 @@ ad = "广告_0009_38.psd"
 2014年9月29日    第三十三期    总第306期\r本版编辑：栗培文  E-mail：1513053183@qq.com
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年九月二十九日      第三十三期      总第311期
-<img>38.jpg
+<img>qianziwen33.jpg
 <img>edited/center0_30.psd
 <img>edited/center1_30.psd
 
@@ -283,7 +283,7 @@ ad = "广告_0009_38.psd"
 2014年10月6日    第三十四期    总第306期\r本版编辑：栗培文  E-mail：1513053183@qq.com
 >
 山西泽州珏山旅游开发有限责任公司主办      二〇一四年十月六日      第三十四期      总第312期
-<img>39.jpg
+<img>qianziwen34.jpg
 <img>edited/center0_31.psd
 <img>edited/center1_31.psd
 
