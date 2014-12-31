@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cheesemobile.domain.ArticleStatus;
+import com.cheesemobile.domain.ArticleStatusList;
 import com.cheesemobile.domain.NewsArticle;
 import com.cheesemobile.domain.NewsBean;
 import com.cheesemobile.domain.NewsBeanArray;
@@ -269,13 +271,15 @@ public class NewsController {
 		// }
 		// });
 
-		// articleStatues(Constants.NEWS_LIBRARY_PATH);
-
+//		 articleStatues(Constants.NEWS_LIBRARY_PATH);
+		outputImage(36);
 		// FootBall fb = new FootBall();
-//		 printSide(false,5);
-		
-		 genOthers(32);
-//		genPages(31);
+//		printSide(false,5);
+//		for(int i = 50; i < 155; i++){
+//			genQianZiWen(i);
+//		}
+//		genOthers(36);
+//		genPages(36);
 		// genSafe(16);
 		// genPoam(22);
 		// String content = "123\n321<hw>hel\nlo你</hw>123\n321<hw>好</hw>123321";
@@ -578,18 +582,18 @@ public class NewsController {
 
 		NewsBean release = articleStatues.getRelease(releaseNumber);
 		release.setAll(2, NewsType.SCENIC_NEWS);
-		NewsBean release2 = articleStatues2.getRelease(releaseNumber);
-		release2.setAll(3, NewsType.VISITORS_TRACK);
-		NewsBean release3 = articleStatues3.getRelease(releaseNumber);
-		release3.setAll(4, NewsType.TRAVEL_LAWS);
-		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
+//		NewsBean release2 = articleStatues2.getRelease(releaseNumber);
+//		release2.setAll(3, NewsType.VISITORS_TRACK);
+//		NewsBean release3 = articleStatues3.getRelease(releaseNumber);
+//		release3.setAll(4, NewsType.TRAVEL_LAWS);
+//		NewsBean release4 = articleStatues4.getRelease(releaseNumber);
 //		release4.setAll(3, NewsType.POAM);
 		// release4.setAll(3, NewsType.SCENIC_BLOGS);
 		// release2.getArticles().addAll(release4.getArticles());
-		 release4.expand();// page3
+//		 release4.expand();// page3
 		// release4.expand();
 //		release3.expand();// page4
-//		 release.expand();// page2
+		release.expand();// page2
 	}
 
 	private void transformNews(NewsBean articles) {
@@ -685,13 +689,28 @@ public class NewsController {
 				"第三十期", "第三十一期", "第三十二期", "第三十三期", "第三十四期", "第三十五期", "第三十六期",
 				"第三十七期", "第三十八期" };
 		String[] names14 = { "第四期", "第五期", "第六期", "第七期", "第八期", "第九期", "第十期",
-				"第十一期", "第十二期", "第十三期" };
+				"第十一期", "第十二期", "第十三期", "第十四期", "第十五期",
+				"第十六期", "第十七期", "第十八期", "第十九期", "第二十期", "第二十一期", "第二十二期",
+				"第二十三期", "第二十四期", "第二十五期", "第二十六期", "第二十七期", "第二十八期", "第二十九期",
+				"第三十期", "第三十一期", "第三十二期", "第三十三期", "第三十四期", "第三十五期", "第三十六期",
+				"第三十七期", "第三十八期"  };
 		// printAllPapers(names,2012 + "");
 		// printAllPapers(names13,2013 + "H:/备份/2014珏山动态/" "年");
 		printAllPapers(names14, "H:/备份/2014珏山动态/");
 		// printNewPage(names14,"H:/备份/2014珏山动态/");
 	}
 
+	public void outputAllPapers(String[] names, String Path){
+		for (int i = 0; i < names.length; i++) {
+			String path = Path + names[i] + ".psd";
+			JSXController.getInstance().invoke("openDoc", path);
+			// printSide(false);
+			outputImage(i+1);
+//			cb.invoke(names[i]);
+			JSXController.getInstance().invoke("save", path);
+			JSXController.getInstance().invoke("closeDoc", "0");
+		}
+	}
 	public void printAllPapers(String[] names, String year) {
 
 		for (int i = 0; i < names.length; i++) {
@@ -830,7 +849,7 @@ public class NewsController {
 	// return returnList;
 	// }
 
-	private NewsBeanArray articleStatues(NewsBeanArray articlesFromString) {
+	private List<ArticleStatus> articleStatues(NewsBeanArray articlesFromString) {
 		// reFormNews(articlesFromString);
 		List<String> names = new ArrayList<String>();
 		List<String> dnames = new ArrayList<String>();
@@ -847,16 +866,19 @@ public class NewsController {
 		List<List<Integer>> department = NewsBean.repeatList(dnames);
 		// _Log.i(result + "\n" + department);
 		// NewsBean.traceRepeatList(result, names);
-		NewsBean.traceRepeatList(department, dnames);
-		return articlesFromString;
+		List<ArticleStatus> traceRepeatList = NewsBean.traceRepeatList(department, dnames);
+		return traceRepeatList;
 	}
 
 	private NewsBeanArray articleStatues(String path) {
-		NewsBeanArray articleStatues = articleStatues(articlesFromString(path));
+		NewsBeanArray articleStatues = articlesFromString(path);
+		ArticleStatusList articleStatues2 = new ArticleStatusList(articleStatues(articleStatues));
 		NewsBeanArray nNewsBeanArray = new NewsBeanArray();
 		NewsBean newsBean = articleStatues.get(articleStatues.size() - 1);
 		nNewsBeanArray.add(newsBean);
-		articleStatues(nNewsBeanArray);
+		ArticleStatusList  articleStatues3 =  new ArticleStatusList(articleStatues(nNewsBeanArray));
+		articleStatues2.minus(articleStatues3);
+		articleStatues2.toString();
 		return articleStatues;
 	}
 

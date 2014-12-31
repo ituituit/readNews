@@ -289,17 +289,25 @@ public class NewsBean {
 	}
 
 	// ��ʾÿ������Ͷ����
-	public static void  traceRepeatList(List<List<Integer>> department,
+	public static List<ArticleStatus>  traceRepeatList(List<List<Integer>> department,
 			List<String> dnames) {
 		int count = 0;
+		List<ArticleStatus> list = new ArrayList<ArticleStatus>();
 		for (int i = 0; i < department.size(); i++) {
 			int nameI = department.get(i).get(0);
 			int numDepName = department.get(i).size();
 			String depName = dnames.get(nameI);
-			_Log.i(depName + " " + numDepName);
+			ArticleStatus as = new ArticleStatus();
+			as.setAcceptCount(numDepName);
+			as.setArticleCount(numDepName);
+			as.setDepartmentName(depName);
+//			_Log.i(depName + "投稿" + numDepName  +"篇," + "采用" +numDepName+ "篇;");
+			_Log.i(as.toString());
 			count += numDepName;
+			list.add(as);
 		}
 		_Log.i("共" + count + "篇");
+		return list;
 	}
 
 }
